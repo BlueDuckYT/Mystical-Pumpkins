@@ -1,6 +1,5 @@
 package blueduck.tileentity;
 
-import blueduck.MagicPumpkinsMod;
 import blueduck.container.InfuserContainer;
 import blueduck.registry.InfuserRecipeRegistry;
 import blueduck.registry.RegisterHandler;
@@ -22,6 +21,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class InfuserTileEntity extends LockableTileEntity implements ISidedInventory, ITickableTileEntity {
 
+	private InfuserRecipe currentRecipe;
 	private int infusingTime;
 	private int infusingTimeTotal;
 	protected final IIntArray timeArray = new IIntArray() {
@@ -170,20 +170,21 @@ public class InfuserTileEntity extends LockableTileEntity implements ISidedInven
 		boolean isThereFuel = !this.items.get(1).isEmpty();
 		boolean isThereSecondary = !this.items.get(2).isEmpty();
 		if (!world.isRemote) {
-			if (isThereFuel && isThereInput && !isThereSecondary)  {
-				InfuserRecipe possibleRecipe = InfuserRecipeRegistry.searchRecipe(this.items.get(0).getCount(), this.items.get(1).getCount(), this.items.get(2));
-				if (possibleRecipe != null) {
+			if (isThereFuel && isThereInput && isThereSecondary)  {
+				if (this.currentRecipe == null) {
+					this.currentRecipe = InfuserRecipeRegistry.searchRecipe(this.items.get(0).getCount(), this.items.get(1).getCount(), this.items.get(2));;
+				}
+				if (currentRecipe != null) {
 					if (infusingTime == 0) {
-						MagicPumpkinsMod.LOGGER.info(possibleRecipe);
-						this.items.get(0).setCount(this.items.get(0).getCount() - possibleRecipe.getInputAmount());
-						this.items.get(1).setCount(this.items.get(1).getCount() - possibleRecipe.getEssenceAmount());
-						this.items.get(2).setCount(this.items.get(2).getCount() - possibleRecipe.getSecondary().getCount());
+						this.items.get(0).setCount(this.items.get(0).getCount() - currentRecipe.getInputAmount());
+						this.items.get(1).setCount(this.items.get(1).getCount() - currentRecipe.getEssenceAmount());
+						this.items.get(2).setCount(this.items.get(2).getCount() - currentRecipe.getSecondary().getCount());
 						dirty = true;
 					}
 					++this.infusingTime;
 					if (this.infusingTime == this.infusingTimeTotal) {
-						this.items.set(3, possibleRecipe.getOutput());
-						this.items.get(3).setCount(possibleRecipe.getOutput().getCount());
+						this.items.set(3, currentRecipe.getOutput());
+						this.items.get(3).setCount(currentRecipe.getOutput().getCount());
 						this.infusingTime = 0;
 						dirty = true;
 					}

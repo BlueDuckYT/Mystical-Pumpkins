@@ -32,7 +32,6 @@ public class InfuserRecipeRegistry {
 			return null;
 		} else {
 			for (InfuserRecipe recipe : recipes) {
-				MagicPumpkinsMod.LOGGER.info(recipe.getSecondary().isItemEqual(secondaryStack) + " " + (essenceAmount >= recipe.getEssenceAmount()) + " " + (inputAmount >= recipe.getInputAmount()));
 				if (recipe.getSecondary().isItemEqual(secondaryStack) && essenceAmount >= recipe.getEssenceAmount() && inputAmount >= recipe.getInputAmount()) {
 					return recipe;
 				}
