@@ -1,6 +1,6 @@
 package blueduck.mysticalpumpkins.client.gui;
 
-import blueduck.mysticalpumpkins.MagicPumpkinsMod;
+import blueduck.mysticalpumpkins.MysticalPumpkinsMod;
 import blueduck.mysticalpumpkins.container.InfuserContainer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -11,7 +11,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class InfuserScreen extends ContainerScreen<InfuserContainer> {
 
-	private static final ResourceLocation PUMPKIN_INFUSER_TEX = new ResourceLocation(MagicPumpkinsMod.MODID, "textures/gui/container/pinfuser.png");
+	private static final ResourceLocation PUMPKIN_INFUSER_TEX = new ResourceLocation(MysticalPumpkinsMod.MODID, "textures/gui/container/pinfuser.png");
 
 	public InfuserScreen(InfuserContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
 		super(screenContainer, inv, titleIn);

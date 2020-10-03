@@ -17,12 +17,12 @@ import org.apache.logging.log4j.Logger;
 import java.util.stream.Collectors;
 
 @Mod("mystical_pumpkins")
-public class MagicPumpkinsMod {
+public class MysticalPumpkinsMod {
 
 	public static final Logger LOGGER = LogManager.getLogger();
 	public static final String MODID = "mystical_pumpkins";
 
-	public MagicPumpkinsMod() {
+	public MysticalPumpkinsMod() {
 		// Register the setup method for modloading
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		// Register the enqueueIMC method for modloading

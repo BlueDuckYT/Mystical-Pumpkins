@@ -1,6 +1,6 @@
 package blueduck.mysticalpumpkins.registry;
 
-import blueduck.mysticalpumpkins.MagicPumpkinsMod;
+import blueduck.mysticalpumpkins.MysticalPumpkinsMod;
 import blueduck.mysticalpumpkins.block.InfuserBlock;
 import blueduck.mysticalpumpkins.client.gui.InfuserScreen;
 import blueduck.mysticalpumpkins.container.InfuserContainer;
@@ -23,10 +23,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class RegisterHandler {
 
-	public static DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MagicPumpkinsMod.MODID);
-	public static DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MagicPumpkinsMod.MODID);
-	public static DeferredRegister<TileEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, MagicPumpkinsMod.MODID);
-	public static DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MagicPumpkinsMod.MODID);
+	public static DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MysticalPumpkinsMod.MODID);
+	public static DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MysticalPumpkinsMod.MODID);
+	public static DeferredRegister<TileEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, MysticalPumpkinsMod.MODID);
+	public static DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MysticalPumpkinsMod.MODID);
 
 	public static final RegistryObject<Block> INFUSER = BLOCKS.register("infuser_block", () -> new InfuserBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.RED)));
 	public static final RegistryObject<TileEntityType<InfuserTileEntity>> INFUSER_TILE_ENTITY = TILE_ENTITIES.register("infuser_tile_entity", () -> TileEntityType.Builder.create(InfuserTileEntity::new, INFUSER.get()).build(null));
