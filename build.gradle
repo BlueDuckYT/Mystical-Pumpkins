@@ -15,7 +15,7 @@ apply plugin: 'maven-publish'
 
 version = '1.0'
 group = 'com.github.lorenzopapi' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'magic_pumpkins'
+archivesBaseName = 'mystical_pumpkins'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
@@ -44,7 +44,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                magic_pumpkins {
+                mystical_pumpkins {
                     source sourceSets.main
                 }
             }
@@ -60,7 +60,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                magic_pumpkins {
+                mystical_pumpkins {
                     source sourceSets.main
                 }
             }
@@ -75,10 +75,10 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'magic_pumpkins', '--all', '--output', file('src/generated/resources/')
+            args '--mod', 'mystical_pumpkins', '--all', '--output', file('src/generated/resources/')
 
             mods {
-                magic_pumpkins {
+                mystical_pumpkins {
                     source sourceSets.main
                 }
             }
@@ -116,7 +116,7 @@ dependencies {
 jar {
     manifest {
         attributes([
-            "Specification-Title": "magic_pumpkins",
+            "Specification-Title": "mystical_pumpkins",
             "Specification-Vendor": "fall_festival_sareus",
             "Specification-Version": "1", // We are version 1 of ourselves
             "Implementation-Title": project.name,

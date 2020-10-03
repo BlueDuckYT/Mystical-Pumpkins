@@ -15,7 +15,7 @@ license="All rights reserved"
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
 # The modid of the mod
-modId="magic_pumpkins" #mandatory
+modId="mystical_pumpkins" #mandatory
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
 version="${file.jarVersion}" #mandatory
  # A display name for the mod
@@ -25,7 +25,7 @@ displayName="Magic Pumpkins Mod" #mandatory
 # A URL for the "homepage" for this mod, displayed in the mod UI
 # displayURL="http://example.com/" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-# logoFile="magic_pumpkins.png" #optional
+# logoFile="mystical_pumpkins.png" #optional
 # A text field displayed in the mod UI
 credits="E" #optional
 # A text field displayed in the mod UI
@@ -35,7 +35,7 @@ description='''
 EEEEEE
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.magic_pumpkins]] #optional
+[[dependencies.mystical_pumpkins]] #optional
     # the modid of the dependency
     modId="forge" #mandatory
     # Does this dependency have to exist - if not, ordering below must be specified
@@ -47,7 +47,7 @@ EEEEEE
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
     side="BOTH"
 # Here's another dependency
-[[dependencies.magic_pumpkins]]
+[[dependencies.mystical_pumpkins]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.16.3]"
