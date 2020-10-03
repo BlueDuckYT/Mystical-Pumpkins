@@ -1,18 +1,17 @@
 package blueduck.block;
 
 import blueduck.tileentity.InfuserTileEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
+import net.minecraft.block.*;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.stats.Stats;
+import net.minecraft.tileentity.BrewingStandTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
@@ -20,13 +19,23 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class InfuserBlock extends Block {
+public class InfuserBlock extends ContainerBlock {
 
 	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 
 	public InfuserBlock(Properties properties) {
 		super(properties);
 		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
+	}
+
+	@Override
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+		if (stack.hasDisplayName()) {
+			TileEntity tileentity = worldIn.getTileEntity(pos);
+			if (tileentity instanceof InfuserTileEntity) {
+				((InfuserTileEntity)tileentity).setCustomName(stack.getDisplayName());
+			}
+		}
 	}
 
 	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
@@ -71,11 +80,6 @@ public class InfuserBlock extends Block {
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return new InfuserTileEntity();
-	}
-
-	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 		if (worldIn.isRemote) {
 			return ActionResultType.SUCCESS;
@@ -83,10 +87,14 @@ public class InfuserBlock extends Block {
 		else {
 			TileEntity tileentity = worldIn.getTileEntity(pos);
 			if (tileentity instanceof InfuserTileEntity) {
-				player.openContainer((INamedContainerProvider) tileentity);
-				player.addStat(Stats.INTERACT_WITH_FURNACE);
+				player.openContainer((InfuserTileEntity) tileentity);
 			}
 			return ActionResultType.CONSUME;
 		}
+	}
+
+	@Override
+	public TileEntity createNewTileEntity(IBlockReader worldIn) {
+		return new InfuserTileEntity();
 	}
 }

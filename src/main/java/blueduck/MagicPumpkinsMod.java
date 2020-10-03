@@ -1,5 +1,6 @@
 package blueduck;
 
+import blueduck.registry.InfuserRecipeRegistry;
 import blueduck.registry.RegisterHandler;
 import net.minecraft.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 @Mod("magic_pumpkins")
 public class MagicPumpkinsMod {
 
-	private static final Logger LOGGER = LogManager.getLogger();
+	public static final Logger LOGGER = LogManager.getLogger();
 	public static final String MODID = "magic_pumpkins";
 
 	public MagicPumpkinsMod() {
@@ -29,8 +30,9 @@ public class MagicPumpkinsMod {
 		// Register the processIMC method for modloading
 		//FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
 		// Register the doClientStuff method for modloading
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 		RegisterHandler.init();
+		InfuserRecipeRegistry.initRegistry();
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 
 		// Register ourselves for server and other game events we are interested in
 		MinecraftForge.EVENT_BUS.register(this);
@@ -45,6 +47,7 @@ public class MagicPumpkinsMod {
 
 	private void doClientStuff(final FMLClientSetupEvent event) {
 		// do something that can only be done on the client
+		RegisterHandler.initClient();
 		LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
 	}
 

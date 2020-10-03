@@ -1,66 +1,94 @@
 package blueduck.tileentity;
 
+import blueduck.MagicPumpkinsMod;
+import blueduck.container.InfuserContainer;
+import blueduck.registry.InfuserRecipeRegistry;
 import blueduck.registry.RegisterHandler;
-import com.google.common.collect.Maps;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IRecipeHelperPopulator;
-import net.minecraft.inventory.IRecipeHolder;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.item.Item;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.RecipeItemHelper;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.tileentity.LockableTileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.IItemProvider;
+import net.minecraft.util.IIntArray;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
-import java.util.Map;
-
-public class InfuserTileEntity extends TileEntity implements ISidedInventory, IRecipeHolder, IRecipeHelperPopulator, ITickableTileEntity {
+public class InfuserTileEntity extends LockableTileEntity implements ISidedInventory, ITickableTileEntity {
 
 	private int infusingTime;
 	private int infusingTimeTotal;
+	protected final IIntArray timeArray = new IIntArray() {
+		public int get(int index) {
+			switch(index) {
+				case 0:
+					return InfuserTileEntity.this.infusingTime;
+				case 1:
+					return InfuserTileEntity.this.infusingTimeTotal;
+				default:
+					return 0;
+			}
+		}
+
+		public void set(int index, int value) {
+			switch(index) {
+				case 0:
+					InfuserTileEntity.this.infusingTime = value;
+					break;
+				case 1:
+					InfuserTileEntity.this.infusingTimeTotal = value;
+			}
+
+		}
+
+		public int size() {
+			return 2;
+		}
+	};
 	protected NonNullList<ItemStack> items = NonNullList.withSize(4, ItemStack.EMPTY);
 
 	public InfuserTileEntity() {
 		super(RegisterHandler.INFUSER_TILE_ENTITY.get());
 	}
 
-	public Map<Item, Integer> getTotalTimes() {
-		Map<Item, Integer> map = Maps.newLinkedHashMap();
-		addInfuserRecipe(map, Items.ACACIA_BUTTON, 12000);
-		return map;
-	}
-
 	@Override
-	public void func_230337_a_(BlockState p_230337_1_, CompoundNBT p_230337_2_) {
-		super.func_230337_a_(p_230337_1_, p_230337_2_);
+	public void func_230337_a_(BlockState state, CompoundNBT compound) {
+		super.func_230337_a_(state, compound);
 		this.items = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
-		ItemStackHelper.loadAllItems(p_230337_2_, this.items);
-		this.infusingTime = p_230337_2_.getInt("InfusingTime");
-		this.infusingTimeTotal = p_230337_2_.getInt("InfusingTimeTotal");
+		ItemStackHelper.loadAllItems(compound, this.items);
+		this.infusingTime = compound.getInt("InfusingTime");
+		this.infusingTimeTotal = compound.getInt("InfusingTimeTotal");
 	}
 
 	@Override
 	public CompoundNBT write(CompoundNBT compound) {
 		super.write(compound);
 		compound.putInt("InfusingTime", this.infusingTime);
-		compound.putInt("CookTimeTotal", this.infusingTimeTotal);
+		compound.putInt("InfusingTimeTotal", this.infusingTimeTotal);
 		ItemStackHelper.saveAllItems(compound, this.items);
 		return compound;
 	}
 
 	@Override
+	protected ITextComponent getDefaultName() {
+		return new TranslationTextComponent("E");
+	}
+
+	@Override
+	protected Container createMenu(int id, PlayerInventory player) {
+		return new InfuserContainer(id, player, this, timeArray);
+	}
+
+	@Override
 	public int[] getSlotsForFace(Direction side) {
 		return new int[0];
-	}
+	} //TODO SLOTS AUTOMATION
 
 	@Override
 	public boolean canInsertItem(int index, ItemStack itemStackIn, Direction direction) {
@@ -115,7 +143,7 @@ public class InfuserTileEntity extends TileEntity implements ISidedInventory, IR
 		}
 
 		if (index == 0 && !flag) {
-			this.infusingTimeTotal = getTotalTimes().get(stack.getItem());
+			this.infusingTimeTotal = 12000;
 			this.infusingTime = 0;
 			this.markDirty();
 		}
@@ -126,7 +154,7 @@ public class InfuserTileEntity extends TileEntity implements ISidedInventory, IR
 		if (this.world != null && this.world.getTileEntity(this.pos) != this) {
 			return false;
 		} else {
-			return player.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
+			return player.getDistanceSq(this.pos.getX() + 0.5D, this.pos.getY() + 0.5D, this.pos.getZ() + 0.5D) <= 16.0D;
 		}
 	}
 
@@ -136,39 +164,34 @@ public class InfuserTileEntity extends TileEntity implements ISidedInventory, IR
 	}
 
 	@Override
-	public void fillStackedContents(RecipeItemHelper helper) {
-		for(ItemStack itemstack : this.items) {
-			helper.accountStack(itemstack);
-		}
-	}
-
-	@Override
-	public void setRecipeUsed(IRecipe<?> recipe) {
-
-	}
-
-	@Override
-	public IRecipe<?> getRecipeUsed() {
-		return null;
-	}
-
-	@Override
 	public void tick() {
 		boolean dirty = false;
-		if (!getWorld().isRemote) {
-			++this.infusingTime;
-			if (this.infusingTime == this.infusingTimeTotal) {
-				this.infusingTime = 0;
-				dirty = true;
+		boolean isThereInput = !this.items.get(0).isEmpty();
+		boolean isThereFuel = !this.items.get(1).isEmpty();
+		boolean isThereSecondary = !this.items.get(2).isEmpty();
+		if (!world.isRemote) {
+			if (isThereFuel && isThereInput && !isThereSecondary)  {
+				InfuserRecipe possibleRecipe = InfuserRecipeRegistry.searchRecipe(this.items.get(0).getCount(), this.items.get(1).getCount(), this.items.get(2));
+				if (possibleRecipe != null) {
+					if (infusingTime == 0) {
+						MagicPumpkinsMod.LOGGER.info(possibleRecipe);
+						this.items.get(0).setCount(this.items.get(0).getCount() - possibleRecipe.getInputAmount());
+						this.items.get(1).setCount(this.items.get(1).getCount() - possibleRecipe.getEssenceAmount());
+						this.items.get(2).setCount(this.items.get(2).getCount() - possibleRecipe.getSecondary().getCount());
+						dirty = true;
+					}
+					++this.infusingTime;
+					if (this.infusingTime == this.infusingTimeTotal) {
+						this.items.set(3, possibleRecipe.getOutput());
+						this.items.get(3).setCount(possibleRecipe.getOutput().getCount());
+						this.infusingTime = 0;
+						dirty = true;
+					}
+				}
 			}
 		}
 		if (dirty) {
 			this.markDirty();
 		}
-	}
-
-	private static void addInfuserRecipe(Map<Item, Integer> map, IItemProvider itemProvider, int burnTimeIn) {
-		Item item = itemProvider.asItem();
-		map.put(item, burnTimeIn);
 	}
 }
