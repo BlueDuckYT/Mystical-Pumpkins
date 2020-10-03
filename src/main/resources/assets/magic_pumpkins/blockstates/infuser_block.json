@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "magic_pumpkins:block/infuser_block,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "magic_pumpkins:block/infuser_block"
+    },
+    "facing=south": {
+      "model": "magic_pumpkins:block/infuser_block",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "magic_pumpkins:block/infuser_block",
+      "y": 270
+    }
+  }
+}

@@ -4,13 +4,13 @@ import net.minecraft.item.ItemStack;
 
 public class InfuserRecipe {
 
-	private final int inputAmount;
+	private final ItemStack input;
 	private final int essenceAmount;
 	private final ItemStack secondary;
 	private final ItemStack output;
 
-	public InfuserRecipe(int inputAmount, int fuelAmount, ItemStack secondary, ItemStack output) {
-		this.inputAmount = inputAmount;
+	public InfuserRecipe(ItemStack input, int fuelAmount, ItemStack secondary, ItemStack output) {
+		this.input = input;
 		this.essenceAmount = fuelAmount;
 		this.secondary = secondary;
 		this.output = output;
@@ -29,14 +29,14 @@ public class InfuserRecipe {
 		return secondary;
 	}
 
-	public int getInputAmount() {
-		return inputAmount;
+	public ItemStack getInput() {
+		return input;
 	}
 
 	@Override
 	public String toString() {
 		return "InfuserRecipe{" +
-				       "inputAmount=" + inputAmount +
+				       "input=" + input +
 				       ", essenceAmount=" + essenceAmount +
 				       ", secondary=" + secondary +
 				       ", output=" + output +

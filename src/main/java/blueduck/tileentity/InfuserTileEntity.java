@@ -172,11 +172,11 @@ public class InfuserTileEntity extends LockableTileEntity implements ISidedInven
 		if (!world.isRemote) {
 			if (isThereFuel && isThereInput && isThereSecondary)  {
 				if (this.currentRecipe == null) {
-					this.currentRecipe = InfuserRecipeRegistry.searchRecipe(this.items.get(0).getCount(), this.items.get(1).getCount(), this.items.get(2));;
+					this.currentRecipe = InfuserRecipeRegistry.searchRecipe(this.items.get(0), this.items.get(1).getCount(), this.items.get(2));;
 				}
 				if (currentRecipe != null) {
 					if (infusingTime == 0) {
-						this.items.get(0).setCount(this.items.get(0).getCount() - currentRecipe.getInputAmount());
+						this.items.get(0).setCount(this.items.get(0).getCount() - currentRecipe.getInput().getCount());
 						this.items.get(1).setCount(this.items.get(1).getCount() - currentRecipe.getEssenceAmount());
 						this.items.get(2).setCount(this.items.get(2).getCount() - currentRecipe.getSecondary().getCount());
 						dirty = true;

@@ -23,10 +23,6 @@ public class InfuserContainer extends Container {
 		this(id, inv, new Inventory(4), new IntArray(2));
 	}
 
-	public IInventory getTileInfuser() {
-		return tileInfuser;
-	}
-
 	public IIntArray getTimeArray() {
 		return timeArray;
 	}
@@ -37,10 +33,10 @@ public class InfuserContainer extends Container {
 		assertIntArraySize(iIntArray, 2);
 		this.tileInfuser = tileEntity;
 		this.timeArray = iIntArray;
-		this.addSlot(new InputSlot(tileEntity, 0, 56, 51));
-		this.addSlot(new FuelSlot(tileEntity, 1, 79, 51));
-		this.addSlot(new SecondaryItemSlot(tileEntity, 2, 102, 51));
-		this.addSlot(new OutputSlot(tileEntity, 3, 125, 51));
+		this.addSlot(new InputSlot(tileEntity, 0, 55, 11));
+		this.addSlot(new FuelSlot(tileEntity, 1, 19, 29));
+		this.addSlot(new SecondaryItemSlot(tileEntity, 2, 55, 47));
+		this.addSlot(new OutputSlot(tileEntity, 3, 145, 29));
 		this.trackIntArray(iIntArray);
 
 		for(int i = 0; i < 3; ++i) {
@@ -60,19 +56,42 @@ public class InfuserContainer extends Container {
 		return this.tileInfuser.isUsableByPlayer(playerIn);
 	}
 
+	@Override
+	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+		ItemStack itemstack = ItemStack.EMPTY;
+		Slot slot = this.inventorySlots.get(index);
+		if (slot != null && slot.getHasStack()) {
+			ItemStack itemstack1 = slot.getStack();
+			itemstack = itemstack1.copy();
+
+			if (itemstack1.isEmpty()) {
+				slot.putStack(ItemStack.EMPTY);
+			} else {
+				slot.onSlotChanged();
+			}
+
+			if (itemstack1.getCount() == itemstack.getCount()) {
+				return ItemStack.EMPTY;
+			}
+
+			slot.onTake(playerIn, itemstack1);
+		}
+		return itemstack;
+	}
+
 	static class InputSlot extends Slot {
 
 		public InputSlot(IInventory inventoryIn, int index, int xPosition, int yPosition) {
 			super(inventoryIn, index, xPosition, yPosition);
 		}
 
-		public static boolean isPumpkin(ItemStack stack) {
-			return stack.getItem() == Items.PUMPKIN || stack.getItem() == Items.CARVED_PUMPKIN;
+		public static boolean isValidInput(ItemStack stack) {
+			return InfuserRecipeRegistry.isValidInput(stack);
 		}
 
 		@Override
 		public boolean isItemValid(ItemStack stack) {
-			return isPumpkin(stack);
+			return isValidInput(stack);
 		}
 
 		@Override
@@ -118,8 +137,8 @@ public class InfuserContainer extends Container {
 
 	static class OutputSlot extends Slot {
 
-		public OutputSlot(IInventory p_i47598_1_, int p_i47598_2_, int p_i47598_3_, int p_i47598_4_) {
-			super(p_i47598_1_, p_i47598_2_, p_i47598_3_, p_i47598_4_);
+		public OutputSlot(IInventory inventory, int index, int xPosition, int yPosition) {
+			super(inventory, index, xPosition, yPosition);
 		}
 
 		@Override
