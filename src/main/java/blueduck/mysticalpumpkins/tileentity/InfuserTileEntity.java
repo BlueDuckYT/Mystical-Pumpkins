@@ -1,8 +1,8 @@
-package blueduck.tileentity;
+package blueduck.mysticalpumpkins.tileentity;
 
-import blueduck.container.InfuserContainer;
-import blueduck.registry.InfuserRecipeRegistry;
-import blueduck.registry.RegisterHandler;
+import blueduck.mysticalpumpkins.container.InfuserContainer;
+import blueduck.mysticalpumpkins.registry.InfuserRecipeRegistry;
+import blueduck.mysticalpumpkins.registry.RegisterHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

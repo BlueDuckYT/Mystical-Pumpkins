@@ -1,7 +1,7 @@
-package blueduck.container;
+package blueduck.mysticalpumpkins.container;
 
-import blueduck.registry.InfuserRecipeRegistry;
-import blueduck.registry.RegisterHandler;
+import blueduck.mysticalpumpkins.registry.InfuserRecipeRegistry;
+import blueduck.mysticalpumpkins.registry.RegisterHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;

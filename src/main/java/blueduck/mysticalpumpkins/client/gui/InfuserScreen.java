@@ -1,7 +1,7 @@
-package blueduck.client.gui;
+package blueduck.mysticalpumpkins.client.gui;
 
-import blueduck.MagicPumpkinsMod;
-import blueduck.container.InfuserContainer;
+import blueduck.mysticalpumpkins.MagicPumpkinsMod;
+import blueduck.mysticalpumpkins.container.InfuserContainer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;

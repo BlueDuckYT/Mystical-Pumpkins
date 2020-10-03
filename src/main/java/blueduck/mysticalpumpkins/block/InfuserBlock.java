@@ -1,6 +1,6 @@
-package blueduck.block;
+package blueduck.mysticalpumpkins.block;
 
-import blueduck.tileentity.InfuserTileEntity;
+import blueduck.mysticalpumpkins.tileentity.InfuserTileEntity;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;

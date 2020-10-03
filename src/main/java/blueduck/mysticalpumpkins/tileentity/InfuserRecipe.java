@@ -1,4 +1,4 @@
-package blueduck.tileentity;
+package blueduck.mysticalpumpkins.tileentity;
 
 import net.minecraft.item.ItemStack;
 

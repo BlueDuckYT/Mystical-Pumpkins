@@ -1,10 +1,10 @@
-package blueduck.registry;
+package blueduck.mysticalpumpkins.registry;
 
-import blueduck.MagicPumpkinsMod;
-import blueduck.block.InfuserBlock;
-import blueduck.client.gui.InfuserScreen;
-import blueduck.container.InfuserContainer;
-import blueduck.tileentity.InfuserTileEntity;
+import blueduck.mysticalpumpkins.MagicPumpkinsMod;
+import blueduck.mysticalpumpkins.block.InfuserBlock;
+import blueduck.mysticalpumpkins.client.gui.InfuserScreen;
+import blueduck.mysticalpumpkins.container.InfuserContainer;
+import blueduck.mysticalpumpkins.tileentity.InfuserTileEntity;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
