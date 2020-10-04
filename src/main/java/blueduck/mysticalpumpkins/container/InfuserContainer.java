@@ -9,7 +9,6 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
 
@@ -17,7 +16,6 @@ public class InfuserContainer extends Container {
 
 	private final IInventory tileInfuser;
 	private final IIntArray timeArray;
-	//private final Slot slot;
 
 	public InfuserContainer(int id, PlayerInventory inv) {
 		this(id, inv, new Inventory(4), new IntArray(2));
@@ -56,6 +54,8 @@ public class InfuserContainer extends Container {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.inventorySlots.get(index);
 		if (slot != null && slot.getHasStack()) {
+
+			//TODO how tf does this thing work
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
 
@@ -109,7 +109,7 @@ public class InfuserContainer extends Container {
 
 		@Override
 		public boolean isItemValid(ItemStack stack) {
-			return stack.getItem() == Items.PUMPKIN_SEEDS; //Essence
+			return stack.getItem() == RegisterHandler.PUMPKIN_ESSENCE.get();
 		}
 
 		@Override
