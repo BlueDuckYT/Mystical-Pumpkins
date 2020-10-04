@@ -1,7 +1,7 @@
-package blueduck.registry;
+package blueduck.mysticalpumpkins.registry;
 
-import blueduck.MagicPumpkinsMod;
-import blueduck.tileentity.InfuserRecipe;
+import blueduck.mysticalpumpkins.MysticalPumpkinsMod;
+import blueduck.mysticalpumpkins.tileentity.InfuserRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 

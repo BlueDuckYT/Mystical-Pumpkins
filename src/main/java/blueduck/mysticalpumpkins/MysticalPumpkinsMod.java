@@ -1,7 +1,7 @@
-package blueduck;
+package blueduck.mysticalpumpkins;
 
-import blueduck.registry.InfuserRecipeRegistry;
-import blueduck.registry.RegisterHandler;
+import blueduck.mysticalpumpkins.registry.InfuserRecipeRegistry;
+import blueduck.mysticalpumpkins.registry.RegisterHandler;
 import net.minecraft.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.InterModComms;
@@ -16,13 +16,13 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.stream.Collectors;
 
-@Mod("magic_pumpkins")
-public class MagicPumpkinsMod {
+@Mod("mystical_pumpkins")
+public class MysticalPumpkinsMod {
 
 	public static final Logger LOGGER = LogManager.getLogger();
-	public static final String MODID = "magic_pumpkins";
+	public static final String MODID = "mystical_pumpkins";
 
-	public MagicPumpkinsMod() {
+	public MysticalPumpkinsMod() {
 		// Register the setup method for modloading
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		// Register the enqueueIMC method for modloading
