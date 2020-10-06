@@ -143,7 +143,7 @@ public class InfuserTileEntity extends LockableTileEntity implements ISidedInven
 		}
 
 		if (index == 0 && !flag) {
-			this.infusingTimeTotal = 12000;
+			this.infusingTimeTotal = 200;
 			this.infusingTime = 0;
 			this.markDirty();
 		}
@@ -174,7 +174,7 @@ public class InfuserTileEntity extends LockableTileEntity implements ISidedInven
 				if (this.currentRecipe == null) {
 					this.currentRecipe = InfuserRecipeRegistry.searchRecipe(this.items.get(0), this.items.get(1).getCount(), this.items.get(2));;
 				}
-				if (currentRecipe != null) {
+				if (currentRecipe != null && (this.items.get(3).isItemEqual(currentRecipe.getOutput()) || this.items.get(3).isEmpty())) {
 					if (infusingTime == 0) {
 						this.items.get(0).setCount(this.items.get(0).getCount() - currentRecipe.getInput().getCount());
 						this.items.get(1).setCount(this.items.get(1).getCount() - currentRecipe.getEssenceAmount());
@@ -184,8 +184,9 @@ public class InfuserTileEntity extends LockableTileEntity implements ISidedInven
 					++this.infusingTime;
 					if (this.infusingTime == this.infusingTimeTotal) {
 						this.items.set(3, currentRecipe.getOutput());
-						this.items.get(3).setCount(currentRecipe.getOutput().getCount());
+						this.items.get(3).setCount(this.items.get(3).getCount() + currentRecipe.getOutput().getCount());
 						this.infusingTime = 0;
+						this.currentRecipe = null;
 						dirty = true;
 					}
 				}

@@ -9,7 +9,6 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
 
@@ -17,14 +16,9 @@ public class InfuserContainer extends Container {
 
 	private final IInventory tileInfuser;
 	private final IIntArray timeArray;
-	//private final Slot slot;
 
 	public InfuserContainer(int id, PlayerInventory inv) {
 		this(id, inv, new Inventory(4), new IntArray(2));
-	}
-
-	public IIntArray getTimeArray() {
-		return timeArray;
 	}
 
 	public InfuserContainer(int id, PlayerInventory playerInventory, IInventory tileEntity, IIntArray iIntArray) {
@@ -33,22 +27,21 @@ public class InfuserContainer extends Container {
 		assertIntArraySize(iIntArray, 2);
 		this.tileInfuser = tileEntity;
 		this.timeArray = iIntArray;
-		this.addSlot(new InputSlot(tileEntity, 0, 55, 11));
-		this.addSlot(new FuelSlot(tileEntity, 1, 19, 29));
-		this.addSlot(new SecondaryItemSlot(tileEntity, 2, 55, 47));
-		this.addSlot(new OutputSlot(tileEntity, 3, 145, 29));
+		this.addSlot(new InputSlot(tileEntity, 0, 53, 12));
+		this.addSlot(new FuelSlot(tileEntity, 1, 17, 30));
+		this.addSlot(new SecondaryItemSlot(tileEntity, 2, 53, 48));
+		this.addSlot(new OutputSlot(tileEntity, 3, 143, 30));
 		this.trackIntArray(iIntArray);
+
+		for(int k = 0; k < 9; ++k) {
+			this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 142));
+		}
 
 		for(int i = 0; i < 3; ++i) {
 			for(int j = 0; j < 9; ++j) {
 				this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
 			}
 		}
-
-		for(int k = 0; k < 9; ++k) {
-			this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 142));
-		}
-
 	}
 
 	@Override
@@ -61,6 +54,8 @@ public class InfuserContainer extends Container {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.inventorySlots.get(index);
 		if (slot != null && slot.getHasStack()) {
+
+			//TODO how tf does this thing work
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
 
@@ -77,6 +72,12 @@ public class InfuserContainer extends Container {
 			slot.onTake(playerIn, itemstack1);
 		}
 		return itemstack;
+	}
+
+	public int infusingScaled() {
+		int infusing = this.timeArray.get(0);
+		int total = this.timeArray.get(1);
+		return total != 0 && infusing != 0 ? infusing * 70 / total : 0;
 	}
 
 	static class InputSlot extends Slot {
@@ -108,7 +109,7 @@ public class InfuserContainer extends Container {
 
 		@Override
 		public boolean isItemValid(ItemStack stack) {
-			return stack.getItem() == Items.PUMPKIN_SEEDS; //Essence
+			return stack.getItem() == RegisterHandler.PUMPKIN_ESSENCE.get();
 		}
 
 		@Override

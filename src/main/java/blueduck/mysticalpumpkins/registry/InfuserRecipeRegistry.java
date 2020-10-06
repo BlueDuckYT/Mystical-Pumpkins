@@ -13,17 +13,16 @@ public class InfuserRecipeRegistry {
 	private static final List<InfuserRecipe> recipes = new ArrayList<>();
 
 	private static void fillWithBuiltInRecipes() {
-		addInfuserRecipe(new ItemStack(Items.JACK_O_LANTERN, 10), 1, new ItemStack(Items.EGG, 1), new ItemStack(Items.KELP, 9));
-		addInfuserRecipe(new ItemStack(Items.PUMPKIN), 2, new ItemStack(Items.FEATHER, 3), new ItemStack(Items.EGG, 1));
-		MysticalPumpkinsMod.LOGGER.info("Registered Builtin recipe");
+		//TODO add recipes
+		MysticalPumpkinsMod.LOGGER.info("Registered Builtin Infuser Recipes");
 	}
 
 	public static void addInfuserRecipe(InfuserRecipe recipe) {
 		recipes.add(recipe);
 	}
 
-	public static void addInfuserRecipe(ItemStack inputAmount, int essenceAmount, ItemStack secondaryMaterials, ItemStack output) {
-		InfuserRecipe recipe = new InfuserRecipe(inputAmount, essenceAmount, secondaryMaterials, output);
+	public static void addInfuserRecipe(ItemStack input, int essenceAmount, ItemStack secondaryMaterials, ItemStack output) {
+		InfuserRecipe recipe = new InfuserRecipe(input, essenceAmount, secondaryMaterials, output);
 		addInfuserRecipe(recipe);
 	}
 
