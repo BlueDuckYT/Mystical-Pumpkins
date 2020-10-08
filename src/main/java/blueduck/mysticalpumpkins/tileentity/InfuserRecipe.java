@@ -16,9 +16,8 @@ public class InfuserRecipe {
 		this.output = output;
 	}
 
-
 	public ItemStack getOutput() {
-		return output;
+		return output.copy();
 	}
 
 	public int getEssenceAmount() {
@@ -26,20 +25,20 @@ public class InfuserRecipe {
 	}
 
 	public ItemStack getSecondary() {
-		return secondary;
+		return secondary.copy();
 	}
 
 	public ItemStack getInput() {
-		return input;
+		return input.copy();
 	}
 
 	@Override
 	public String toString() {
-		return "InfuserRecipe{" +
+		return "InfuserRecipe -> " +
 				       "input=" + input +
 				       ", essenceAmount=" + essenceAmount +
 				       ", secondary=" + secondary +
-				       ", output=" + output +
-				       '}';
+				       ", output=" + output
+					;
 	}
 }

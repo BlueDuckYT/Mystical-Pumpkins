@@ -1,7 +1,9 @@
 package blueduck.mysticalpumpkins.registry;
 
 import blueduck.mysticalpumpkins.MysticalPumpkinsMod;
-import blueduck.mysticalpumpkins.block.*;
+import blueduck.mysticalpumpkins.block.EffectPumpkinItem;
+import blueduck.mysticalpumpkins.block.InfuserBlock;
+import blueduck.mysticalpumpkins.block.MysticalPumpkinBlock;
 import blueduck.mysticalpumpkins.client.gui.InfuserScreen;
 import blueduck.mysticalpumpkins.container.InfuserContainer;
 import blueduck.mysticalpumpkins.tileentity.InfuserTileEntity;
