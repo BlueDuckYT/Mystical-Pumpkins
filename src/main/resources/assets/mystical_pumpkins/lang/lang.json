@@ -9,5 +9,7 @@
   "block.mystical_pumpkins.luck_pumpkin": "Pumpkin of Luck",
   "block.mystical_pumpkins.mire_pumpkin": "Pumpkin of Mire",
   "block.mystical_pumpkins.cinders_pumpkin": "Pumpkin of Cinders",
-  "block.mystical_pumpkins.healing_pumpkin": "Pumpkin of Restoration"
+  "block.mystical_pumpkins.healing_pumpkin": "Pumpkin of Restoration",
+
+  "item.mystical_pumpkins.pumpkin_essence": "Pumpkin Essence"
 }
