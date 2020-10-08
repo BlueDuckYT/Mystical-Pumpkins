@@ -6,6 +6,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.container.BrewingStandContainer;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
@@ -54,9 +55,25 @@ public class InfuserContainer extends Container {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.inventorySlots.get(index);
 		if (slot != null && slot.getHasStack()) {
-			//TODO how tf does this thing work
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
+			System.out.println(itemstack1);
+			if (index > 4) {
+				if (InfuserContainer.InputSlot.isValidInput(itemstack1) && this.mergeItemStack(itemstack1, 0, 1, false)) {
+					return ItemStack.EMPTY;
+				} else if (itemstack1.getItem() == RegisterHandler.PUMPKIN_ESSENCE.get() && this.mergeItemStack(itemstack1, 1, 2, false)) {
+					return ItemStack.EMPTY;
+				} else if (InfuserRecipeRegistry.canBeInfused(itemstack1) && this.mergeItemStack(itemstack1, 2, 3, false)) {
+					return ItemStack.EMPTY;
+				} else if (InfuserRecipeRegistry.isInfused(itemstack1) && this.mergeItemStack(itemstack1, 3, 4, false)) {
+					return ItemStack.EMPTY;
+				}
+			} else {
+				if (!this.mergeItemStack(itemstack1, 4, 40, true)) {
+					return ItemStack.EMPTY;
+				}
+				slot.onSlotChange(itemstack1, itemstack);
+			}
 
 			if (itemstack1.isEmpty()) {
 				slot.putStack(ItemStack.EMPTY);

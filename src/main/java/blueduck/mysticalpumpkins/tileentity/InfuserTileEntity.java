@@ -22,6 +22,9 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class InfuserTileEntity extends LockableTileEntity implements ISidedInventory, ITickableTileEntity {
 
+	private static final int[] SLOTS_FOR_UP = new int[]{0};
+	private static final int[] SLOTS_FOR_DOWN = new int[]{2, 1};
+	private static final int[] SLOTS_HORIZONTAL = new int[]{1};
 	private InfuserRecipe currentRecipe;
 	private int infusingTime;
 	private int infusingTimeTotal = 200;
@@ -88,8 +91,12 @@ public class InfuserTileEntity extends LockableTileEntity implements ISidedInven
 
 	@Override
 	public int[] getSlotsForFace(Direction side) {
-		return new int[0];
-	} //TODO SLOTS AUTOMATION
+		if (side == Direction.UP) {
+			return SLOTS_FOR_UP;
+		} else {
+			return side == Direction.DOWN ? SLOTS_FOR_DOWN : new int[0];
+		}
+	}
 
 	@Override
 	public boolean canInsertItem(int index, ItemStack itemStackIn, Direction direction) {
@@ -100,8 +107,9 @@ public class InfuserTileEntity extends LockableTileEntity implements ISidedInven
 	public boolean canExtractItem(int index, ItemStack stack, Direction direction) {
 		if (direction == Direction.DOWN && index == 3) {
 			return !stack.isEmpty();
+		} else {
+			return false;
 		}
-		return true;
 	}
 
 	@Override

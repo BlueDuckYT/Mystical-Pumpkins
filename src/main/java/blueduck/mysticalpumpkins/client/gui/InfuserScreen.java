@@ -23,7 +23,7 @@ public class InfuserScreen extends ContainerScreen<InfuserContainer> {
 		this.field_230706_i_.getTextureManager().bindTexture(PUMPKIN_INFUSER_TEX);
 
 		this.func_238474_b_(matrixStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
-		int infusingScale = this.container.infusingScaled() + 1;
+		int infusingScale = this.container.infusingScaled();
 		this.func_238474_b_(
 				matrixStack,
 				this.guiLeft + 71,  // x of starting replacing point (up)
