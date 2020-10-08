@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "mystical_pumpkins:block/grace_pumpkin",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "mystical_pumpkins:block/grace_pumpkin"
+    },
+    "facing=south": {
+      "model": "mystical_pumpkins:block/grace_pumpkin",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "mystical_pumpkins:block/grace_pumpkin",
+      "y": 270
+    }
+  }
+}

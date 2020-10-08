@@ -47,9 +47,9 @@ public class RegisterHandler {
 
 	public static final RegistryObject<Block> FLOATING_PUMPKIN = BLOCKS.register("floating_pumpkin", () -> new MysticalPumpkinBlock());
 	public static final RegistryObject<Item> FLOATING_PUMPKIN_ITEM = ITEMS.register("floating_pumpkin", () -> new EffectPumpkinItem(FLOATING_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.SLOW_FALLING));
-	public static final RegistryObject<Block> VOID_PUMPKIN = BLOCKS.register("void_pumpkin", () -> new MysticalPumpkinBlock());
+	public static final RegistryObject<Block> VOID_PUMPKIN = BLOCKS.register("void_pumpkin", () -> new LuminousMysticalPumpkinBlock(6));
 	public static final RegistryObject<Item> VOID_PUMPKIN_ITEM = ITEMS.register("void_pumpkin", () -> new VoidPumpkinItem(VOID_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC)));
-	public static final RegistryObject<Block> GRAVITY_PUMPKIN = BLOCKS.register("gravity_pumpkin", () -> new MysticalPumpkinBlock());
+	public static final RegistryObject<Block> GRAVITY_PUMPKIN = BLOCKS.register("gravity_pumpkin", () -> new LuminousMysticalPumpkinBlock(12));
 	public static final RegistryObject<Item> GRAVITY_PUMPKIN_ITEM = ITEMS.register("gravity_pumpkin", () -> new GravityPumpkinItem(GRAVITY_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC)));
 
 
