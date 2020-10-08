@@ -14,6 +14,11 @@ public class InfuserRecipeRegistry {
 
 	private static void fillWithBuiltInRecipes() {
 		//TODO add recipes
+		addInfuserRecipe(new ItemStack(Items.CARVED_PUMPKIN), 10, new ItemStack(Items.SEA_PICKLE, 8), new ItemStack(RegisterHandler.WATER_PUMPKIN_ITEM.get()));
+		addInfuserRecipe(new ItemStack(Items.CARVED_PUMPKIN), 30, new ItemStack(Items.GOLD_INGOT, 7), new ItemStack(RegisterHandler.LUCK_PUMPKIN_ITEM.get()));
+
+		//addInfuserRecipe(new ItemStack(Items.CARVED_PUMPKIN), 30, new ItemStack(Items.FEATHER, 10), new ItemStack(RegisterHandler.FLOATING_PUMPKIN_ITEM.get()));
+
 		MysticalPumpkinsMod.LOGGER.info("Registered Builtin Infuser Recipes");
 	}
 

@@ -31,7 +31,7 @@ public class MysticalPumpkinsMod {
 		//FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
 		// Register the doClientStuff method for modloading
 		RegisterHandler.init();
-		InfuserRecipeRegistry.initRegistry();
+
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 
 		// Register ourselves for server and other game events we are interested in
@@ -41,6 +41,7 @@ public class MysticalPumpkinsMod {
 	private void setup(final FMLCommonSetupEvent event)
 	{
 		// some preinit code
+		InfuserRecipeRegistry.initRegistry();
 		LOGGER.info("HELLO FROM PREINIT");
 		LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
 	}
