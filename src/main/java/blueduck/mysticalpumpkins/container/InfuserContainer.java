@@ -54,7 +54,6 @@ public class InfuserContainer extends Container {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.inventorySlots.get(index);
 		if (slot != null && slot.getHasStack()) {
-
 			//TODO how tf does this thing work
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();

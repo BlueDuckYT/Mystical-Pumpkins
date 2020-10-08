@@ -10,6 +10,7 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableTileEntity;
@@ -23,7 +24,7 @@ public class InfuserTileEntity extends LockableTileEntity implements ISidedInven
 
 	private InfuserRecipe currentRecipe;
 	private int infusingTime;
-	private int infusingTimeTotal;
+	private int infusingTimeTotal = 200;
 	protected final IIntArray timeArray = new IIntArray() {
 		public int get(int index) {
 			switch(index) {
@@ -70,7 +71,7 @@ public class InfuserTileEntity extends LockableTileEntity implements ISidedInven
 	public CompoundNBT write(CompoundNBT compound) {
 		super.write(compound);
 		compound.putInt("InfusingTime", this.infusingTime);
-		compound.putInt("InfusingTimeTotal", this.infusingTimeTotal);
+		compound.putInt("InfusingTimeTotal", 200);
 		ItemStackHelper.saveAllItems(compound, this.items);
 		return compound;
 	}
@@ -142,9 +143,7 @@ public class InfuserTileEntity extends LockableTileEntity implements ISidedInven
 			stack.setCount(this.getInventoryStackLimit());
 		}
 
-		if (index == 0 && !flag) {
-			this.infusingTimeTotal = 200;
-			this.infusingTime = 0;
+		if (!flag) {
 			this.markDirty();
 		}
 	}
@@ -161,20 +160,27 @@ public class InfuserTileEntity extends LockableTileEntity implements ISidedInven
 	@Override
 	public void clear() {
 		this.items.clear();
+		this.infusingTime = 0;
+		this.infusingTimeTotal = 200;
+		this.currentRecipe = null;
 	}
 
 	@Override
 	public void tick() {
 		boolean dirty = false;
-		boolean isThereInput = !this.items.get(0).isEmpty();
-		boolean isThereFuel = !this.items.get(1).isEmpty();
-		boolean isThereSecondary = !this.items.get(2).isEmpty();
 		if (!world.isRemote) {
-			if (isThereFuel && isThereInput && isThereSecondary)  {
-				if (this.currentRecipe == null) {
-					this.currentRecipe = InfuserRecipeRegistry.searchRecipe(this.items.get(0), this.items.get(1).getCount(), this.items.get(2));;
-				}
-				if (currentRecipe != null && (this.items.get(3).isItemEqual(currentRecipe.getOutput()) || this.items.get(3).isEmpty())) {
+			boolean isThereInput = !this.items.get(0).isEmpty();
+			boolean isThereFuel = !this.items.get(1).isEmpty();
+			boolean isThereSecondary = !this.items.get(2).isEmpty();
+			boolean isThereOutputAlready = !this.items.get(3).isEmpty();
+			if (isThereFuel && isThereInput && isThereSecondary && this.currentRecipe == null) {
+				this.currentRecipe = InfuserRecipeRegistry.searchRecipe(this.items.get(0), this.items.get(1).getCount(), this.items.get(2));
+			}
+			if (currentRecipe != null && (this.items.get(3).isItemEqual(currentRecipe.getOutput()) || !isThereOutputAlready)) {
+				if (currentRecipe.getOutput().getItem() == Items.AIR.getItem()) {
+					this.currentRecipe = null;
+					System.out.println("Le thonk");
+				} else {
 					if (infusingTime == 0) {
 						this.items.get(0).setCount(this.items.get(0).getCount() - currentRecipe.getInput().getCount());
 						this.items.get(1).setCount(this.items.get(1).getCount() - currentRecipe.getEssenceAmount());
@@ -183,8 +189,14 @@ public class InfuserTileEntity extends LockableTileEntity implements ISidedInven
 					}
 					++this.infusingTime;
 					if (this.infusingTime == this.infusingTimeTotal) {
-						this.items.set(3, currentRecipe.getOutput());
-						this.items.get(3).setCount(this.items.get(3).getCount() + currentRecipe.getOutput().getCount());
+						System.out.println("Equal!");
+						System.out.println(currentRecipe.getOutput());
+						if (!isThereOutputAlready)
+							this.items.set(3, currentRecipe.getOutput());
+						else
+							this.items.get(3).setCount(this.items.get(3).getCount() + currentRecipe.getOutput().getCount());
+
+						System.out.println(this.items.get(3));
 						this.infusingTime = 0;
 						this.currentRecipe = null;
 						dirty = true;
