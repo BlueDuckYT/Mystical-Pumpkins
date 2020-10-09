@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube",
   "textures": {
-    "particle": "mystical_pumpkins:block/",
+    "particle": "mystical_pumpkins:block/floating_pumpkin_left",
     "north": "minecraft:block/carved_pumpkin",
     "south": "minecraft:block/pumpkin_side",
     "east": "mystical_pumpkins:block/floating_pumpkin_right",

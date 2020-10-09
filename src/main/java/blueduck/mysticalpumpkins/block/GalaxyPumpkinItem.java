@@ -14,7 +14,7 @@ public class GalaxyPumpkinItem extends MysticalPumpkinItem {
     }
 
     public void tick(ItemStack stack, World world, PlayerEntity player) {
-        if (player.getPersistentData().getBoolean("isPressingSpace")) {
+        if (player.getPersistentData().getBoolean("isPressingSpace") && player.isAirBorne) {
             //player.addPotionEffect(new EffectInstance(Effects.LEVITATION, 5, 7));
             player.setMotion(player.getLookVec());
         }

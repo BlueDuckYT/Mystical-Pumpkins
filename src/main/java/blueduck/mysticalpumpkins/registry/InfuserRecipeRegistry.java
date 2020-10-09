@@ -30,6 +30,7 @@ public class InfuserRecipeRegistry {
 		addInfuserRecipe(new ItemStack(Items.CARVED_PUMPKIN), 30, new ItemStack(Items.BLAZE_ROD, 8), new ItemStack(RegisterHandler.LAVA_PUMPKIN_ITEM.get()));
 		addInfuserRecipe(new ItemStack(Items.CARVED_PUMPKIN), 10, new ItemStack(Items.SLIME_BALL, 1), new ItemStack(RegisterHandler.MIRE_PUMPKIN_ITEM.get()));
 		addInfuserRecipe(new ItemStack(Items.CARVED_PUMPKIN), 30, new ItemStack(Items.GOLDEN_APPLE, 1), new ItemStack(RegisterHandler.HEALING_PUMPKIN_ITEM.get()));
+		addInfuserRecipe(new ItemStack(Items.CARVED_PUMPKIN), 20, new ItemStack(Items.DIAMOND_SWORD, 1), new ItemStack(RegisterHandler.WRATH_PUMPKIN_ITEM.get()));
 
 
 

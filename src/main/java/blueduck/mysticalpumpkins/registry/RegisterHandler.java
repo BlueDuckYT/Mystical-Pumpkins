@@ -49,6 +49,9 @@ public class RegisterHandler {
 	public static final RegistryObject<Block> LAVA_PUMPKIN = BLOCKS.register("cinder_pumpkin", () -> new MysticalPumpkinBlock());
 	public static final RegistryObject<Item> LAVA_PUMPKIN_ITEM = ITEMS.register("cinder_pumpkin", () -> new EffectPumpkinItem(LAVA_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.FIRE_RESISTANCE));
 
+	public static final RegistryObject<Block> WRATH_PUMPKIN = BLOCKS.register("wrath_pumpkin", () -> new MysticalPumpkinBlock());
+	public static final RegistryObject<Item> WRATH_PUMPKIN_ITEM = ITEMS.register("wrath_pumpkin", () -> new WrathPumpkinItem(WRATH_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC)));
+
 	public static final RegistryObject<Block> FLOATING_PUMPKIN = BLOCKS.register("floating_pumpkin", () -> new MysticalPumpkinBlock());
 	public static final RegistryObject<Item> FLOATING_PUMPKIN_ITEM = ITEMS.register("floating_pumpkin", () -> new EffectPumpkinItem(FLOATING_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.SLOW_FALLING));
 	public static final RegistryObject<Block> VOID_PUMPKIN = BLOCKS.register("void_pumpkin", () -> new LuminousMysticalPumpkinBlock(6));
@@ -65,8 +68,8 @@ public class RegisterHandler {
 	public static final RegistryObject<Block> HEALING_PUMPKIN = BLOCKS.register("healing_pumpkin", () -> new MysticalPumpkinBlock());
 	public static final RegistryObject<Item> HEALING_PUMPKIN_ITEM = ITEMS.register("healing_pumpkin", () -> new EffectPumpkinItem(HEALING_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.REGENERATION));
 
-	public static final RegistryObject<Block> MIRE_PUMPKIN = BLOCKS.register("mire_pumpkin", () -> new MysticalPumpkinBlock());
-	public static final RegistryObject<Item> MIRE_PUMPKIN_ITEM = ITEMS.register("mire_pumpkin", () -> new EffectPumpkinItem(MIRE_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.JUMP_BOOST));
+	public static final RegistryObject<Block> MIRE_PUMPKIN = BLOCKS.register("mire_pumpkin", () -> new MirePumpkinBlock());
+	public static final RegistryObject<Item> MIRE_PUMPKIN_ITEM = ITEMS.register("mire_pumpkin", () -> new MysticalPumpkinItem(MIRE_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC)));
 
 
 	public static void initClient() {
