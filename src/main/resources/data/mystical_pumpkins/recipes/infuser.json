@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XSX",
+    "F#F",
+    "XSX"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:enchanting_table"
+    },
+    "S": {
+      "item": "minecraft:vines"
+    },
+    "X": {
+      "item": "minecraft:pumpkin"
+    },
+    "F": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "mystical_pumpkins:infusion_table"
+  }
+}
