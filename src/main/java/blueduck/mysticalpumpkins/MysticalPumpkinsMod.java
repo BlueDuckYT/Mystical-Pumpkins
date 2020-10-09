@@ -78,11 +78,13 @@ public class MysticalPumpkinsMod {
 
 		@SubscribeEvent
 		public static void onKeyPress(InputEvent.KeyInputEvent event) {
-			if (Minecraft.getInstance().isGamePaused()) {
-				return;
+			try {
+				if (event.getKey() == GLFW.GLFW_KEY_SPACE) {
+					MysticalPumpkinsMessageHandler.HANDLER.sendToServer(new BooleanMessage(Minecraft.getInstance().player.getUniqueID().toString(), event.getAction() != GLFW.GLFW_RELEASE));
+				}
 			}
-			if (event.getKey() == GLFW.GLFW_KEY_SPACE) {
-				MysticalPumpkinsMessageHandler.HANDLER.sendToServer(new BooleanMessage(Minecraft.getInstance().player.getUniqueID().toString(), event.getAction() != GLFW.GLFW_RELEASE));
+			catch(Exception e) {
+
 			}
 		}
 	}

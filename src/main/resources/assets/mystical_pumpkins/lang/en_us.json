@@ -6,9 +6,10 @@
   "block.mystical_pumpkins.floating_pumpkin": "Pumpkin of Floating",
   "block.mystical_pumpkins.void_pumpkin": "Pumpkin of the Void",
   "block.mystical_pumpkins.gravity_pumpkin": "Pumpkin of Gravity",
+  "block.mystical_pumpkins.galaxy_pumpkin": "Pumpkin of the Galaxies",
   "block.mystical_pumpkins.luck_pumpkin": "Pumpkin of Luck",
   "block.mystical_pumpkins.mire_pumpkin": "Pumpkin of Mire",
-  "block.mystical_pumpkins.cinders_pumpkin": "Pumpkin of Cinders",
+  "block.mystical_pumpkins.cinder_pumpkin": "Pumpkin of Cinders",
   "block.mystical_pumpkins.healing_pumpkin": "Pumpkin of Restoration",
 
   "item.mystical_pumpkins.pumpkin_essence": "Pumpkin Essence"
