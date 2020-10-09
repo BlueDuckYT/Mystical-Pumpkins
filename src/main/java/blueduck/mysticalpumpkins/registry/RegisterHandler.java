@@ -14,6 +14,7 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.Rarity;
 import net.minecraft.potion.Effects;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -34,6 +35,9 @@ public class RegisterHandler {
 	public static final RegistryObject<Item> INFUSER_ITEM = ITEMS.register("infusion_table", () -> new BlockItem(INFUSER.get(), new Item.Properties().group(ItemGroup.MISC)));
 	public static final RegistryObject<Item> PUMPKIN_ESSENCE = ITEMS.register("pumpkin_essence", () -> new Item(new Item.Properties().group(ItemGroup.MISC)));
 	public static final RegistryObject<ContainerType<InfuserContainer>> INFUSER_CONTAINER = CONTAINERS.register("infuser", () -> new ContainerType<>(InfuserContainer::new));
+
+	public static final RegistryObject<Item> HEART_OF_PUMPKLOPS = ITEMS.register("heart_of_pumpklops", () -> new Item(new Item.Properties().group(ItemGroup.MISC).rarity(Rarity.RARE)));
+
 
 	public static final RegistryObject<Block> GRACE_PUMPKIN = BLOCKS.register("grace_pumpkin", () -> new MysticalPumpkinBlock());
 	public static final RegistryObject<Item> GRACE_PUMPKIN_ITEM = ITEMS.register("grace_pumpkin", () -> new EffectPumpkinItem(GRACE_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.DOLPHINS_GRACE));

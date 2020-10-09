@@ -21,13 +21,14 @@ public class InfuserRecipeRegistry {
 		//TODO add recipes
 		addInfuserRecipe(new ItemStack(Items.CARVED_PUMPKIN), 10, new ItemStack(Items.SEA_PICKLE, 8), new ItemStack(RegisterHandler.GRACE_PUMPKIN_ITEM.get()));
 		addInfuserRecipe(new ItemStack(RegisterHandler.GRACE_PUMPKIN_ITEM.get()), 20, new ItemStack(Items.HEART_OF_THE_SEA, 1), new ItemStack(RegisterHandler.WATER_PUMPKIN_ITEM.get()));
-		addInfuserRecipe(new ItemStack(RegisterHandler.WATER_PUMPKIN_ITEM.get()), 40, new ItemStack(Items.CONDUIT, 1), new ItemStack(RegisterHandler.CONDUIT_PUMPKIN_ITEM.get()));
+		addInfuserRecipe(new ItemStack(RegisterHandler.WATER_PUMPKIN_ITEM.get()), 40, new ItemStack(RegisterHandler.HEART_OF_PUMPKLOPS.get(), 1), new ItemStack(RegisterHandler.CONDUIT_PUMPKIN_ITEM.get()));
 		addInfuserRecipe(new ItemStack(Items.CARVED_PUMPKIN), 30, new ItemStack(Items.GOLD_INGOT, 7), new ItemStack(RegisterHandler.LUCK_PUMPKIN_ITEM.get()));
 		addInfuserRecipe(new ItemStack(Items.CARVED_PUMPKIN), 20, new ItemStack(Items.FEATHER, 10), new ItemStack(RegisterHandler.FLOATING_PUMPKIN_ITEM.get()));
 		addInfuserRecipe(new ItemStack(RegisterHandler.FLOATING_PUMPKIN_ITEM.get()), 40, new ItemStack(Items.TOTEM_OF_UNDYING, 1), new ItemStack(RegisterHandler.VOID_PUMPKIN_ITEM.get()));
-		addInfuserRecipe(new ItemStack(RegisterHandler.VOID_PUMPKIN_ITEM.get()), 40, new ItemStack(Items.ELYTRA, 1), new ItemStack(RegisterHandler.GRAVITY_PUMPKIN_ITEM.get()));
+		addInfuserRecipe(new ItemStack(RegisterHandler.VOID_PUMPKIN_ITEM.get()), 64, new ItemStack(RegisterHandler.HEART_OF_PUMPKLOPS.get(), 1), new ItemStack(RegisterHandler.GRAVITY_PUMPKIN_ITEM.get()));
+		addInfuserRecipe(new ItemStack(RegisterHandler.VOID_PUMPKIN_ITEM.get()), 64, new ItemStack(Items.ELYTRA, 1), new ItemStack(RegisterHandler.GALAXY_PUMPKIN_ITEM.get()));
 		addInfuserRecipe(new ItemStack(Items.CARVED_PUMPKIN), 30, new ItemStack(Items.BLAZE_ROD, 8), new ItemStack(RegisterHandler.LAVA_PUMPKIN_ITEM.get()));
-		addInfuserRecipe(new ItemStack(Items.CARVED_PUMPKIN), 30, new ItemStack(Items.RABBIT_FOOT, 1), new ItemStack(RegisterHandler.MIRE_PUMPKIN_ITEM.get()));
+		addInfuserRecipe(new ItemStack(Items.CARVED_PUMPKIN), 10, new ItemStack(Items.SLIME_BALL, 1), new ItemStack(RegisterHandler.MIRE_PUMPKIN_ITEM.get()));
 		addInfuserRecipe(new ItemStack(Items.CARVED_PUMPKIN), 30, new ItemStack(Items.GOLDEN_APPLE, 1), new ItemStack(RegisterHandler.HEALING_PUMPKIN_ITEM.get()));
 
 
