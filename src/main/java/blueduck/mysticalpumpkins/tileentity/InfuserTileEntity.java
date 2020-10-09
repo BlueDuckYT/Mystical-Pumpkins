@@ -1,5 +1,6 @@
 package blueduck.mysticalpumpkins.tileentity;
 
+import blueduck.mysticalpumpkins.MysticalPumpkinsMod;
 import blueduck.mysticalpumpkins.container.InfuserContainer;
 import blueduck.mysticalpumpkins.registry.InfuserRecipeRegistry;
 import blueduck.mysticalpumpkins.registry.RegisterHandler;
@@ -10,7 +11,6 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableTileEntity;
@@ -20,11 +20,13 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
+import java.util.stream.IntStream;
+
 public class InfuserTileEntity extends LockableTileEntity implements ISidedInventory, ITickableTileEntity {
 
-	private static final int[] SLOTS_FOR_UP = new int[]{0};
-	private static final int[] SLOTS_FOR_DOWN = new int[]{2, 1};
+	private static final int[] SLOTS_FOR_UP = new int[]{0, 2};
 	private static final int[] SLOTS_HORIZONTAL = new int[]{1};
+	private static final int[] SLOTS_FOR_DOWN = new int[]{3};
 	private InfuserRecipe currentRecipe;
 	private int infusingTime;
 	private int infusingTimeTotal = 200;
@@ -81,7 +83,7 @@ public class InfuserTileEntity extends LockableTileEntity implements ISidedInven
 
 	@Override
 	protected ITextComponent getDefaultName() {
-		return new TranslationTextComponent("E");
+		return new TranslationTextComponent("gui.mystical_pumpkins.infusion_table");
 	}
 
 	@Override
@@ -91,11 +93,12 @@ public class InfuserTileEntity extends LockableTileEntity implements ISidedInven
 
 	@Override
 	public int[] getSlotsForFace(Direction side) {
-		if (side == Direction.UP) {
+		return new int[0];
+		/*if (side == Direction.UP) {
 			return SLOTS_FOR_UP;
 		} else {
-			return side == Direction.DOWN ? SLOTS_FOR_DOWN : new int[0];
-		}
+			return side == Direction.DOWN ? SLOTS_FOR_DOWN : SLOTS_HORIZONTAL;
+		}*/
 	}
 
 	@Override
@@ -105,6 +108,7 @@ public class InfuserTileEntity extends LockableTileEntity implements ISidedInven
 
 	@Override
 	public boolean canExtractItem(int index, ItemStack stack, Direction direction) {
+		MysticalPumpkinsMod.LOGGER.info(direction.toString());
 		if (direction == Direction.DOWN && index == 3) {
 			return !stack.isEmpty();
 		} else {
@@ -185,30 +189,21 @@ public class InfuserTileEntity extends LockableTileEntity implements ISidedInven
 				this.currentRecipe = InfuserRecipeRegistry.searchRecipe(this.items.get(0), this.items.get(1).getCount(), this.items.get(2));
 			}
 			if (currentRecipe != null && (this.items.get(3).isItemEqual(currentRecipe.getOutput()) || !isThereOutputAlready)) {
-				if (currentRecipe.getOutput().getItem() == Items.AIR.getItem()) {
+				if (infusingTime == 0) {
+					this.items.get(0).setCount(this.items.get(0).getCount() - currentRecipe.getInput().getCount());
+					this.items.get(1).setCount(this.items.get(1).getCount() - currentRecipe.getEssenceAmount());
+					this.items.get(2).setCount(this.items.get(2).getCount() - currentRecipe.getSecondary().getCount());
+					dirty = true;
+				}
+				++this.infusingTime;
+				if (this.infusingTime == this.infusingTimeTotal) {
+					if (!isThereOutputAlready)
+						this.items.set(3, currentRecipe.getOutput());
+					else
+						this.items.get(3).setCount(this.items.get(3).getCount() + currentRecipe.getOutput().getCount());
+					this.infusingTime = 0;
 					this.currentRecipe = null;
-					System.out.println("Le thonk");
-				} else {
-					if (infusingTime == 0) {
-						this.items.get(0).setCount(this.items.get(0).getCount() - currentRecipe.getInput().getCount());
-						this.items.get(1).setCount(this.items.get(1).getCount() - currentRecipe.getEssenceAmount());
-						this.items.get(2).setCount(this.items.get(2).getCount() - currentRecipe.getSecondary().getCount());
-						dirty = true;
-					}
-					++this.infusingTime;
-					if (this.infusingTime == this.infusingTimeTotal) {
-						System.out.println("Equal!");
-						System.out.println(currentRecipe.getOutput());
-						if (!isThereOutputAlready)
-							this.items.set(3, currentRecipe.getOutput());
-						else
-							this.items.get(3).setCount(this.items.get(3).getCount() + currentRecipe.getOutput().getCount());
-
-						System.out.println(this.items.get(3));
-						this.infusingTime = 0;
-						this.currentRecipe = null;
-						dirty = true;
-					}
+					dirty = true;
 				}
 			}
 		}

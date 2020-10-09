@@ -53,7 +53,6 @@ public class MysticalPumpkinsMod {
 
 	private void doClientStuff(final FMLClientSetupEvent event) {
 		RegisterHandler.initClient();
-		RenderTypeLookup.setRenderLayer(RegisterHandler.INFUSER.get(), RenderType.getCutoutMipped());
 	}
 
 	/*private void enqueueIMC(final InterModEnqueueEvent event) {

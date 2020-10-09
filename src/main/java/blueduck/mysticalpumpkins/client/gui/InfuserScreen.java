@@ -31,7 +31,7 @@ public class InfuserScreen extends ContainerScreen<InfuserContainer> {
 				176,                // x of thing that replaces (up)
 				0,                  // y of thing that replaces (left)
 				infusingScale,
-				16
+				17
 		);
 	}
 }
