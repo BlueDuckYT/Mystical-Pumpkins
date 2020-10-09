@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class InfuserRecipeRegistry {
 
-	private static final ArrayList<InfuserRecipe> recipes = new ArrayList<>();
+	public static final ArrayList<InfuserRecipe> recipes = new ArrayList<>();
 
 	private static void fillWithBuiltInRecipes() {
 		//TODO add recipes
@@ -49,7 +49,7 @@ public class InfuserRecipeRegistry {
 		recipes.add(toAdd);
 	}
 
-	public static void removeRecipe(ItemStack input, int essenceAmount, ItemStack secondaryMaterials, ItemStack output) {
+	public static void removeRecipe(ItemStack input, int essenceAmount, ItemStack secondaryMaterials) {
 		InfuserRecipe toRemove = searchRecipe(input, essenceAmount, secondaryMaterials);
 		recipes.remove(toRemove);
 	}
