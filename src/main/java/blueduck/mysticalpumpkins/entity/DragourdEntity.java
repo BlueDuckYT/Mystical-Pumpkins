@@ -7,6 +7,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
@@ -26,6 +27,7 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
 
     private AnimationController moveController = new EntityAnimationController(this, "moveController", 10F, this::moveController);
 
+    public int attackTimer = 0;
 
     public DragourdEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
         super(type, worldIn);
@@ -46,9 +48,12 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
 
     private <ENTITY extends Entity> boolean moveController(AnimationTestEvent<ENTITY> event)
     {
-
-        if (event.isWalking()) {
-            moveController.setAnimation(new AnimationBuilder().addAnimation("walk", false));
+        if (attackTimer > 0) {
+            moveController.setAnimation(new AnimationBuilder().addAnimation("attack", true));
+            attackTimer--;
+        }
+        else if (event.isWalking()) {
+            moveController.setAnimation(new AnimationBuilder().addAnimation("walk", true));
             return true;
         }
         return false;
@@ -56,7 +61,7 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
 
     }
     public boolean attackEntityAsMob(Entity entityIn) {
-        moveController.setAnimation(new AnimationBuilder().addAnimation("attack", false));
+        attackTimer = 60;
         return super.attackEntityAsMob(entityIn);
     }
 
@@ -73,8 +78,8 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
 
     public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
         return MobEntity.func_233666_p_()
-                .func_233815_a_(Attributes.field_233818_a_, 12.0D) //health
-                .func_233815_a_(Attributes.field_233821_d_, 0.05D) //movement speed
+                .func_233815_a_(Attributes.field_233818_a_, 20.0D) //health
+                .func_233815_a_(Attributes.field_233821_d_, 0.3D) //movement speed
                 .func_233815_a_(Attributes.field_233823_f_, 3.0D) //attack damage
                 .func_233815_a_(Attributes.field_233824_g_, 0.2D); //attack knockback
     }
