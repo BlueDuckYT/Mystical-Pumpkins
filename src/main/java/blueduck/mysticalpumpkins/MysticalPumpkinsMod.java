@@ -7,14 +7,20 @@ import blueduck.mysticalpumpkins.network.message.BooleanMessage;
 import blueduck.mysticalpumpkins.registry.InfusionTableRecipeRegistry;
 import blueduck.mysticalpumpkins.registry.RegisterHandler;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.SpawnEggItem;
+import net.minecraft.world.biome.Biomes;
+import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -106,6 +112,18 @@ public class MysticalPumpkinsMod {
 		}
 	}
 
+	@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+	public static class OtherEvents {
+		@SubscribeEvent
+		public static void onBiomeLoad(BiomeLoadingEvent event) {
+			if (event.getName().equals(Biomes.DARK_FOREST.func_240901_a_())) {
+				//event.getSpawns().getEntityTypes().add(RegisterHandler.DRAGOURD.get());
+				event.getSpawns().func_242575_a(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(RegisterHandler.DRAGOURD.get(), 20, 1, 4));
+			}
+
+		}
+	}
+
 	@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ForgeEventBusSubscriber {
 		@SubscribeEvent(priority = EventPriority.LOWEST)
@@ -114,6 +132,7 @@ public class MysticalPumpkinsMod {
 		}
 		@SubscribeEvent
 		public static void onClientSetup(FMLClientSetupEvent event) {
+			RenderTypeLookup.setRenderLayer(RegisterHandler.INFUSION_TABLE.get(), RenderType.getTranslucent());
 			RenderingRegistry.registerEntityRenderingHandler(RegisterHandler.DRAGOURD.get(), (manager) -> {
 				return new DragourdRenderer(manager);
 			});

@@ -18,5 +18,7 @@
   "item.mystical_pumpkins.dragourd_spawn_egg": "Dragourd Spawn Egg",
 
   "entity.mystical_pumpkins.dragourd": "Dragourd",
-  "gui.jei.category.pumpkin_infusion_table": "Pumpkin Infusion"
+
+  "gui.jei.category.pumpkin_infusion_table": "Pumpkin Infusion",
+  "gui.mystical_pumpkins.infusion_table": "Pumpkin Infusion Table"
 }
