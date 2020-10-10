@@ -1,9 +1,9 @@
 package blueduck.mysticalpumpkins.tileentity;
 
-import blueduck.mysticalpumpkins.MysticalPumpkinsMod;
-import blueduck.mysticalpumpkins.container.InfuserContainer;
-import blueduck.mysticalpumpkins.registry.InfuserRecipeRegistry;
+import blueduck.mysticalpumpkins.container.InfusionTableContainer;
+import blueduck.mysticalpumpkins.registry.InfusionTableRecipeRegistry;
 import blueduck.mysticalpumpkins.registry.RegisterHandler;
+import blueduck.mysticalpumpkins.utils.SpecialConstants;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -20,23 +20,21 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
-import java.util.stream.IntStream;
-
-public class InfuserTileEntity extends LockableTileEntity implements ISidedInventory, ITickableTileEntity {
+public class InfusionTableTileEntity extends LockableTileEntity implements ISidedInventory, ITickableTileEntity {
 
 	private static final int[] SLOTS_FOR_UP = new int[]{0, 2};
 	private static final int[] SLOTS_HORIZONTAL = new int[]{1};
 	private static final int[] SLOTS_FOR_DOWN = new int[]{3};
-	private InfuserRecipe currentRecipe;
+	private InfusionTableRecipe currentRecipe;
 	private int infusingTime;
 	private int infusingTimeTotal = 200;
 	protected final IIntArray timeArray = new IIntArray() {
 		public int get(int index) {
 			switch(index) {
 				case 0:
-					return InfuserTileEntity.this.infusingTime;
+					return InfusionTableTileEntity.this.infusingTime;
 				case 1:
-					return InfuserTileEntity.this.infusingTimeTotal;
+					return InfusionTableTileEntity.this.infusingTimeTotal;
 				default:
 					return 0;
 			}
@@ -45,10 +43,10 @@ public class InfuserTileEntity extends LockableTileEntity implements ISidedInven
 		public void set(int index, int value) {
 			switch(index) {
 				case 0:
-					InfuserTileEntity.this.infusingTime = value;
+					InfusionTableTileEntity.this.infusingTime = value;
 					break;
 				case 1:
-					InfuserTileEntity.this.infusingTimeTotal = value;
+					InfusionTableTileEntity.this.infusingTimeTotal = value;
 			}
 
 		}
@@ -59,7 +57,7 @@ public class InfuserTileEntity extends LockableTileEntity implements ISidedInven
 	};
 	protected NonNullList<ItemStack> items = NonNullList.withSize(4, ItemStack.EMPTY);
 
-	public InfuserTileEntity() {
+	public InfusionTableTileEntity() {
 		super(RegisterHandler.INFUSER_TILE_ENTITY.get());
 	}
 
@@ -88,7 +86,7 @@ public class InfuserTileEntity extends LockableTileEntity implements ISidedInven
 
 	@Override
 	protected Container createMenu(int id, PlayerInventory player) {
-		return new InfuserContainer(id, player, this, timeArray);
+		return new InfusionTableContainer(id, player, this, timeArray);
 	}
 
 	@Override
@@ -108,7 +106,7 @@ public class InfuserTileEntity extends LockableTileEntity implements ISidedInven
 
 	@Override
 	public boolean canExtractItem(int index, ItemStack stack, Direction direction) {
-		MysticalPumpkinsMod.LOGGER.info(direction.toString());
+		SpecialConstants.LOGGER.info(direction.toString());
 		if (direction == Direction.DOWN && index == 3) {
 			return !stack.isEmpty();
 		} else {
@@ -186,7 +184,7 @@ public class InfuserTileEntity extends LockableTileEntity implements ISidedInven
 			boolean isThereSecondary = !this.items.get(2).isEmpty();
 			boolean isThereOutputAlready = !this.items.get(3).isEmpty();
 			if (isThereFuel && isThereInput && isThereSecondary && this.currentRecipe == null) {
-				this.currentRecipe = InfuserRecipeRegistry.searchRecipe(this.items.get(0), this.items.get(1).getCount(), this.items.get(2));
+				this.currentRecipe = InfusionTableRecipeRegistry.searchRecipe(this.items.get(0), this.items.get(1).getCount(), this.items.get(2));
 			}
 			if (currentRecipe != null && (this.items.get(3).isItemEqual(currentRecipe.getOutput()) || !isThereOutputAlready)) {
 				if (infusingTime == 0) {

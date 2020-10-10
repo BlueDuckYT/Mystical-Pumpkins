@@ -1,6 +1,6 @@
 package blueduck.mysticalpumpkins.block;
 
-import blueduck.mysticalpumpkins.tileentity.InfuserTileEntity;
+import blueduck.mysticalpumpkins.tileentity.InfusionTableTileEntity;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,22 +12,17 @@ import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.IBooleanFunction;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 //TODO shape
-public class InfuserBlock extends ContainerBlock {
+public class InfusionTableBlock extends ContainerBlock {
 
 	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 
-	public InfuserBlock(Properties properties) {
+	public InfusionTableBlock(Properties properties) {
 		super(properties);
 		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
 	}
@@ -36,8 +31,8 @@ public class InfuserBlock extends ContainerBlock {
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		if (stack.hasDisplayName()) {
 			TileEntity tileentity = worldIn.getTileEntity(pos);
-			if (tileentity instanceof InfuserTileEntity) {
-				((InfuserTileEntity)tileentity).setCustomName(stack.getDisplayName());
+			if (tileentity instanceof InfusionTableTileEntity) {
+				((InfusionTableTileEntity)tileentity).setCustomName(stack.getDisplayName());
 			}
 		}
 	}
@@ -46,9 +41,9 @@ public class InfuserBlock extends ContainerBlock {
 	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (!state.isIn(newState.getBlock())) {
 			TileEntity tileentity = worldIn.getTileEntity(pos);
-			if (tileentity instanceof InfuserTileEntity) {
-				InventoryHelper.dropInventoryItems(worldIn, pos, (InfuserTileEntity)tileentity);
-				((InfuserTileEntity) tileentity).clear();
+			if (tileentity instanceof InfusionTableTileEntity) {
+				InventoryHelper.dropInventoryItems(worldIn, pos, (InfusionTableTileEntity)tileentity);
+				((InfusionTableTileEntity) tileentity).clear();
 				worldIn.updateComparatorOutputLevel(pos, this);
 			}
 			super.onReplaced(state, worldIn, pos, newState, isMoving);
@@ -97,8 +92,8 @@ public class InfuserBlock extends ContainerBlock {
 		}
 		else {
 			TileEntity tileentity = worldIn.getTileEntity(pos);
-			if (tileentity instanceof InfuserTileEntity) {
-				player.openContainer((InfuserTileEntity) tileentity);
+			if (tileentity instanceof InfusionTableTileEntity) {
+				player.openContainer((InfusionTableTileEntity) tileentity);
 			}
 			return ActionResultType.CONSUME;
 		}
@@ -106,6 +101,6 @@ public class InfuserBlock extends ContainerBlock {
 
 	@Override
 	public TileEntity createNewTileEntity(IBlockReader worldIn) {
-		return new InfuserTileEntity();
+		return new InfusionTableTileEntity();
 	}
 }

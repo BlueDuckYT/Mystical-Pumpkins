@@ -4,7 +4,7 @@ import blueduck.mysticalpumpkins.client.renderer.DragourdRenderer;
 import blueduck.mysticalpumpkins.item.MysticalPumpkinSpawnEgg;
 import blueduck.mysticalpumpkins.network.MysticalPumpkinsMessageHandler;
 import blueduck.mysticalpumpkins.network.message.BooleanMessage;
-import blueduck.mysticalpumpkins.registry.InfuserRecipeRegistry;
+import blueduck.mysticalpumpkins.registry.InfusionTableRecipeRegistry;
 import blueduck.mysticalpumpkins.registry.RegisterHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
@@ -55,7 +55,7 @@ public class MysticalPumpkinsMod {
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
-		InfuserRecipeRegistry.initRegistry();
+		InfusionTableRecipeRegistry.initRegistry();
 		MysticalPumpkinsMessageHandler.register();
 
 		event.enqueueWork(this::afterCommonSetup);

@@ -2,12 +2,12 @@ package blueduck.mysticalpumpkins.registry;
 
 import blueduck.mysticalpumpkins.MysticalPumpkinsMod;
 import blueduck.mysticalpumpkins.block.*;
-import blueduck.mysticalpumpkins.client.gui.InfuserScreen;
+import blueduck.mysticalpumpkins.client.gui.InfusionTableScreen;
 import blueduck.mysticalpumpkins.client.renderer.DragourdRenderer;
-import blueduck.mysticalpumpkins.container.InfuserContainer;
+import blueduck.mysticalpumpkins.container.InfusionTableContainer;
 import blueduck.mysticalpumpkins.entity.DragourdEntity;
 import blueduck.mysticalpumpkins.item.MysticalPumpkinSpawnEgg;
-import blueduck.mysticalpumpkins.tileentity.InfuserTileEntity;
+import blueduck.mysticalpumpkins.tileentity.InfusionTableTileEntity;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -43,11 +43,11 @@ public class RegisterHandler {
 	public static DeferredRegister<TileEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, MysticalPumpkinsMod.MODID);
 	public static DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MysticalPumpkinsMod.MODID);
 
-	public static final RegistryObject<Block> INFUSER = BLOCKS.register("infusion_table", () -> new InfuserBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.RED)));
-	public static final RegistryObject<TileEntityType<InfuserTileEntity>> INFUSER_TILE_ENTITY = TILE_ENTITIES.register("infuser_tile_entity", () -> TileEntityType.Builder.create(InfuserTileEntity::new, INFUSER.get()).build(null));
+	public static final RegistryObject<Block> INFUSER = BLOCKS.register("infusion_table", () -> new InfusionTableBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.RED)));
+	public static final RegistryObject<TileEntityType<InfusionTableTileEntity>> INFUSER_TILE_ENTITY = TILE_ENTITIES.register("infuser_tile_entity", () -> TileEntityType.Builder.create(InfusionTableTileEntity::new, INFUSER.get()).build(null));
 	public static final RegistryObject<Item> INFUSER_ITEM = ITEMS.register("infusion_table", () -> new BlockItem(INFUSER.get(), new Item.Properties().group(ItemGroup.MISC)));
 	public static final RegistryObject<Item> PUMPKIN_ESSENCE = ITEMS.register("pumpkin_essence", () -> new Item(new Item.Properties().group(ItemGroup.MISC)));
-	public static final RegistryObject<ContainerType<InfuserContainer>> INFUSER_CONTAINER = CONTAINERS.register("infuser", () -> new ContainerType<>(InfuserContainer::new));
+	public static final RegistryObject<ContainerType<InfusionTableContainer>> INFUSER_CONTAINER = CONTAINERS.register("infuser", () -> new ContainerType<>(InfusionTableContainer::new));
 
 	public static final RegistryObject<Item> HEART_OF_PUMPKLOPS = ITEMS.register("heart_of_pumpklops", () -> new Item(new Item.Properties().group(ItemGroup.MISC).rarity(Rarity.RARE)));
 
@@ -90,7 +90,7 @@ public class RegisterHandler {
 
 
 	public static void initClient() {
-		ScreenManager.registerFactory(INFUSER_CONTAINER.get(), InfuserScreen::new);
+		ScreenManager.registerFactory(INFUSER_CONTAINER.get(), InfusionTableScreen::new);
 	}
 
 	public static void init() {

@@ -2,14 +2,14 @@ package blueduck.mysticalpumpkins.tileentity;
 
 import net.minecraft.item.ItemStack;
 
-public class InfuserRecipe {
+public class InfusionTableRecipe {
 
 	private final ItemStack input;
 	private final int essenceAmount;
 	private final ItemStack secondary;
 	private final ItemStack output;
 
-	public InfuserRecipe(ItemStack input, int fuelAmount, ItemStack secondary, ItemStack output) {
+	public InfusionTableRecipe(ItemStack input, int fuelAmount, ItemStack secondary, ItemStack output) {
 		this.input = input;
 		this.essenceAmount = fuelAmount;
 		this.secondary = secondary;
