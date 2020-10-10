@@ -1,21 +1,19 @@
 package blueduck.mysticalpumpkins.registry;
 
-import blueduck.mysticalpumpkins.MysticalPumpkinsMod;
 import blueduck.mysticalpumpkins.block.*;
-import blueduck.mysticalpumpkins.client.gui.InfuserScreen;
+import blueduck.mysticalpumpkins.client.gui.InfusionTableScreen;
 import blueduck.mysticalpumpkins.client.renderer.DragourdRenderer;
-import blueduck.mysticalpumpkins.container.InfuserContainer;
+import blueduck.mysticalpumpkins.container.InfusionTableContainer;
 import blueduck.mysticalpumpkins.entity.DragourdEntity;
-import blueduck.mysticalpumpkins.tileentity.InfuserTileEntity;
+import blueduck.mysticalpumpkins.tileentity.InfusionTableTileEntity;
+import blueduck.mysticalpumpkins.utils.SpecialConstants;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
@@ -25,8 +23,6 @@ import net.minecraft.item.Rarity;
 import net.minecraft.potion.Effects;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -36,17 +32,17 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class RegisterHandler {
 
-	public static DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MysticalPumpkinsMod.MODID);
-	public static DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MysticalPumpkinsMod.MODID);
-	public static DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, MysticalPumpkinsMod.MODID);
-	public static DeferredRegister<TileEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, MysticalPumpkinsMod.MODID);
-	public static DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MysticalPumpkinsMod.MODID);
-
-	public static final RegistryObject<Block> INFUSER = BLOCKS.register("infusion_table", () -> new InfuserBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.RED)));
-	public static final RegistryObject<TileEntityType<InfuserTileEntity>> INFUSER_TILE_ENTITY = TILE_ENTITIES.register("infuser_tile_entity", () -> TileEntityType.Builder.create(InfuserTileEntity::new, INFUSER.get()).build(null));
-	public static final RegistryObject<Item> INFUSER_ITEM = ITEMS.register("infusion_table", () -> new BlockItem(INFUSER.get(), new Item.Properties().group(ItemGroup.MISC)));
+	public static DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, SpecialConstants.MODID);
+	public static DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, SpecialConstants.MODID);
+	public static DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, SpecialConstants.MODID);
+	public static DeferredRegister<TileEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, SpecialConstants.MODID);
+	public static DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, SpecialConstants.MODID);
+	
+	public static final RegistryObject<Block> INFUSION_TABLE = BLOCKS.register("infusion_table", () -> new InfusionTableBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.RED)));
+	public static final RegistryObject<TileEntityType<InfusionTableTileEntity>> INFUSER_TILE_ENTITY = TILE_ENTITIES.register("infuser_tile_entity", () -> TileEntityType.Builder.create(InfusionTableTileEntity::new, INFUSION_TABLE.get()).build(null));
+	public static final RegistryObject<Item> INFUSION_TABLE_ITEM = ITEMS.register("infusion_table", () -> new BlockItem(INFUSION_TABLE.get(), new Item.Properties().group(ItemGroup.MISC)));
 	public static final RegistryObject<Item> PUMPKIN_ESSENCE = ITEMS.register("pumpkin_essence", () -> new Item(new Item.Properties().group(ItemGroup.MISC)));
-	public static final RegistryObject<ContainerType<InfuserContainer>> INFUSER_CONTAINER = CONTAINERS.register("infuser", () -> new ContainerType<>(InfuserContainer::new));
+	public static final RegistryObject<ContainerType<InfusionTableContainer>> INFUSER_CONTAINER = CONTAINERS.register("infuser", () -> new ContainerType<>(InfusionTableContainer::new));
 
 	public static final RegistryObject<Item> HEART_OF_PUMPKLOPS = ITEMS.register("heart_of_pumpklops", () -> new Item(new Item.Properties().group(ItemGroup.MISC).rarity(Rarity.RARE)));
 
@@ -61,10 +57,10 @@ public class RegisterHandler {
 	public static final RegistryObject<Block> LAVA_PUMPKIN = BLOCKS.register("cinder_pumpkin", MysticalPumpkinBlock::new);
 	public static final RegistryObject<Item> LAVA_PUMPKIN_ITEM = ITEMS.register("cinder_pumpkin", () -> new EffectPumpkinItem(LAVA_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.FIRE_RESISTANCE));
 
-	public static final RegistryObject<Block> WRATH_PUMPKIN = BLOCKS.register("wrath_pumpkin", () -> new MysticalPumpkinBlock());
+	public static final RegistryObject<Block> WRATH_PUMPKIN = BLOCKS.register("wrath_pumpkin", MysticalPumpkinBlock::new);
 	public static final RegistryObject<Item> WRATH_PUMPKIN_ITEM = ITEMS.register("wrath_pumpkin", () -> new WrathPumpkinItem(WRATH_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC)));
 
-	public static final RegistryObject<Block> FLOATING_PUMPKIN = BLOCKS.register("floating_pumpkin", () -> new MysticalPumpkinBlock());
+	public static final RegistryObject<Block> FLOATING_PUMPKIN = BLOCKS.register("floating_pumpkin", MysticalPumpkinBlock::new);
 	public static final RegistryObject<Item> FLOATING_PUMPKIN_ITEM = ITEMS.register("floating_pumpkin", () -> new EffectPumpkinItem(FLOATING_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.SLOW_FALLING));
 	public static final RegistryObject<Block> VOID_PUMPKIN = BLOCKS.register("void_pumpkin", () -> new LuminousMysticalPumpkinBlock(6));
 	public static final RegistryObject<Item> VOID_PUMPKIN_ITEM = ITEMS.register("void_pumpkin", () -> new VoidPumpkinItem(VOID_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC)));
@@ -80,14 +76,15 @@ public class RegisterHandler {
 	public static final RegistryObject<Block> HEALING_PUMPKIN = BLOCKS.register("healing_pumpkin", MysticalPumpkinBlock::new);
 	public static final RegistryObject<Item> HEALING_PUMPKIN_ITEM = ITEMS.register("healing_pumpkin", () -> new EffectPumpkinItem(HEALING_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.REGENERATION));
 
-	public static final RegistryObject<Block> MIRE_PUMPKIN = BLOCKS.register("mire_pumpkin", () -> new MirePumpkinBlock());
+	public static final RegistryObject<Block> MIRE_PUMPKIN = BLOCKS.register("mire_pumpkin", MirePumpkinBlock::new);
 	public static final RegistryObject<Item> MIRE_PUMPKIN_ITEM = ITEMS.register("mire_pumpkin", () -> new MysticalPumpkinItem(MIRE_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC)));
 
-	public static final RegistryObject<EntityType<DragourdEntity>> DRAGOURD = ENTITIES.register("dragourd", () -> EntityType.Builder.<DragourdEntity>create(DragourdEntity::new, EntityClassification.MONSTER).size(0.9F, 0.8F).build(new ResourceLocation("mystical_pumpkins", "textures/entity/dragourd.png").toString()));
+	public static final RegistryObject<EntityType<DragourdEntity>> DRAGOURD = ENTITIES.register("dragourd", () -> EntityType.Builder.create(DragourdEntity::new, EntityClassification.MONSTER).size(0.9F, 0.8F).build(new ResourceLocation("mystical_pumpkins", "textures/entity/dragourd.png").toString()));
 
 
 	public static void initClient() {
-		ScreenManager.registerFactory(INFUSER_CONTAINER.get(), InfuserScreen::new);
+		ScreenManager.registerFactory(INFUSER_CONTAINER.get(), InfusionTableScreen::new);
+		RenderingRegistry.registerEntityRenderingHandler(RegisterHandler.DRAGOURD.get(), DragourdRenderer::new);
 	}
 
 	public static void init() {
@@ -99,12 +96,6 @@ public class RegisterHandler {
 		CONTAINERS.register(bus);
 	}
 
-	@OnlyIn(Dist.CLIENT)
-	public static void registerRenderer() {
-		RenderingRegistry.registerEntityRenderingHandler((EntityType) DRAGOURD.get(), (manager) -> {
-			return new DragourdRenderer(manager);
-		});
-	}
 	public static void attributeStuff() {
 		GlobalEntityTypeAttributes.put(DRAGOURD.get(), DragourdEntity.setCustomAttributes().func_233813_a_()/*(or your own)*/);
 	}

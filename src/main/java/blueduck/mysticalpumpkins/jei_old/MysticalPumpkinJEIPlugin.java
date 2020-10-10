@@ -1,8 +1,8 @@
-package blueduck.mysticalpumpkins.jei;
+package blueduck.mysticalpumpkins.jei_old;
 
-import blueduck.mysticalpumpkins.MysticalPumpkinsMod;
-import blueduck.mysticalpumpkins.jei.infusing.InfusingRecipeCategory;
-import blueduck.mysticalpumpkins.registry.InfuserRecipeRegistry;
+import blueduck.mysticalpumpkins.jei_old.infusing.InfusingRecipeCategory;
+import blueduck.mysticalpumpkins.registry.InfusionTableRecipeRegistry;
+import blueduck.mysticalpumpkins.utils.SpecialConstants;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
@@ -19,11 +19,11 @@ public class MysticalPumpkinJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipes(IRecipeRegistration registration) {
-		registration.addRecipes(InfuserRecipeRegistry.recipes, this.getPluginUid());
+		registration.addRecipes(InfusionTableRecipeRegistry.recipes, this.getPluginUid());
 	}
 
 	@Override
 	public ResourceLocation getPluginUid() {
-		return new ResourceLocation(MysticalPumpkinsMod.MODID, "jei_plugin");
+		return new ResourceLocation(SpecialConstants.MODID, "jei_plugin");
 	}
 }

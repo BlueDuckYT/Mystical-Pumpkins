@@ -1,9 +1,8 @@
-package blueduck.mysticalpumpkins.jei.infusing;
+package blueduck.mysticalpumpkins.jei_old.infusing;
 
-import blueduck.mysticalpumpkins.MysticalPumpkinsMod;
-import blueduck.mysticalpumpkins.client.gui.InfuserScreen;
 import blueduck.mysticalpumpkins.registry.RegisterHandler;
-import blueduck.mysticalpumpkins.tileentity.InfuserRecipe;
+import blueduck.mysticalpumpkins.tileentity.InfusionTableRecipe;
+import blueduck.mysticalpumpkins.utils.SpecialConstants;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -20,7 +19,7 @@ import net.minecraft.util.ResourceLocation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InfusingRecipeCategory implements IRecipeCategory<InfuserRecipe> {
+public class InfusingRecipeCategory implements IRecipeCategory<InfusionTableRecipe> {
 
 	private static final int inputSlot = 0;
 	private static final int essenceSlot = 1;
@@ -34,12 +33,12 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfuserRecipe> {
 	private final IDrawableAnimated arrow;
 
 	public InfusingRecipeCategory(IGuiHelper guiHelper) {
-		ResourceLocation location = InfuserScreen.PUMPKIN_INFUSER_TEX;
+		ResourceLocation location = SpecialConstants.PUMPKIN_INFUSER_TEX;
 		background = guiHelper
 				             .drawableBuilder(location, 0, 0, 176, 166)
 				             .addPadding(1, 0, 0, 50)
 				             .build();
-		icon = guiHelper.createDrawableIngredient(new ItemStack(RegisterHandler.INFUSER.get()));
+		icon = guiHelper.createDrawableIngredient(new ItemStack(RegisterHandler.INFUSION_TABLE.get()));
 		localizedName = Translator.translateToLocal("gui.jei.category.infusing");
 
 		arrow = guiHelper
@@ -51,12 +50,12 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfuserRecipe> {
 
 	@Override
 	public ResourceLocation getUid() {
-		return new ResourceLocation(MysticalPumpkinsMod.MODID, "mystical_infusing");
+		return new ResourceLocation(SpecialConstants.MODID, "mystical_infusing");
 	}
 
 	@Override
-	public Class<? extends InfuserRecipe> getRecipeClass() {
-		return InfuserRecipe.class;
+	public Class<? extends InfusionTableRecipe> getRecipeClass() {
+		return InfusionTableRecipe.class;
 	}
 
 	@Override
@@ -75,7 +74,7 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfuserRecipe> {
 	}
 
 	@Override
-	public void setIngredients(InfuserRecipe recipe, IIngredients iIngredients) {
+	public void setIngredients(InfusionTableRecipe recipe, IIngredients iIngredients) {
 		List<ItemStack> inputs = new ArrayList<>();
 		inputs.add(recipe.getInput());
 		inputs.add(new ItemStack(RegisterHandler.PUMPKIN_ESSENCE.get(), recipe.getEssenceAmount()));
@@ -85,12 +84,12 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfuserRecipe> {
 	}
 
 	@Override
-	public void draw(InfuserRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
+	public void draw(InfusionTableRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
 		arrow.draw(matrixStack, 71, 30);
 	}
 
 	@Override
-	public void setRecipe(IRecipeLayout iRecipeLayout, InfuserRecipe InfuserRecipe, IIngredients iIngredients) {
+	public void setRecipe(IRecipeLayout iRecipeLayout, InfusionTableRecipe InfuserRecipe, IIngredients iIngredients) {
 		IGuiItemStackGroup itemStacks = iRecipeLayout.getItemStacks();
 		itemStacks.init(inputSlot, true, 53, 12);
 		itemStacks.init(essenceSlot, true, 17, 30);

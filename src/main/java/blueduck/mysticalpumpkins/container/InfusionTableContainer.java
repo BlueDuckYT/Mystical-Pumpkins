@@ -1,28 +1,27 @@
 package blueduck.mysticalpumpkins.container;
 
-import blueduck.mysticalpumpkins.registry.InfuserRecipeRegistry;
+import blueduck.mysticalpumpkins.registry.InfusionTableRecipeRegistry;
 import blueduck.mysticalpumpkins.registry.RegisterHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.BrewingStandContainer;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
 
-public class InfuserContainer extends Container {
+public class InfusionTableContainer extends Container {
 
 	private final IInventory tileInfuser;
 	private final IIntArray timeArray;
 
-	public InfuserContainer(int id, PlayerInventory inv) {
+	public InfusionTableContainer(int id, PlayerInventory inv) {
 		this(id, inv, new Inventory(4), new IntArray(2));
 	}
 
-	public InfuserContainer(int id, PlayerInventory playerInventory, IInventory tileEntity, IIntArray iIntArray) {
+	public InfusionTableContainer(int id, PlayerInventory playerInventory, IInventory tileEntity, IIntArray iIntArray) {
 		super(RegisterHandler.INFUSER_CONTAINER.get(), id);
 		assertInventorySize(tileEntity, 4);
 		assertIntArraySize(iIntArray, 2);
@@ -59,13 +58,13 @@ public class InfuserContainer extends Container {
 			itemstack = itemstack1.copy();
 			System.out.println(itemstack1);
 			if (index > 4) {
-				if (InfuserContainer.InputSlot.isValidInput(itemstack1) && this.mergeItemStack(itemstack1, 0, 1, false)) {
+				if (InfusionTableContainer.InputSlot.isValidInput(itemstack1) && this.mergeItemStack(itemstack1, 0, 1, false)) {
 					return ItemStack.EMPTY;
 				} else if (itemstack1.getItem() == RegisterHandler.PUMPKIN_ESSENCE.get() && this.mergeItemStack(itemstack1, 1, 2, false)) {
 					return ItemStack.EMPTY;
-				} else if (InfuserRecipeRegistry.canBeInfused(itemstack1) && this.mergeItemStack(itemstack1, 2, 3, false)) {
+				} else if (InfusionTableRecipeRegistry.canBeInfused(itemstack1) && this.mergeItemStack(itemstack1, 2, 3, false)) {
 					return ItemStack.EMPTY;
-				} else if (InfuserRecipeRegistry.isInfused(itemstack1) && this.mergeItemStack(itemstack1, 3, 4, false)) {
+				} else if (InfusionTableRecipeRegistry.isInfused(itemstack1) && this.mergeItemStack(itemstack1, 3, 4, false)) {
 					return ItemStack.EMPTY;
 				}
 			} else {
@@ -103,7 +102,7 @@ public class InfuserContainer extends Container {
 		}
 
 		public static boolean isValidInput(ItemStack stack) {
-			return InfuserRecipeRegistry.isValidInput(stack);
+			return InfusionTableRecipeRegistry.isValidInput(stack);
 		}
 
 		@Override
@@ -142,7 +141,7 @@ public class InfuserContainer extends Container {
 
 		@Override
 		public boolean isItemValid(ItemStack stack) {
-			return InfuserRecipeRegistry.canBeInfused(stack);
+			return InfusionTableRecipeRegistry.canBeInfused(stack);
 		}
 
 		@Override
@@ -160,7 +159,7 @@ public class InfuserContainer extends Container {
 
 		@Override
 		public boolean isItemValid(ItemStack stack) {
-			return InfuserRecipeRegistry.isInfused(stack);
+			return InfusionTableRecipeRegistry.isInfused(stack);
 		}
 
 		@Override

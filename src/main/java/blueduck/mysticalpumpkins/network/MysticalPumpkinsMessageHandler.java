@@ -1,8 +1,8 @@
 package blueduck.mysticalpumpkins.network;
 
-import blueduck.mysticalpumpkins.MysticalPumpkinsMod;
 import blueduck.mysticalpumpkins.network.message.IMessage;
 import blueduck.mysticalpumpkins.network.message.BooleanMessage;
+import blueduck.mysticalpumpkins.utils.SpecialConstants;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
@@ -13,7 +13,7 @@ public class MysticalPumpkinsMessageHandler {
 
 	private static final String PROTOCOL_VERSION = Integer.toString(1);
 	public static final SimpleChannel HANDLER = NetworkRegistry.ChannelBuilder
-			.named(new ResourceLocation(MysticalPumpkinsMod.MODID, "main_channel"))
+			.named(new ResourceLocation(SpecialConstants.MODID, "main_channel"))
 			.clientAcceptedVersions(PROTOCOL_VERSION::equals)
 			.serverAcceptedVersions(PROTOCOL_VERSION::equals)
 			.networkProtocolVersion(() -> PROTOCOL_VERSION)

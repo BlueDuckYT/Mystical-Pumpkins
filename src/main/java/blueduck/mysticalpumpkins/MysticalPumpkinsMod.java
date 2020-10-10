@@ -1,26 +1,20 @@
 package blueduck.mysticalpumpkins;
 
-import blueduck.mysticalpumpkins.client.renderer.DragourdRenderer;
 import blueduck.mysticalpumpkins.network.MysticalPumpkinsMessageHandler;
 import blueduck.mysticalpumpkins.network.message.BooleanMessage;
-import blueduck.mysticalpumpkins.registry.InfuserRecipeRegistry;
+import blueduck.mysticalpumpkins.registry.InfusionTableRecipeRegistry;
 import blueduck.mysticalpumpkins.registry.RegisterHandler;
+import blueduck.mysticalpumpkins.utils.SpecialConstants;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.entity.EntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -28,8 +22,6 @@ import java.util.ArrayList;
 @Mod("mystical_pumpkins")
 public class MysticalPumpkinsMod {
 
-	public static final Logger LOGGER = LogManager.getLogger();
-	public static final String MODID = "mystical_pumpkins";
 	public static ArrayList<String> players = new ArrayList<>();
 
 	public MysticalPumpkinsMod() {
@@ -50,14 +42,13 @@ public class MysticalPumpkinsMod {
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
-		InfuserRecipeRegistry.initRegistry();
+		InfusionTableRecipeRegistry.initRegistry();
 		MysticalPumpkinsMessageHandler.register();
 
 		event.enqueueWork(this::afterCommonSetup);
 
 	}
-	public void afterCommonSetup()
-	{
+	public void afterCommonSetup() {
 		RegisterHandler.attributeStuff();
 	}
 
@@ -82,36 +73,38 @@ public class MysticalPumpkinsMod {
 		event.player.getPersistentData().putBoolean("isPressingSpace", players.contains(event.player.getUniqueID().toString()));
 	}
 
-	@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+	@Mod.EventBusSubscriber(modid = SpecialConstants.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 	public static class ClientEventBusSubscriber {
-
-
 
 		@SubscribeEvent
 		public static void onKeyPress(InputEvent.KeyInputEvent event) {
 			try {
-				if (Minecraft.getInstance().isGamePaused()){
-					return;
-				}
-				if (event.getKey() == GLFW.GLFW_KEY_SPACE) {
+				if (!Minecraft.getInstance().isGamePaused() && event.getKey() == GLFW.GLFW_KEY_SPACE) {
 					MysticalPumpkinsMessageHandler.HANDLER.sendToServer(new BooleanMessage(Minecraft.getInstance().player.getUniqueID().toString(), event.getAction() != GLFW.GLFW_RELEASE));
 				}
 			}
-			catch(Exception e) {
-
-			}
+			catch(Exception ignored) {}
 		}
 	}
 
-	@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+	/**
+	 * For Blueduck:
+	 * This thing
+	 * is
+	 * useless
+	 * we already have a method that checks for the ClientSetupEvent
+	 * and it's "doClientStuff"
+	 * also, on RegisterHandler class, there is a "initClient" method
+	 * for registration of things like Renderers.
+	 */
+
+	/*@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ForgeEventBusSubscriber {
 		@SubscribeEvent
 		public static void onClientSetup(FMLClientSetupEvent event) {
-			RenderingRegistry.registerEntityRenderingHandler(RegisterHandler.DRAGOURD.get(), (manager) -> {
-				return new DragourdRenderer(manager);
-			});
+			RenderingRegistry.registerEntityRenderingHandler(RegisterHandler.DRAGOURD.get(), DragourdRenderer::new);
 
 		}
-	}
+	}*/
 
 }

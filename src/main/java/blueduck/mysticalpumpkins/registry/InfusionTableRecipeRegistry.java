@@ -1,7 +1,7 @@
 package blueduck.mysticalpumpkins.registry;
 
-import blueduck.mysticalpumpkins.MysticalPumpkinsMod;
-import blueduck.mysticalpumpkins.tileentity.InfuserRecipe;
+import blueduck.mysticalpumpkins.tileentity.InfusionTableRecipe;
+import blueduck.mysticalpumpkins.utils.SpecialConstants;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
@@ -13,9 +13,9 @@ import java.util.ArrayList;
  * Works even at runtime, to let you add recipes for some challenges, remove some from other mods and so on.
  * */
 
-public class InfuserRecipeRegistry {
+public class InfusionTableRecipeRegistry {
 
-	public static final ArrayList<InfuserRecipe> recipes = new ArrayList<>();
+	public static final ArrayList<InfusionTableRecipe> recipes = new ArrayList<>();
 
 	private static void fillWithBuiltInRecipes() {
 		//TODO add recipes
@@ -34,29 +34,29 @@ public class InfuserRecipeRegistry {
 
 
 
-		for (InfuserRecipe recipe : recipes) {
-			MysticalPumpkinsMod.LOGGER.debug("Registered recipe " + recipe);
+		for (InfusionTableRecipe recipe : recipes) {
+			SpecialConstants.LOGGER.debug("Registered recipe " + recipe);
 		}
-		MysticalPumpkinsMod.LOGGER.info("Registered Builtin Infuser Recipes");
+		SpecialConstants.LOGGER.info("Registered Builtin Infuser Recipes");
 	}
 
-	private static InfuserRecipe createInfuserRecipe(ItemStack input, int essenceAmount, ItemStack secondaryMaterials, ItemStack output) {
-		return new InfuserRecipe(input, essenceAmount, secondaryMaterials, output);
+	private static InfusionTableRecipe createInfuserRecipe(ItemStack input, int essenceAmount, ItemStack secondaryMaterials, ItemStack output) {
+		return new InfusionTableRecipe(input, essenceAmount, secondaryMaterials, output);
 	}
 
 	public static void addInfuserRecipe(ItemStack input, int essenceAmount, ItemStack secondaryMaterials, ItemStack output) {
-		InfuserRecipe toAdd = createInfuserRecipe(input, essenceAmount, secondaryMaterials, output);
+		InfusionTableRecipe toAdd = createInfuserRecipe(input, essenceAmount, secondaryMaterials, output);
 		recipes.add(toAdd);
 	}
 
 	public static void removeRecipe(ItemStack input, int essenceAmount, ItemStack secondaryMaterials) {
-		InfuserRecipe toRemove = searchRecipe(input, essenceAmount, secondaryMaterials);
+		InfusionTableRecipe toRemove = searchRecipe(input, essenceAmount, secondaryMaterials);
 		recipes.remove(toRemove);
 	}
 
-	public static InfuserRecipe searchRecipe(ItemStack inputStack, int essenceAmount, ItemStack secondaryStack) {
+	public static InfusionTableRecipe searchRecipe(ItemStack inputStack, int essenceAmount, ItemStack secondaryStack) {
 		if (!secondaryStack.isEmpty() && !inputStack.isEmpty() && essenceAmount > 0) {
-			for (InfuserRecipe recipe : recipes) {
+			for (InfusionTableRecipe recipe : recipes) {
 				ItemStack input = recipe.getInput();
 				ItemStack second = recipe.getSecondary();
 				if (second.isItemEqual(secondaryStack) && secondaryStack.getCount() >= second.getCount() && essenceAmount >= recipe.getEssenceAmount() && input.isItemEqual(inputStack) && inputStack.getCount() >= input.getCount()) {
@@ -69,7 +69,7 @@ public class InfuserRecipeRegistry {
 
 	public static boolean isValidInput(ItemStack stack) {
 		if (!stack.isEmpty()) {
-			for (InfuserRecipe recipe : recipes) {
+			for (InfusionTableRecipe recipe : recipes) {
 				if (recipe.getInput().isItemEqual(stack)) {
 					return true;
 				}
@@ -80,7 +80,7 @@ public class InfuserRecipeRegistry {
 
 	public static boolean canBeInfused(ItemStack stack) {
 		if (!stack.isEmpty()) {
-			for (InfuserRecipe recipe : recipes) {
+			for (InfusionTableRecipe recipe : recipes) {
 				if (recipe.getSecondary().isItemEqual(stack)) {
 					return true;
 				}
@@ -91,7 +91,7 @@ public class InfuserRecipeRegistry {
 
 	public static boolean isInfused(ItemStack stack) {
 		if (!stack.isEmpty()) {
-			for (InfuserRecipe recipe : recipes) {
+			for (InfusionTableRecipe recipe : recipes) {
 				if (recipe.getOutput().isItemEqual(stack)) {
 					return true;
 				}
