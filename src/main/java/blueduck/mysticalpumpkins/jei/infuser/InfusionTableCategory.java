@@ -83,10 +83,10 @@ public class InfusionTableCategory implements IRecipeCategory<InfusionTableRecip
 	public void setRecipe(IRecipeLayout recipeLayout, InfusionTableRecipe recipe, IIngredients ingredients) {
 		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
-		guiItemStacks.init(inputSlot, true, 53, 12);
-		guiItemStacks.init(essenceSlot, true, 17, 30);
-		guiItemStacks.init(secondarySlot, true, 53, 48);
-		guiItemStacks.init(outputSlot, false, 143, 30);
+		guiItemStacks.init(inputSlot, true, 52, 11);
+		guiItemStacks.init(essenceSlot, true, 16, 29);
+		guiItemStacks.init(secondarySlot, true, 52, 47);
+		guiItemStacks.init(outputSlot, false, 142, 29);
 
 		guiItemStacks.set(ingredients);
 	}

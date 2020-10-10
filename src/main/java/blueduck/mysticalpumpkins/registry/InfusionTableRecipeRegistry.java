@@ -18,7 +18,6 @@ public class InfusionTableRecipeRegistry {
 	public static final ArrayList<InfusionTableRecipe> recipes = new ArrayList<>();
 
 	private static void fillWithBuiltInRecipes() {
-		//TODO add recipes
 		addInfuserRecipe(new ItemStack(Items.CARVED_PUMPKIN), 10, new ItemStack(Items.SEA_PICKLE, 8), new ItemStack(RegisterHandler.GRACE_PUMPKIN_ITEM.get()));
 		addInfuserRecipe(new ItemStack(RegisterHandler.GRACE_PUMPKIN_ITEM.get()), 20, new ItemStack(Items.HEART_OF_THE_SEA, 1), new ItemStack(RegisterHandler.WATER_PUMPKIN_ITEM.get()));
 		addInfuserRecipe(new ItemStack(RegisterHandler.WATER_PUMPKIN_ITEM.get()), 40, new ItemStack(RegisterHandler.HEART_OF_PUMPKLOPS.get(), 1), new ItemStack(RegisterHandler.CONDUIT_PUMPKIN_ITEM.get()));

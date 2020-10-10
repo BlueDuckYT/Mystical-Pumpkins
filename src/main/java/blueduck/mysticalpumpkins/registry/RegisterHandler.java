@@ -100,6 +100,7 @@ public class RegisterHandler {
 		CONTAINERS.register(bus);
 	}
 
+	//Can this method be deleted?
 	@OnlyIn(Dist.CLIENT)
 	public static void registerRenderer() {
 		RenderingRegistry.registerEntityRenderingHandler((EntityType) DRAGOURD.get(), (manager) -> {

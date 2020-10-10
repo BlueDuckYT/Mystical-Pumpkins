@@ -2,6 +2,7 @@ package blueduck.mysticalpumpkins.network;
 
 import blueduck.mysticalpumpkins.network.message.BooleanMessage;
 import blueduck.mysticalpumpkins.network.message.IMessage;
+import blueduck.mysticalpumpkins.network.message.InfusingMovingMessage;
 import blueduck.mysticalpumpkins.utils.SpecialConstants;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -21,6 +22,7 @@ public class MysticalPumpkinsMessageHandler {
 	
 	public static void register() {
 		registerMessage(BooleanMessage.class, new BooleanMessage());
+		registerMessage(InfusingMovingMessage.class, new InfusingMovingMessage());
 	}
 	
 	public static <T> void registerMessage(Class<T> clazz, IMessage<T> message) {

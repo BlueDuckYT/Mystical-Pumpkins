@@ -56,7 +56,6 @@ public class InfusionTableContainer extends Container {
 		if (slot != null && slot.getHasStack()) {
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
-			System.out.println(itemstack1);
 			if (index > 4) {
 				if (InfusionTableContainer.InputSlot.isValidInput(itemstack1) && this.mergeItemStack(itemstack1, 0, 1, false)) {
 					return ItemStack.EMPTY;
