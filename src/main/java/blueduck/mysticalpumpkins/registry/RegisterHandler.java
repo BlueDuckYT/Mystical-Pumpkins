@@ -3,13 +3,20 @@ package blueduck.mysticalpumpkins.registry;
 import blueduck.mysticalpumpkins.MysticalPumpkinsMod;
 import blueduck.mysticalpumpkins.block.*;
 import blueduck.mysticalpumpkins.client.gui.InfuserScreen;
+import blueduck.mysticalpumpkins.client.renderer.DragourdRenderer;
 import blueduck.mysticalpumpkins.container.InfuserContainer;
+import blueduck.mysticalpumpkins.entity.DragourdEntity;
 import blueduck.mysticalpumpkins.tileentity.InfuserTileEntity;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -17,8 +24,12 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Rarity;
 import net.minecraft.potion.Effects;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -27,6 +38,7 @@ public class RegisterHandler {
 
 	public static DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MysticalPumpkinsMod.MODID);
 	public static DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MysticalPumpkinsMod.MODID);
+	public static DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, MysticalPumpkinsMod.MODID);
 	public static DeferredRegister<TileEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, MysticalPumpkinsMod.MODID);
 	public static DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MysticalPumpkinsMod.MODID);
 
@@ -71,6 +83,8 @@ public class RegisterHandler {
 	public static final RegistryObject<Block> MIRE_PUMPKIN = BLOCKS.register("mire_pumpkin", () -> new MirePumpkinBlock());
 	public static final RegistryObject<Item> MIRE_PUMPKIN_ITEM = ITEMS.register("mire_pumpkin", () -> new MysticalPumpkinItem(MIRE_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC)));
 
+	public static final RegistryObject<EntityType<DragourdEntity>> DRAGOURD = ENTITIES.register("dragourd", () -> EntityType.Builder.<DragourdEntity>create(DragourdEntity::new, EntityClassification.MONSTER).size(0.9F, 0.8F).build(new ResourceLocation("mystical_pumpkins", "textures/entity/dragourd.png").toString()));
+
 
 	public static void initClient() {
 		ScreenManager.registerFactory(INFUSER_CONTAINER.get(), InfuserScreen::new);
@@ -80,8 +94,19 @@ public class RegisterHandler {
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 		BLOCKS.register(bus);
 		ITEMS.register(bus);
+		ENTITIES.register(bus);
 		TILE_ENTITIES.register(bus);
 		CONTAINERS.register(bus);
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public static void registerRenderer() {
+		RenderingRegistry.registerEntityRenderingHandler((EntityType) DRAGOURD.get(), (manager) -> {
+			return new DragourdRenderer(manager);
+		});
+	}
+	public static void attributeStuff() {
+		GlobalEntityTypeAttributes.put(DRAGOURD.get(), DragourdEntity.setCustomAttributes().func_233813_a_()/*(or your own)*/);
 	}
 
 }

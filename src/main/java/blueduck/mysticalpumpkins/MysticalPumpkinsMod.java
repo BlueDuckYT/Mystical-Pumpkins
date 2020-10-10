@@ -1,5 +1,6 @@
 package blueduck.mysticalpumpkins;
 
+import blueduck.mysticalpumpkins.client.renderer.DragourdRenderer;
 import blueduck.mysticalpumpkins.network.MysticalPumpkinsMessageHandler;
 import blueduck.mysticalpumpkins.network.message.BooleanMessage;
 import blueduck.mysticalpumpkins.registry.InfuserRecipeRegistry;
@@ -7,11 +8,13 @@ import blueduck.mysticalpumpkins.registry.RegisterHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.entity.EntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -49,6 +52,13 @@ public class MysticalPumpkinsMod {
 	private void setup(final FMLCommonSetupEvent event) {
 		InfuserRecipeRegistry.initRegistry();
 		MysticalPumpkinsMessageHandler.register();
+
+		event.enqueueWork(this::afterCommonSetup);
+
+	}
+	public void afterCommonSetup()
+	{
+		RegisterHandler.attributeStuff();
 	}
 
 	private void doClientStuff(final FMLClientSetupEvent event) {
@@ -73,8 +83,10 @@ public class MysticalPumpkinsMod {
 		event.player.getPersistentData().putBoolean("isPressingSpace", players.contains(event.player.getUniqueID().toString()));
 	}
 
-	@Mod.EventBusSubscriber(modid = "mystical_pumpkins", bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+	@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 	public static class ClientEventBusSubscriber {
+
+
 
 		@SubscribeEvent
 		public static void onKeyPress(InputEvent.KeyInputEvent event) {
@@ -89,6 +101,17 @@ public class MysticalPumpkinsMod {
 			catch(Exception e) {
 
 			}
+		}
+	}
+
+	@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+	public static class ForgeEventBusSubscriber {
+		@SubscribeEvent
+		public static void onClientSetup(FMLClientSetupEvent event) {
+			RenderingRegistry.registerEntityRenderingHandler(RegisterHandler.DRAGOURD.get(), (manager) -> {
+				return new DragourdRenderer(manager);
+			});
+
 		}
 	}
 

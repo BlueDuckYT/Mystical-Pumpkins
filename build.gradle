@@ -14,7 +14,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 version = '1.0'
-group = 'com.github.lorenzopapi' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = 'blueduck.mysticalpumpkins' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'mystical_pumpkins'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
@@ -85,6 +85,11 @@ minecraft {
         }
     }
 }
+repositories {
+    maven {
+        url = "https://www.cursemaven.com"
+    }
+}
 
 dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
@@ -92,6 +97,8 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.16.3-34.1.1'
 
+    implementation fg.deobf("curse.maven:jei:3073591")
+    implementation fg.deobf("curse.maven:geckolib:3071704")
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"
