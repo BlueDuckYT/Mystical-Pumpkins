@@ -1,6 +1,5 @@
 package blueduck.mysticalpumpkins.registry;
 
-import blueduck.mysticalpumpkins.MysticalPumpkinsMod;
 import blueduck.mysticalpumpkins.block.*;
 import blueduck.mysticalpumpkins.client.gui.InfusionTableScreen;
 import blueduck.mysticalpumpkins.client.renderer.DragourdRenderer;
@@ -8,6 +7,7 @@ import blueduck.mysticalpumpkins.container.InfusionTableContainer;
 import blueduck.mysticalpumpkins.entity.DragourdEntity;
 import blueduck.mysticalpumpkins.item.MysticalPumpkinSpawnEgg;
 import blueduck.mysticalpumpkins.tileentity.InfusionTableTileEntity;
+import blueduck.mysticalpumpkins.utils.SpecialConstants;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -35,11 +35,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class RegisterHandler {
 
-	public static DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MysticalPumpkinsMod.MODID);
-	public static DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MysticalPumpkinsMod.MODID);
-	public static DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, MysticalPumpkinsMod.MODID);
-	public static DeferredRegister<TileEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, MysticalPumpkinsMod.MODID);
-	public static DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MysticalPumpkinsMod.MODID);
+	public static DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, SpecialConstants.MODID);
+	public static DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, SpecialConstants.MODID);
+	public static DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, SpecialConstants.MODID);
+	public static DeferredRegister<TileEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, SpecialConstants.MODID);
+	public static DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, SpecialConstants.MODID);
 
 	public static final RegistryObject<Block> INFUSION_TABLE = BLOCKS.register("infusion_table", () -> new InfusionTableBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.RED)));
 	public static final RegistryObject<TileEntityType<InfusionTableTileEntity>> INFUSER_TILE_ENTITY = TILE_ENTITIES.register("infuser_tile_entity", () -> TileEntityType.Builder.create(InfusionTableTileEntity::new, INFUSION_TABLE.get()).build(null));

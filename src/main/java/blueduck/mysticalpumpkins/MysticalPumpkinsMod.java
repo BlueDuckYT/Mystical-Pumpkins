@@ -6,6 +6,7 @@ import blueduck.mysticalpumpkins.network.MysticalPumpkinsMessageHandler;
 import blueduck.mysticalpumpkins.network.message.BooleanMessage;
 import blueduck.mysticalpumpkins.registry.InfusionTableRecipeRegistry;
 import blueduck.mysticalpumpkins.registry.RegisterHandler;
+import blueduck.mysticalpumpkins.utils.SpecialConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -28,8 +29,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -37,8 +36,6 @@ import java.util.ArrayList;
 @Mod("mystical_pumpkins")
 public class MysticalPumpkinsMod {
 
-	public static final Logger LOGGER = LogManager.getLogger();
-	public static final String MODID = "mystical_pumpkins";
 	public static ArrayList<String> players = new ArrayList<>();
 
 	public MysticalPumpkinsMod() {
@@ -51,7 +48,6 @@ public class MysticalPumpkinsMod {
 		// Register the doClientStuff method for modloading
 		RegisterHandler.init();
 
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 		// Register ourselves for server and other game events we are interested in
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.addListener(this::onPlayerTick);
@@ -68,10 +64,6 @@ public class MysticalPumpkinsMod {
 	public void afterCommonSetup()
 	{
 		RegisterHandler.attributeStuff();
-	}
-
-	private void doClientStuff(final FMLClientSetupEvent event) {
-		RegisterHandler.initClient();
 	}
 
 	/*private void enqueueIMC(final InterModEnqueueEvent event) {
@@ -91,28 +83,20 @@ public class MysticalPumpkinsMod {
 		event.player.getPersistentData().putBoolean("isPressingSpace", players.contains(event.player.getUniqueID().toString()));
 	}
 
-	@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+	@Mod.EventBusSubscriber(modid = SpecialConstants.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 	public static class ClientEventBusSubscriber {
-
-
-
 		@SubscribeEvent
 		public static void onKeyPress(InputEvent.KeyInputEvent event) {
 			try {
-				if (Minecraft.getInstance().isGamePaused()){
-					return;
-				}
-				if (event.getKey() == GLFW.GLFW_KEY_SPACE) {
+				if (event.getKey() == GLFW.GLFW_KEY_SPACE && !Minecraft.getInstance().isGamePaused()) {
 					MysticalPumpkinsMessageHandler.HANDLER.sendToServer(new BooleanMessage(Minecraft.getInstance().player.getUniqueID().toString(), event.getAction() != GLFW.GLFW_RELEASE));
 				}
 			}
-			catch(Exception e) {
-
-			}
+			catch(Throwable ignored) {}
 		}
 	}
 
-	@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+	@Mod.EventBusSubscriber(modid = SpecialConstants.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 	public static class OtherEvents {
 		@SubscribeEvent
 		public static void onBiomeLoad(BiomeLoadingEvent event) {
@@ -124,19 +108,17 @@ public class MysticalPumpkinsMod {
 		}
 	}
 
-	@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-	public static class ForgeEventBusSubscriber {
+	@Mod.EventBusSubscriber(modid = SpecialConstants.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+	public static class ModEventBusSubscriber {
 		@SubscribeEvent(priority = EventPriority.LOWEST)
 		public static void onPostRegisterEntities(final RegistryEvent.Register<EntityType<?>> event) {
 			MysticalPumpkinSpawnEgg.SetupStuff();
 		}
 		@SubscribeEvent
 		public static void onClientSetup(FMLClientSetupEvent event) {
+			RegisterHandler.initClient();
 			RenderTypeLookup.setRenderLayer(RegisterHandler.INFUSION_TABLE.get(), RenderType.getTranslucent());
-			RenderingRegistry.registerEntityRenderingHandler(RegisterHandler.DRAGOURD.get(), (manager) -> {
-				return new DragourdRenderer(manager);
-			});
-
+			RenderingRegistry.registerEntityRenderingHandler(RegisterHandler.DRAGOURD.get(), DragourdRenderer::new);
 		}
 		@SubscribeEvent
 		public static void onItemColorEvent(ColorHandlerEvent.Item event) {
