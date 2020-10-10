@@ -48,6 +48,6 @@ public class MysticalPumpkinsJeiPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-		registration.addRecipeCatalyst(new ItemStack(RegisterHandler.INFUSER.get()), SpecialConstants.INFUSION_TABLE_UID);
+		registration.addRecipeCatalyst(new ItemStack(RegisterHandler.INFUSION_TABLE.get()), SpecialConstants.INFUSION_TABLE_UID);
 	}
 }

@@ -32,7 +32,7 @@ public class InfusionTableCategory implements IRecipeCategory<InfusionTableRecip
 
 	public InfusionTableCategory(IGuiHelper guiHelper) {
 		this.background = guiHelper.createDrawable(SpecialConstants.PUMPKIN_INFUSER_TEX, 0, 0, 176, 71);
-		this.icon = guiHelper.createDrawableIngredient(new ItemStack(RegisterHandler.INFUSER.get()));
+		this.icon = guiHelper.createDrawableIngredient(new ItemStack(RegisterHandler.INFUSION_TABLE.get()));
 		this.localizedName = Translator.translateToLocal("gui.jei.category.pumpkin_infusion_table");
 		int regularCookTime = 200;
 		this.arrow = guiHelper.drawableBuilder(SpecialConstants.PUMPKIN_INFUSER_TEX, 176, 0, 70, 17)
