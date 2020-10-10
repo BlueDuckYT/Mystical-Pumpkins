@@ -31,8 +31,8 @@ public class InfusionTableCategory implements IRecipeCategory<InfusionTableRecip
 	protected static final int outputSlot = 3;
 
 	public InfusionTableCategory(IGuiHelper guiHelper) {
-		this.background = guiHelper.createDrawable(SpecialConstants.PUMPKIN_INFUSER_TEX, 0, 0, 176, 166);
-		this.icon = guiHelper.createDrawableIngredient(new ItemStack(RegisterHandler.INFUSION_TABLE.get()));
+		this.background = guiHelper.createDrawable(SpecialConstants.PUMPKIN_INFUSER_TEX, 0, 0, 176, 71);
+		this.icon = guiHelper.createDrawableIngredient(new ItemStack(RegisterHandler.INFUSER.get()));
 		this.localizedName = Translator.translateToLocal("gui.jei.category.pumpkin_infusion_table");
 		int regularCookTime = 200;
 		this.arrow = guiHelper.drawableBuilder(SpecialConstants.PUMPKIN_INFUSER_TEX, 176, 0, 70, 17)
@@ -74,7 +74,7 @@ public class InfusionTableCategory implements IRecipeCategory<InfusionTableRecip
 		NonNullList<Ingredient> inputs = NonNullList.create();
 		inputs.add(Ingredient.fromStacks(recipe.getInput()));
 		inputs.add(Ingredient.fromStacks(new ItemStack(RegisterHandler.PUMPKIN_ESSENCE.get(), recipe.getEssenceAmount())));
-		inputs.add(Ingredient.fromStacks(recipe.getOutput()));
+		inputs.add(Ingredient.fromStacks(recipe.getSecondary()));
 		ingredients.setInputIngredients(inputs);
 		ingredients.setOutput(VanillaTypes.ITEM, recipe.getOutput());
 	}

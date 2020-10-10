@@ -38,7 +38,7 @@ public class MysticalPumpkinsJeiPlugin implements IModPlugin {
 
 	@Override
 	public void registerGuiHandlers(IGuiHandlerRegistration registration) {
-		registration.addRecipeClickArea(InfusionTableScreen.class, 69, 29, 80, 20);
+		registration.addRecipeClickArea(InfusionTableScreen.class, 69, 29, 80, 20, SpecialConstants.INFUSION_TABLE_UID);
 	}
 
 	@Override
@@ -48,6 +48,6 @@ public class MysticalPumpkinsJeiPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-		registration.addRecipeCatalyst(new ItemStack(RegisterHandler.INFUSION_TABLE.get()), SpecialConstants.INFUSION_TABLE_UID);
+		registration.addRecipeCatalyst(new ItemStack(RegisterHandler.INFUSER.get()), SpecialConstants.INFUSION_TABLE_UID);
 	}
 }
