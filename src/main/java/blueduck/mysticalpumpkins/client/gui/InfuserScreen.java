@@ -11,7 +11,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class InfuserScreen extends ContainerScreen<InfuserContainer> {
 
-	private static final ResourceLocation PUMPKIN_INFUSER_TEX = new ResourceLocation(MysticalPumpkinsMod.MODID, "textures/gui/container/pinfuser.png");
+	public static final ResourceLocation PUMPKIN_INFUSER_TEX = new ResourceLocation(MysticalPumpkinsMod.MODID, "textures/gui/container/pinfuser.png");
 
 	public InfuserScreen(InfuserContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
 		super(screenContainer, inv, titleIn);
@@ -31,7 +31,7 @@ public class InfuserScreen extends ContainerScreen<InfuserContainer> {
 				176,                // x of thing that replaces (up)
 				0,                  // y of thing that replaces (left)
 				infusingScale,
-				16
+				17
 		);
 	}
 }

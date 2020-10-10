@@ -51,14 +51,14 @@ public class RegisterHandler {
 	public static final RegistryObject<Item> HEART_OF_PUMPKLOPS = ITEMS.register("heart_of_pumpklops", () -> new Item(new Item.Properties().group(ItemGroup.MISC).rarity(Rarity.RARE)));
 
 
-	public static final RegistryObject<Block> GRACE_PUMPKIN = BLOCKS.register("grace_pumpkin", () -> new MysticalPumpkinBlock());
+	public static final RegistryObject<Block> GRACE_PUMPKIN = BLOCKS.register("grace_pumpkin", MysticalPumpkinBlock::new);
 	public static final RegistryObject<Item> GRACE_PUMPKIN_ITEM = ITEMS.register("grace_pumpkin", () -> new EffectPumpkinItem(GRACE_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.DOLPHINS_GRACE));
-	public static final RegistryObject<Block> WATER_PUMPKIN = BLOCKS.register("undrowning_pumpkin", () -> new MysticalPumpkinBlock());
+	public static final RegistryObject<Block> WATER_PUMPKIN = BLOCKS.register("undrowning_pumpkin", MysticalPumpkinBlock::new);
 	public static final RegistryObject<Item> WATER_PUMPKIN_ITEM = ITEMS.register("undrowning_pumpkin", () -> new EffectPumpkinItem(WATER_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.WATER_BREATHING));
-	public static final RegistryObject<Block> CONDUIT_PUMPKIN = BLOCKS.register("conduit_pumpkin", () -> new MysticalPumpkinBlock());
+	public static final RegistryObject<Block> CONDUIT_PUMPKIN = BLOCKS.register("conduit_pumpkin", MysticalPumpkinBlock::new);
 	public static final RegistryObject<Item> CONDUIT_PUMPKIN_ITEM = ITEMS.register("conduit_pumpkin", () -> new EffectPumpkinItem(CONDUIT_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.CONDUIT_POWER));
 
-	public static final RegistryObject<Block> LAVA_PUMPKIN = BLOCKS.register("cinder_pumpkin", () -> new MysticalPumpkinBlock());
+	public static final RegistryObject<Block> LAVA_PUMPKIN = BLOCKS.register("cinder_pumpkin", MysticalPumpkinBlock::new);
 	public static final RegistryObject<Item> LAVA_PUMPKIN_ITEM = ITEMS.register("cinder_pumpkin", () -> new EffectPumpkinItem(LAVA_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.FIRE_RESISTANCE));
 
 	public static final RegistryObject<Block> WRATH_PUMPKIN = BLOCKS.register("wrath_pumpkin", () -> new MysticalPumpkinBlock());
@@ -74,10 +74,10 @@ public class RegisterHandler {
 	public static final RegistryObject<Item> GALAXY_PUMPKIN_ITEM = ITEMS.register("galaxy_pumpkin", () -> new GalaxyPumpkinItem(GALAXY_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC)));
 
 
-	public static final RegistryObject<Block> LUCK_PUMPKIN = BLOCKS.register("luck_pumpkin", () -> new MysticalPumpkinBlock());
+	public static final RegistryObject<Block> LUCK_PUMPKIN = BLOCKS.register("luck_pumpkin", MysticalPumpkinBlock::new);
 	public static final RegistryObject<Item> LUCK_PUMPKIN_ITEM = ITEMS.register("luck_pumpkin", () -> new EffectPumpkinItem(LUCK_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.LUCK));
 
-	public static final RegistryObject<Block> HEALING_PUMPKIN = BLOCKS.register("healing_pumpkin", () -> new MysticalPumpkinBlock());
+	public static final RegistryObject<Block> HEALING_PUMPKIN = BLOCKS.register("healing_pumpkin", MysticalPumpkinBlock::new);
 	public static final RegistryObject<Item> HEALING_PUMPKIN_ITEM = ITEMS.register("healing_pumpkin", () -> new EffectPumpkinItem(HEALING_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.REGENERATION));
 
 	public static final RegistryObject<Block> MIRE_PUMPKIN = BLOCKS.register("mire_pumpkin", () -> new MirePumpkinBlock());
