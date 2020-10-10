@@ -1,9 +1,9 @@
 package blueduck.mysticalpumpkins.network.message;
 
-import java.util.function.Supplier;
-
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
+
+import java.util.function.Supplier;
 
 public interface IMessage<T> {
 	

@@ -1,18 +1,12 @@
 package blueduck.mysticalpumpkins.block;
 
-import blueduck.mysticalpumpkins.registry.RegisterHandler;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.pattern.BlockPattern;
-import net.minecraft.block.pattern.BlockPatternBuilder;
-import net.minecraft.block.pattern.BlockStateMatcher;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.SnowGolemEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.CachedBlockInfo;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 

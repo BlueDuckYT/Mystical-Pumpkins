@@ -1,7 +1,7 @@
 package blueduck.mysticalpumpkins.network;
 
-import blueduck.mysticalpumpkins.network.message.IMessage;
 import blueduck.mysticalpumpkins.network.message.BooleanMessage;
+import blueduck.mysticalpumpkins.network.message.IMessage;
 import blueduck.mysticalpumpkins.utils.SpecialConstants;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;

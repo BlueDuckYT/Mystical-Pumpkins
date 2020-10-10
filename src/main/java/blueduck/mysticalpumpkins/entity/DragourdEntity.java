@@ -7,7 +7,6 @@ import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
@@ -18,7 +17,6 @@ import software.bernie.geckolib.animation.controller.AnimationController;
 import software.bernie.geckolib.animation.controller.EntityAnimationController;
 import software.bernie.geckolib.entity.IAnimatedEntity;
 import software.bernie.geckolib.event.AnimationTestEvent;
-import software.bernie.geckolib.example.KeyboardHandler;
 import software.bernie.geckolib.manager.EntityAnimationManager;
 
 public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {

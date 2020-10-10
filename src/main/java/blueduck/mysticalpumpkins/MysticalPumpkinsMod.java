@@ -7,8 +7,6 @@ import blueduck.mysticalpumpkins.network.message.BooleanMessage;
 import blueduck.mysticalpumpkins.registry.InfusionTableRecipeRegistry;
 import blueduck.mysticalpumpkins.registry.RegisterHandler;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraftforge.api.distmarker.Dist;

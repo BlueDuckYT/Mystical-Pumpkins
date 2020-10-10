@@ -15,6 +15,13 @@ public class InfusionTableScreen extends ContainerScreen<InfusionTableContainer>
 	}
 
 	@Override
+	public void func_230430_a_(MatrixStack stack, int mouseX, int mouseY, float p_230430_4_) {
+		this.func_230446_a_(stack);
+		super.func_230430_a_(stack, mouseX, mouseY, p_230430_4_);
+		this.func_230459_a_(stack, mouseX, mouseY);
+	}
+
+	@Override
 	public void func_230450_a_(MatrixStack matrixStack, float p_230450_2_, int p_230450_3_, int p_230450_4_) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.field_230706_i_.getTextureManager().bindTexture(SpecialConstants.PUMPKIN_INFUSER_TEX);

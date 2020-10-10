@@ -1,11 +1,8 @@
 package blueduck.mysticalpumpkins.block;
 
-import com.sun.jna.platform.KeyboardUtils;
-import net.java.games.input.Keyboard;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
