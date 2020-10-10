@@ -22,7 +22,7 @@ public class InfusionTableContainer extends Container {
 	}
 
 	public InfusionTableContainer(int id, PlayerInventory playerInventory, IInventory tileEntity, IIntArray iIntArray) {
-		super(RegisterHandler.INFUSER_CONTAINER.get(), id);
+		super(RegisterHandler.INFUSION_TABLE_CONTAINER.get(), id);
 		assertInventorySize(tileEntity, 4);
 		assertIntArraySize(iIntArray, 2);
 		this.tileInfuser = tileEntity;

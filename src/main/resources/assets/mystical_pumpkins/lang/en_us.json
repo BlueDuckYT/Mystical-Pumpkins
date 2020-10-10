@@ -17,5 +17,6 @@
   "item.mystical_pumpkins.heart_of_pumpklops": "Heart of Pumpklops",
   "item.mystical_pumpkins.dragourd_spawn_egg": "Dragourd Spawn Egg",
 
-  "entity.mystical_pumpkins.dragourd": "Dragourd"
+  "entity.mystical_pumpkins.dragourd": "Dragourd",
+  "gui.jei.category.pumpkin_infusion_table": "Pumpkin Infusion"
 }

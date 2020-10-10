@@ -41,11 +41,11 @@ public class RegisterHandler {
 	public static DeferredRegister<TileEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, MysticalPumpkinsMod.MODID);
 	public static DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MysticalPumpkinsMod.MODID);
 
-	public static final RegistryObject<Block> INFUSER = BLOCKS.register("infusion_table", () -> new InfusionTableBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.RED)));
-	public static final RegistryObject<TileEntityType<InfusionTableTileEntity>> INFUSER_TILE_ENTITY = TILE_ENTITIES.register("infuser_tile_entity", () -> TileEntityType.Builder.create(InfusionTableTileEntity::new, INFUSER.get()).build(null));
-	public static final RegistryObject<Item> INFUSER_ITEM = ITEMS.register("infusion_table", () -> new BlockItem(INFUSER.get(), new Item.Properties().group(ItemGroup.MISC)));
+	public static final RegistryObject<Block> INFUSION_TABLE = BLOCKS.register("infusion_table", () -> new InfusionTableBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.RED)));
+	public static final RegistryObject<TileEntityType<InfusionTableTileEntity>> INFUSER_TILE_ENTITY = TILE_ENTITIES.register("infuser_tile_entity", () -> TileEntityType.Builder.create(InfusionTableTileEntity::new, INFUSION_TABLE.get()).build(null));
+	public static final RegistryObject<Item> INFUSION_TABLE_ITEM = ITEMS.register("infusion_table", () -> new BlockItem(INFUSION_TABLE.get(), new Item.Properties().group(ItemGroup.MISC)));
 	public static final RegistryObject<Item> PUMPKIN_ESSENCE = ITEMS.register("pumpkin_essence", () -> new Item(new Item.Properties().group(ItemGroup.MISC)));
-	public static final RegistryObject<ContainerType<InfusionTableContainer>> INFUSER_CONTAINER = CONTAINERS.register("infuser", () -> new ContainerType<>(InfusionTableContainer::new));
+	public static final RegistryObject<ContainerType<InfusionTableContainer>> INFUSION_TABLE_CONTAINER = CONTAINERS.register("infuser", () -> new ContainerType<>(InfusionTableContainer::new));
 
 	public static final RegistryObject<Item> HEART_OF_PUMPKLOPS = ITEMS.register("heart_of_pumpklops", () -> new Item(new Item.Properties().group(ItemGroup.MISC).rarity(Rarity.RARE)));
 
@@ -88,7 +88,7 @@ public class RegisterHandler {
 
 
 	public static void initClient() {
-		ScreenManager.registerFactory(INFUSER_CONTAINER.get(), InfusionTableScreen::new);
+		ScreenManager.registerFactory(INFUSION_TABLE_CONTAINER.get(), InfusionTableScreen::new);
 	}
 
 	public static void init() {
