@@ -1,6 +1,7 @@
 package blueduck.mysticalpumpkins;
 
 import blueduck.mysticalpumpkins.client.renderer.DragourdRenderer;
+import blueduck.mysticalpumpkins.item.MysticalPumpkinSpawnEgg;
 import blueduck.mysticalpumpkins.network.MysticalPumpkinsMessageHandler;
 import blueduck.mysticalpumpkins.network.message.BooleanMessage;
 import blueduck.mysticalpumpkins.registry.InfuserRecipeRegistry;
@@ -9,10 +10,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.EntityType;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -105,12 +110,22 @@ public class MysticalPumpkinsMod {
 
 	@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ForgeEventBusSubscriber {
+		@SubscribeEvent(priority = EventPriority.LOWEST)
+		public static void onPostRegisterEntities(final RegistryEvent.Register<EntityType<?>> event) {
+			MysticalPumpkinSpawnEgg.SetupStuff();
+		}
 		@SubscribeEvent
 		public static void onClientSetup(FMLClientSetupEvent event) {
 			RenderingRegistry.registerEntityRenderingHandler(RegisterHandler.DRAGOURD.get(), (manager) -> {
 				return new DragourdRenderer(manager);
 			});
 
+		}
+		@SubscribeEvent
+		public static void onItemColorEvent(ColorHandlerEvent.Item event) {
+			for (final SpawnEggItem egg : MysticalPumpkinSpawnEgg.SPAWN_EGGS) {
+				event.getItemColors().register((stack, i) -> egg.getColor(i), egg);
+			}
 		}
 	}
 

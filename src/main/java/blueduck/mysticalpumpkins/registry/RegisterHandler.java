@@ -6,6 +6,7 @@ import blueduck.mysticalpumpkins.client.gui.InfuserScreen;
 import blueduck.mysticalpumpkins.client.renderer.DragourdRenderer;
 import blueduck.mysticalpumpkins.container.InfuserContainer;
 import blueduck.mysticalpumpkins.entity.DragourdEntity;
+import blueduck.mysticalpumpkins.item.MysticalPumpkinSpawnEgg;
 import blueduck.mysticalpumpkins.tileentity.InfuserTileEntity;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -84,6 +85,8 @@ public class RegisterHandler {
 	public static final RegistryObject<Item> MIRE_PUMPKIN_ITEM = ITEMS.register("mire_pumpkin", () -> new MysticalPumpkinItem(MIRE_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC)));
 
 	public static final RegistryObject<EntityType<DragourdEntity>> DRAGOURD = ENTITIES.register("dragourd", () -> EntityType.Builder.<DragourdEntity>create(DragourdEntity::new, EntityClassification.MONSTER).size(0.9F, 0.8F).build(new ResourceLocation("mystical_pumpkins", "textures/entity/dragourd.png").toString()));
+
+	public static final RegistryObject<Item> DRAGOURD_SPAWN_EGG = ITEMS.register("dragourd_spawn_egg", () -> new MysticalPumpkinSpawnEgg(() -> DRAGOURD.get(),16743215, 13335343, new Item.Properties().group(ItemGroup.MISC)));
 
 
 	public static void initClient() {

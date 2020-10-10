@@ -88,4 +88,8 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
         return SoundEvents.BLOCK_WOOD_BREAK;
     }
 
+    public SoundEvent getDeathSound() {
+        return SoundEvents.BLOCK_WOOD_BREAK;
+    }
+
 }

@@ -14,5 +14,8 @@
   "block.mystical_pumpkins.wrath_pumpkin": "Pumpkin of Wrath",
 
   "item.mystical_pumpkins.pumpkin_essence": "Pumpkin Essence",
-  "item.mystical_pumpkins.heart_of_pumpklops": "Heart of Pumpklops"
+  "item.mystical_pumpkins.heart_of_pumpklops": "Heart of Pumpklops",
+  "item.mystical_pumpkins.dragourd_spawn_egg": "Dragourd Spawn Egg",
+
+  "entity.mystical_pumpkins.dragourd": "Dragourd"
 }
