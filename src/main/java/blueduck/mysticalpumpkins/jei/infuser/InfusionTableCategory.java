@@ -31,12 +31,12 @@ public class InfusionTableCategory implements IRecipeCategory<InfusionTableRecip
 	protected static final int outputSlot = 3;
 
 	public InfusionTableCategory(IGuiHelper guiHelper) {
-		this.background = guiHelper.createDrawable(SpecialConstants.PUMPKIN_INFUSER_TEX, 0, 0, 176, 71);
+		this.background = guiHelper.createDrawable(SpecialConstants.PUMPKIN_INFUSER_JEI, 0, 0, 176, 76);
 		this.icon = guiHelper.createDrawableIngredient(new ItemStack(RegisterHandler.INFUSION_TABLE.get()));
 		this.localizedName = Translator.translateToLocal("gui.jei.category.pumpkin_infusion_table");
-		int regularCookTime = 200;
+		int totalCookTime = 200;
 		this.arrow = guiHelper.drawableBuilder(SpecialConstants.PUMPKIN_INFUSER_TEX, 176, 0, 70, 17)
-				                    .buildAnimated(regularCookTime, IDrawableAnimated.StartDirection.LEFT, false);
+				                    .buildAnimated(totalCookTime, IDrawableAnimated.StartDirection.LEFT, false);
 	}
 
 	@Override
@@ -83,10 +83,10 @@ public class InfusionTableCategory implements IRecipeCategory<InfusionTableRecip
 	public void setRecipe(IRecipeLayout recipeLayout, InfusionTableRecipe recipe, IIngredients ingredients) {
 		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
-		guiItemStacks.init(inputSlot, true, 53, 12);
-		guiItemStacks.init(essenceSlot, true, 17, 30);
-		guiItemStacks.init(secondarySlot, true, 53, 48);
-		guiItemStacks.init(outputSlot, false, 143, 30);
+		guiItemStacks.init(inputSlot, true, 52, 11);
+		guiItemStacks.init(essenceSlot, true, 16, 29);
+		guiItemStacks.init(secondarySlot, true, 52, 47);
+		guiItemStacks.init(outputSlot, false, 142, 29);
 
 		guiItemStacks.set(ingredients);
 	}
