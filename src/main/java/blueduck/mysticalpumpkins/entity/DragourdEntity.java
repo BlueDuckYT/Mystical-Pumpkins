@@ -24,6 +24,8 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
     public EntityAnimationManager animationManager = new EntityAnimationManager();
 
     private AnimationController moveController = new EntityAnimationController(this, "moveController", 10F, this::moveController);
+    private AnimationController headController = new EntityAnimationController(this, "headController", 10F, this::moveController);
+    private AnimationController tailController = new EntityAnimationController(this, "tailController", 10F, this::moveController);
 
     public int attackTimer = 0;
 
@@ -36,6 +38,8 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
         if(world.isRemote)
         {
             this.animationManager.addAnimationController(moveController);
+            this.animationManager.addAnimationController(headController);
+            this.animationManager.addAnimationController(tailController);
         }
     }
 
@@ -46,12 +50,19 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
 
     private <ENTITY extends Entity> boolean moveController(AnimationTestEvent<ENTITY> event)
     {
+        boolean b = false;
         if (attackTimer > 0) {
-            moveController.setAnimation(new AnimationBuilder().addAnimation("attack", true));
+            headController.setAnimation(new AnimationBuilder().addAnimation("attackhead", true));
+            tailController.setAnimation(new AnimationBuilder().addAnimation("attacktail", true));
             attackTimer--;
+            b = true;
         }
         else if (event.isWalking()) {
-            moveController.setAnimation(new AnimationBuilder().addAnimation("walk", true));
+            moveController.setAnimation(new AnimationBuilder().addAnimation("walklegs", true));
+            if (!b) {
+                headController.setAnimation(new AnimationBuilder().addAnimation("walkhead", true));
+                tailController.setAnimation(new AnimationBuilder().addAnimation("walktail", true));
+            }
             return true;
         }
         return false;
@@ -60,6 +71,9 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
     }
     public boolean attackEntityAsMob(Entity entityIn) {
         attackTimer = 60;
+        headController.setAnimation(new AnimationBuilder().addAnimation("attackhead", true));
+        tailController.setAnimation(new AnimationBuilder().addAnimation("attacktail", true));
+
         return super.attackEntityAsMob(entityIn);
     }
 
