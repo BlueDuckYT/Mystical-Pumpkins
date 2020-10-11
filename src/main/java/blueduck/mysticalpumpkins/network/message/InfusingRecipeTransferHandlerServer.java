@@ -1,7 +1,9 @@
 package blueduck.mysticalpumpkins.network.message;
 
 import blueduck.mysticalpumpkins.registry.InfusionTableRecipeRegistry;
+import blueduck.mysticalpumpkins.registry.RegisterHandler;
 import blueduck.mysticalpumpkins.tileentity.InfusionTableRecipe;
+import blueduck.mysticalpumpkins.utils.SpecialConstants;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
@@ -16,28 +18,33 @@ import java.util.*;
  * but modified
  * lol
  * */
+
+//TODO I feel like I should refactor this class and make it cleaner.
 public class InfusingRecipeTransferHandlerServer {
 
 	public static void setItems(PlayerEntity player, InfusionTableRecipe recipe, Map<Integer, Integer> slotIdMap, List<Integer> craftingSlots, List<Integer> inventorySlots, boolean maxTransfer, boolean requireCompleteSets) {
 		Container container = player.openContainer;
 
+		SpecialConstants.LOGGER.info(recipe);
 		// grab items from slots
 		Map<Integer, ItemStack> slotMap = new HashMap<>(slotIdMap.size());
 		for (Map.Entry<Integer, Integer> entry : slotIdMap.entrySet()) {
 			Slot slot = container.getSlot(entry.getValue());
 			final ItemStack slotStack = slot.getStack();
-			final ItemStack copyStack = slotStack.copy();
+
 			if (slotStack.isEmpty()) {
 				return;
 			}
-			ItemStack stack = slotStack.copy();
-			if (InfusionTableRecipeRegistry.canBeInfused(copyStack))
-				copyStack.setCount(recipe.getSecondary().getCount());
-			else if (InfusionTableRecipeRegistry.isValidInput(copyStack))
-				copyStack.setCount(recipe.getInput().getCount());
-			else
-				copyStack.setCount(recipe.getEssenceAmount());
-			slotMap.put(entry.getKey(), stack);
+			ItemStack copy = slotStack.copy();
+
+			if (InfusionTableRecipeRegistry.canBeInfused(copy))
+				copy.setCount(recipe.getSecondary().getCount());
+			else if (InfusionTableRecipeRegistry.isValidInput(copy))
+				copy.setCount(recipe.getInput().getCount());
+			else if (copy.getItem() == RegisterHandler.PUMPKIN_ESSENCE.get())
+				copy.setCount(recipe.getEssenceAmount());
+
+			slotMap.put(entry.getKey(), copy);
 		}
 
 		// Transfer as many items as possible only if it has been explicitly requested by the implementation
@@ -114,6 +121,9 @@ public class InfusingRecipeTransferHandlerServer {
 		// This map becomes populated with the resulting items to transfer and is returned by this method.
 		final Map<Integer, ItemStack> result = new HashMap<>(required.size());
 
+		SpecialConstants.LOGGER.info(required);
+		SpecialConstants.LOGGER.info(transferAsCompleteSets + " " + maxTransfer);
+
 		loopSets:
 		while (true) { // for each set
 
@@ -181,8 +191,8 @@ public class InfusingRecipeTransferHandlerServer {
 
 				if (resultItemStack == null) {
 					result.put(entry.getKey(), entry.getValue());
-
 				} else {
+					SpecialConstants.LOGGER.info(resultItemStack);
 					resultItemStack.grow(1);
 				}
 			}

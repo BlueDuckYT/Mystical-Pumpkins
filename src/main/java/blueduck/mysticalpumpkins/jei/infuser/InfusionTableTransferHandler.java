@@ -6,6 +6,8 @@ import blueduck.mysticalpumpkins.network.message.InfusingMovingMessage;
 import blueduck.mysticalpumpkins.registry.InfusionTableRecipeRegistry;
 import blueduck.mysticalpumpkins.registry.RegisterHandler;
 import blueduck.mysticalpumpkins.tileentity.InfusionTableRecipe;
+import blueduck.mysticalpumpkins.utils.SpecialConstants;
+import com.google.common.collect.Lists;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.ingredient.IGuiIngredient;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
@@ -80,7 +82,9 @@ public class InfusionTableTransferHandler implements IRecipeTransferHandler<Infu
 			return handlerHelper.createInternalError();
 		}
 
-		Map<Integer, ItemStack> availableItemStacks = new HashMap<>();
+		Map<Integer, ItemStack> craftingItemStack = new HashMap<>();
+		Map<Integer, ItemStack> inventoryItemStack = new HashMap<>();
+		Map<Integer, ItemStack> availableItemStack = new HashMap<>();
 		int filledCraftSlotCount = 0;
 		int emptySlotCount = 0;
 
@@ -92,7 +96,7 @@ public class InfusionTableTransferHandler implements IRecipeTransferHandler<Infu
 					return handlerHelper.createInternalError();
 				}
 				filledCraftSlotCount++;
-				availableItemStacks.put(slot.slotNumber, stack.copy());
+				craftingItemStack.put(slot.slotNumber, stack.copy());
 			}
 		}
 
@@ -100,7 +104,7 @@ public class InfusionTableTransferHandler implements IRecipeTransferHandler<Infu
 			final ItemStack stack = slot.getStack();
 
 			if (!stack.isEmpty()) {
-				availableItemStacks.put(slot.slotNumber, stack.copy());
+				inventoryItemStack.put(slot.slotNumber, stack.copy());
 			} else {
 				emptySlotCount++;
 			}
@@ -112,18 +116,23 @@ public class InfusionTableTransferHandler implements IRecipeTransferHandler<Infu
 			return handlerHelper.createUserErrorWithTooltip(message);
 		}
 
-		Integer slot = checkStack(infusionTableRecipe, availableItemStacks);
+		Integer slot = checkStack(infusionTableRecipe, inventoryItemStack);
 
-		if (checkStack(infusionTableRecipe, availableItemStacks) >= 0) {
+		if (slot >= 0) {
 			String message = Translator.translateToLocal("jei.tooltip.error.recipe.transfer.missing");
 			return handlerHelper.createUserErrorForSlots(message, Collections.singleton(slot));
 		}
 
-		RecipeTransferUtil.MatchingItemsResult matchingItemsResult = RecipeTransferUtil.getMatchingItems(stackHelper, availableItemStacks, itemStackGroup.getGuiIngredients());
+		Collection<Integer> missingItems = checkMissingStack(inventoryItemStack);
+
+		availableItemStack.putAll(craftingItemStack);
+		availableItemStack.putAll(inventoryItemStack);
+
+		RecipeTransferUtil.MatchingItemsResult matchingItemsResult = RecipeTransferUtil.getMatchingItems(stackHelper, availableItemStack, itemStackGroup.getGuiIngredients());
 
 		if (matchingItemsResult.missingItems.size() > 0) {
 			String message = Translator.translateToLocal("jei.tooltip.error.recipe.transfer.missing");
-			return handlerHelper.createUserErrorForSlots(message, matchingItemsResult.missingItems);
+			return handlerHelper.createUserErrorForSlots(message, missingItems);
 		}
 
 		List<Integer> craftingSlotIndexes = new ArrayList<>(craftingSlots.keySet());
@@ -164,5 +173,36 @@ public class InfusionTableTransferHandler implements IRecipeTransferHandler<Infu
 			}
 		}
 		return -1;
+	}
+
+	private static Collection<Integer> checkMissingStack(Map<Integer, ItemStack> stacks) {
+		if (stacks.isEmpty()) {
+			return Lists.newArrayList(0, 1, 2);
+		} else {
+			ArrayList<Item> items = new ArrayList<>();
+			Map<Integer, ItemStack> existingStacks = new HashMap<>();
+			for (ItemStack stack : stacks.values()) {
+				Item item = stack.getItem();
+				items.add(item);
+			}
+
+			if (!items.contains(RegisterHandler.PUMPKIN_ESSENCE.get()))
+				return Lists.newArrayList(1);
+
+			stacks.values().forEach(stack -> {
+				if (InfusionTableRecipeRegistry.isValidInput(stack))
+					existingStacks.put(0, stack);
+				if (InfusionTableRecipeRegistry.canBeInfused(stack))
+					existingStacks.put(2, stack);
+			});
+
+			if (existingStacks.size() < 2) {
+				if (existingStacks.containsKey(0))
+					return Collections.singleton(2);
+				if (existingStacks.containsKey(2))
+					return Collections.singleton(0);
+			}
+		}
+		return Collections.singleton(-1);
 	}
 }

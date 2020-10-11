@@ -36,27 +36,27 @@ public class InfusingMovingMessage implements IMessage<InfusingMovingMessage> {
 
 	@Override
 	public void encode(InfusingMovingMessage message, PacketBuffer buf) {
-		buf.writeVarInt(recipeMap.size());
-		for (Map.Entry<Integer, Integer> recipeMapEntry : recipeMap.entrySet()) {
+		buf.writeVarInt(message.recipeMap.size());
+		for (Map.Entry<Integer, Integer> recipeMapEntry : message.recipeMap.entrySet()) {
 			buf.writeVarInt(recipeMapEntry.getKey());
 			buf.writeVarInt(recipeMapEntry.getValue());
 		}
-		buf.writeItemStack(recipeToBeMoved.getInput());
-		buf.writeItemStack(new ItemStack(RegisterHandler.PUMPKIN_ESSENCE.get(), recipeToBeMoved.getEssenceAmount()));
-		buf.writeItemStack(recipeToBeMoved.getSecondary());
-		buf.writeItemStack(recipeToBeMoved.getOutput());
-		buf.writeVarInt(craftingSlots.size());
-		for (Integer craftingSlot : craftingSlots) {
+		buf.writeItemStack(message.recipeToBeMoved.getInput());
+		buf.writeItemStack(new ItemStack(RegisterHandler.PUMPKIN_ESSENCE.get(), message.recipeToBeMoved.getEssenceAmount()));
+		buf.writeItemStack(message.recipeToBeMoved.getSecondary());
+		buf.writeItemStack(message.recipeToBeMoved.getOutput());
+		buf.writeVarInt(message.craftingSlots.size());
+		for (Integer craftingSlot : message.craftingSlots) {
 			buf.writeVarInt(craftingSlot);
 		}
 
-		buf.writeVarInt(inventorySlots.size());
-		for (Integer inventorySlot : inventorySlots) {
+		buf.writeVarInt(message.inventorySlots.size());
+		for (Integer inventorySlot : message.inventorySlots) {
 			buf.writeVarInt(inventorySlot);
 		}
 
-		buf.writeBoolean(maxTransfer);
-		buf.writeBoolean(requireCompleteSets);
+		buf.writeBoolean(message.maxTransfer);
+		buf.writeBoolean(message.requireCompleteSets);
 	}
 
 	@Override
