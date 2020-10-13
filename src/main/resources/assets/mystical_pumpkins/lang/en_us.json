@@ -16,8 +16,12 @@
   "item.mystical_pumpkins.pumpkin_essence": "Pumpkin Essence",
   "item.mystical_pumpkins.heart_of_pumpklops": "Heart of Pumpklops",
   "item.mystical_pumpkins.dragourd_spawn_egg": "Dragourd Spawn Egg",
+  "item.mystical_pumpkins.enemy_pumpkinion_spawn_egg": "Rabid Pumpkinion Spawn Egg",
+  "item.mystical_pumpkins.friendly_pumpkinion_spawn_egg": "Pumpkinion Spawn Egg",
 
   "entity.mystical_pumpkins.dragourd": "Dragourd",
+  "entity.mystical_pumpkins.enemy_pumpkinion": "Rabid Pumpkinion",
+  "entity.mystical_pumpkins.friendly_pumpkinion": "Pumpkinion",
 
   "gui.jei.category.pumpkin_infusion_table": "Pumpkin Infusion",
   "gui.mystical_pumpkins.infusion_table": "Pumpkin Infusion Table"

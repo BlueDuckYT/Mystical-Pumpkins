@@ -3,7 +3,6 @@ package blueduck.mysticalpumpkins.jei;
 import blueduck.mysticalpumpkins.client.gui.InfusionTableScreen;
 import blueduck.mysticalpumpkins.container.InfusionTableContainer;
 import blueduck.mysticalpumpkins.jei.infuser.InfusionTableCategory;
-import blueduck.mysticalpumpkins.jei.infuser.InfusionTableTransferHandler;
 import blueduck.mysticalpumpkins.registry.InfusionTableRecipeRegistry;
 import blueduck.mysticalpumpkins.registry.RegisterHandler;
 import blueduck.mysticalpumpkins.utils.SpecialConstants;
@@ -43,8 +42,8 @@ public class MysticalPumpkinsJeiPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-		InfusionTableTransferHandler handler = new InfusionTableTransferHandler(registration.getJeiHelpers().getStackHelper(), registration.getTransferHelper(), new BasicRecipeTransferInfo<>(InfusionTableContainer.class, SpecialConstants.INFUSION_TABLE_UID, 0, 3, 4, 36));
-		registration.addRecipeTransferHandler(handler, SpecialConstants.INFUSION_TABLE_UID);
+		//InfusionTableTransferHandler handler = new InfusionTableTransferHandler(registration.getJeiHelpers().getStackHelper(), registration.getTransferHelper(), new BasicRecipeTransferInfo<>(InfusionTableContainer.class, SpecialConstants.INFUSION_TABLE_UID, 0, 3, 4, 36));
+		//registration.addRecipeTransferHandler(handler, SpecialConstants.INFUSION_TABLE_UID);
 	}
 
 	@Override
