@@ -1,6 +1,10 @@
 package blueduck.mysticalpumpkins.tileentity;
 
+import blueduck.mysticalpumpkins.registry.RegisterHandler;
 import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InfusionTableRecipe {
 
@@ -30,6 +34,14 @@ public class InfusionTableRecipe {
 
 	public ItemStack getInput() {
 		return input.copy();
+	}
+
+	public List<ItemStack> getIngredients() {
+		List<ItemStack> ingredients = new ArrayList<>();
+		ingredients.add(input);
+		ingredients.add(new ItemStack(RegisterHandler.PUMPKIN_ESSENCE.get(), essenceAmount));
+		ingredients.add(secondary);
+		return ingredients;
 	}
 
 	@Override
