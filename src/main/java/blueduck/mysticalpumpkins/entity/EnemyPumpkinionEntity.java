@@ -19,17 +19,15 @@ import software.bernie.geckolib.entity.IAnimatedEntity;
 import software.bernie.geckolib.event.AnimationTestEvent;
 import software.bernie.geckolib.manager.EntityAnimationManager;
 
-public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
+public class EnemyPumpkinionEntity extends MonsterEntity implements IAnimatedEntity {
 
     public EntityAnimationManager animationManager = new EntityAnimationManager();
 
     private AnimationController moveController = new EntityAnimationController(this, "moveController", 10F, this::moveController);
-    private AnimationController headController = new EntityAnimationController(this, "headController", 10F, this::moveController);
-    private AnimationController tailController = new EntityAnimationController(this, "tailController", 10F, this::moveController);
 
     public int attackTimer = 0;
 
-    public DragourdEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+    public EnemyPumpkinionEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
         super(type, worldIn);
         registerAnimationControllers();
     }
@@ -38,8 +36,6 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
         if(world.isRemote)
         {
             this.animationManager.addAnimationController(moveController);
-            this.animationManager.addAnimationController(headController);
-            this.animationManager.addAnimationController(tailController);
         }
     }
 
@@ -52,17 +48,15 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
     {
         boolean b = false;
         if (attackTimer > 0) {
-            headController.setAnimation(new AnimationBuilder().addAnimation("attackhead", true));
-            tailController.setAnimation(new AnimationBuilder().addAnimation("attacktail", true));
             attackTimer--;
+            moveController.setAnimation(new AnimationBuilder().addAnimation("attack", true));
             b = true;
             return true;
         }
         else if (event.isWalking()) {
-            moveController.setAnimation(new AnimationBuilder().addAnimation("walklegs", true));
+            moveController.setAnimation(new AnimationBuilder().addAnimation("walk", true));
             if (!b) {
-                headController.setAnimation(new AnimationBuilder().addAnimation("walkhead", true));
-                tailController.setAnimation(new AnimationBuilder().addAnimation("walktail", true));
+
             }
             return true;
         }
@@ -72,8 +66,7 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
     }
     public boolean attackEntityAsMob(Entity entityIn) {
         attackTimer = 60;
-        headController.setAnimation(new AnimationBuilder().addAnimation("attackhead", true));
-        tailController.setAnimation(new AnimationBuilder().addAnimation("attacktail", true));
+        moveController.setAnimation(new AnimationBuilder().addAnimation("attack", true));
 
         return super.attackEntityAsMob(entityIn);
     }
@@ -91,9 +84,9 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
 
     public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
         return MobEntity.func_233666_p_()
-                .func_233815_a_(Attributes.field_233818_a_, 20.0D) //health
+                .func_233815_a_(Attributes.field_233818_a_, 10.0D) //health
                 .func_233815_a_(Attributes.field_233821_d_, 0.3D) //movement speed
-                .func_233815_a_(Attributes.field_233823_f_, 3.0D) //attack damage
+                .func_233815_a_(Attributes.field_233823_f_, 2.0D) //attack damage
                 .func_233815_a_(Attributes.field_233824_g_, 0.2D); //attack knockback
     }
 

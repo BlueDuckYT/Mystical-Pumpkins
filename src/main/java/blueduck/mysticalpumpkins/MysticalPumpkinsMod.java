@@ -1,6 +1,8 @@
 package blueduck.mysticalpumpkins;
 
 import blueduck.mysticalpumpkins.client.renderer.DragourdRenderer;
+import blueduck.mysticalpumpkins.client.renderer.EnemyPumpkinionRenderer;
+import blueduck.mysticalpumpkins.client.renderer.FriendlyPumpkinionRenderer;
 import blueduck.mysticalpumpkins.item.MysticalPumpkinSpawnEgg;
 import blueduck.mysticalpumpkins.network.MysticalPumpkinsMessageHandler;
 import blueduck.mysticalpumpkins.network.message.BooleanMessage;
@@ -119,6 +121,8 @@ public class MysticalPumpkinsMod {
 			RegisterHandler.initClient();
 			RenderTypeLookup.setRenderLayer(RegisterHandler.INFUSION_TABLE.get(), RenderType.getTranslucent());
 			RenderingRegistry.registerEntityRenderingHandler(RegisterHandler.DRAGOURD.get(), DragourdRenderer::new);
+			RenderingRegistry.registerEntityRenderingHandler(RegisterHandler.ENEMY_PUMPKINION.get(), EnemyPumpkinionRenderer::new);
+			RenderingRegistry.registerEntityRenderingHandler(RegisterHandler.FRIENDLY_PUMPKINION.get(), FriendlyPumpkinionRenderer::new);
 		}
 		@SubscribeEvent
 		public static void onItemColorEvent(ColorHandlerEvent.Item event) {

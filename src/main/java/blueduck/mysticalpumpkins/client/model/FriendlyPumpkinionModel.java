@@ -5,13 +5,13 @@
 package blueduck.mysticalpumpkins.client.model;
 
 import blueduck.mysticalpumpkins.entity.EnemyPumpkinionEntity;
+import blueduck.mysticalpumpkins.entity.FriendlyPumpkinionEntity;
 import blueduck.mysticalpumpkins.utils.SpecialConstants;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ResourceLocation;
 import software.bernie.geckolib.animation.model.AnimatedEntityModel;
 import software.bernie.geckolib.animation.render.AnimatedModelRenderer;
 
-public class PumpkinionModel extends AnimatedEntityModel<EnemyPumpkinionEntity> {
+public class FriendlyPumpkinionModel extends AnimatedEntityModel<FriendlyPumpkinionEntity> {
 
     private final AnimatedModelRenderer main;
 	private final AnimatedModelRenderer body;
@@ -19,7 +19,7 @@ public class PumpkinionModel extends AnimatedEntityModel<EnemyPumpkinionEntity> 
 	private final AnimatedModelRenderer lleg;
 	private final AnimatedModelRenderer rleg;
 
-    public PumpkinionModel()
+    public FriendlyPumpkinionModel()
     {
         textureWidth = 64;
     textureHeight = 64;

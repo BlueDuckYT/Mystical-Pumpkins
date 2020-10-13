@@ -1,12 +1,16 @@
 package blueduck.mysticalpumpkins.entity;
 
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.passive.GolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
@@ -19,17 +23,15 @@ import software.bernie.geckolib.entity.IAnimatedEntity;
 import software.bernie.geckolib.event.AnimationTestEvent;
 import software.bernie.geckolib.manager.EntityAnimationManager;
 
-public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
+public class FriendlyPumpkinionEntity extends CreatureEntity implements IAnimatedEntity {
 
     public EntityAnimationManager animationManager = new EntityAnimationManager();
 
     private AnimationController moveController = new EntityAnimationController(this, "moveController", 10F, this::moveController);
-    private AnimationController headController = new EntityAnimationController(this, "headController", 10F, this::moveController);
-    private AnimationController tailController = new EntityAnimationController(this, "tailController", 10F, this::moveController);
 
     public int attackTimer = 0;
 
-    public DragourdEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+    public FriendlyPumpkinionEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
         super(type, worldIn);
         registerAnimationControllers();
     }
@@ -38,8 +40,6 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
         if(world.isRemote)
         {
             this.animationManager.addAnimationController(moveController);
-            this.animationManager.addAnimationController(headController);
-            this.animationManager.addAnimationController(tailController);
         }
     }
 
@@ -52,17 +52,15 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
     {
         boolean b = false;
         if (attackTimer > 0) {
-            headController.setAnimation(new AnimationBuilder().addAnimation("attackhead", true));
-            tailController.setAnimation(new AnimationBuilder().addAnimation("attacktail", true));
             attackTimer--;
+            moveController.setAnimation(new AnimationBuilder().addAnimation("attack", true));
             b = true;
             return true;
         }
         else if (event.isWalking()) {
-            moveController.setAnimation(new AnimationBuilder().addAnimation("walklegs", true));
+            moveController.setAnimation(new AnimationBuilder().addAnimation("walk", true));
             if (!b) {
-                headController.setAnimation(new AnimationBuilder().addAnimation("walkhead", true));
-                tailController.setAnimation(new AnimationBuilder().addAnimation("walktail", true));
+
             }
             return true;
         }
@@ -72,8 +70,7 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
     }
     public boolean attackEntityAsMob(Entity entityIn) {
         attackTimer = 60;
-        headController.setAnimation(new AnimationBuilder().addAnimation("attackhead", true));
-        tailController.setAnimation(new AnimationBuilder().addAnimation("attacktail", true));
+        moveController.setAnimation(new AnimationBuilder().addAnimation("attack", true));
 
         return super.attackEntityAsMob(entityIn);
     }
@@ -86,14 +83,16 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
         this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
         this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setCallsForHelp());
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MobEntity.class, 5, false, false, (p_234199_0_) -> {
+            return p_234199_0_ instanceof IMob && !(p_234199_0_ instanceof CreeperEntity);
+        }));
     }
 
     public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
         return MobEntity.func_233666_p_()
-                .func_233815_a_(Attributes.field_233818_a_, 20.0D) //health
+                .func_233815_a_(Attributes.field_233818_a_, 10.0D) //health
                 .func_233815_a_(Attributes.field_233821_d_, 0.3D) //movement speed
-                .func_233815_a_(Attributes.field_233823_f_, 3.0D) //attack damage
+                .func_233815_a_(Attributes.field_233823_f_, 2.0D) //attack damage
                 .func_233815_a_(Attributes.field_233824_g_, 0.2D); //attack knockback
     }
 

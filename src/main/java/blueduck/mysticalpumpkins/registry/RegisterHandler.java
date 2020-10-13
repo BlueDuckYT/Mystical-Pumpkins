@@ -3,8 +3,12 @@ package blueduck.mysticalpumpkins.registry;
 import blueduck.mysticalpumpkins.block.*;
 import blueduck.mysticalpumpkins.client.gui.InfusionTableScreen;
 import blueduck.mysticalpumpkins.client.renderer.DragourdRenderer;
+import blueduck.mysticalpumpkins.client.renderer.EnemyPumpkinionRenderer;
+import blueduck.mysticalpumpkins.client.renderer.FriendlyPumpkinionRenderer;
 import blueduck.mysticalpumpkins.container.InfusionTableContainer;
 import blueduck.mysticalpumpkins.entity.DragourdEntity;
+import blueduck.mysticalpumpkins.entity.EnemyPumpkinionEntity;
+import blueduck.mysticalpumpkins.entity.FriendlyPumpkinionEntity;
 import blueduck.mysticalpumpkins.item.MysticalPumpkinSpawnEgg;
 import blueduck.mysticalpumpkins.tileentity.InfusionTableTileEntity;
 import blueduck.mysticalpumpkins.utils.SpecialConstants;
@@ -86,6 +90,14 @@ public class RegisterHandler {
 
 	public static final RegistryObject<Item> DRAGOURD_SPAWN_EGG = ITEMS.register("dragourd_spawn_egg", () -> new MysticalPumpkinSpawnEgg(() -> DRAGOURD.get(),16743215, 13335343, new Item.Properties().group(ItemGroup.MISC)));
 
+	public static final RegistryObject<EntityType<EnemyPumpkinionEntity>> ENEMY_PUMPKINION = ENTITIES.register("enemy_pumpkinion", () -> EntityType.Builder.<EnemyPumpkinionEntity>create(EnemyPumpkinionEntity::new, EntityClassification.MONSTER).size(0.9F, 0.9F).build(new ResourceLocation("mystical_pumpkins", "textures/entity/pumpkinion.png").toString()));
+
+	public static final RegistryObject<Item> ENEMY_PUMPKINION_SPAWN_EGG = ITEMS.register("enemy_pumpkinion_spawn_egg", () -> new MysticalPumpkinSpawnEgg(() -> ENEMY_PUMPKINION.get(),16743215, 13335343, new Item.Properties().group(ItemGroup.MISC)));
+
+	public static final RegistryObject<EntityType<FriendlyPumpkinionEntity>> FRIENDLY_PUMPKINION = ENTITIES.register("friendly_pumpkinion", () -> EntityType.Builder.<FriendlyPumpkinionEntity>create(FriendlyPumpkinionEntity::new, EntityClassification.CREATURE).size(0.9F, 0.9F).build(new ResourceLocation("mystical_pumpkins", "textures/entity/pumpkinion.png").toString()));
+
+	public static final RegistryObject<Item> FRIENDLY_PUMPKINION_SPAWN_EGG = ITEMS.register("friendly_pumpkinion_spawn_egg", () -> new MysticalPumpkinSpawnEgg(() -> ENEMY_PUMPKINION.get(),16743215, 13335343, new Item.Properties().group(ItemGroup.MISC)));
+
 
 	public static void initClient() {
 		ScreenManager.registerFactory(INFUSION_TABLE_CONTAINER.get(), InfusionTableScreen::new);
@@ -106,9 +118,17 @@ public class RegisterHandler {
 		RenderingRegistry.registerEntityRenderingHandler((EntityType) DRAGOURD.get(), (manager) -> {
 			return new DragourdRenderer(manager);
 		});
+		RenderingRegistry.registerEntityRenderingHandler((EntityType) ENEMY_PUMPKINION.get(), (manager) -> {
+			return new EnemyPumpkinionRenderer(manager);
+		});
+		RenderingRegistry.registerEntityRenderingHandler((EntityType) FRIENDLY_PUMPKINION.get(), (manager) -> {
+			return new FriendlyPumpkinionRenderer(manager);
+		});
 	}
 	public static void attributeStuff() {
 		GlobalEntityTypeAttributes.put(DRAGOURD.get(), DragourdEntity.setCustomAttributes().func_233813_a_()/*(or your own)*/);
+		GlobalEntityTypeAttributes.put(ENEMY_PUMPKINION.get(), DragourdEntity.setCustomAttributes().func_233813_a_()/*(or your own)*/);
+		GlobalEntityTypeAttributes.put(FRIENDLY_PUMPKINION.get(), DragourdEntity.setCustomAttributes().func_233813_a_()/*(or your own)*/);
 	}
 
 }
