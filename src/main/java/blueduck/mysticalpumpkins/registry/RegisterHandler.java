@@ -10,6 +10,7 @@ import blueduck.mysticalpumpkins.entity.DragourdEntity;
 import blueduck.mysticalpumpkins.entity.EnemyPumpkinionEntity;
 import blueduck.mysticalpumpkins.entity.FriendlyPumpkinionEntity;
 import blueduck.mysticalpumpkins.item.MysticalPumpkinSpawnEgg;
+import blueduck.mysticalpumpkins.item.ScepterItem;
 import blueduck.mysticalpumpkins.tileentity.InfusionTableTileEntity;
 import blueduck.mysticalpumpkins.utils.SpecialConstants;
 import net.minecraft.block.AbstractBlock;
@@ -97,6 +98,8 @@ public class RegisterHandler {
 	public static final RegistryObject<EntityType<FriendlyPumpkinionEntity>> FRIENDLY_PUMPKINION = ENTITIES.register("friendly_pumpkinion", () -> EntityType.Builder.<FriendlyPumpkinionEntity>create(FriendlyPumpkinionEntity::new, EntityClassification.MISC).size(0.9F, 0.9F).build(new ResourceLocation("mystical_pumpkins", "textures/entity/pumpkinion.png").toString()));
 
 	public static final RegistryObject<Item> FRIENDLY_PUMPKINION_SPAWN_EGG = ITEMS.register("friendly_pumpkinion_spawn_egg", () -> new MysticalPumpkinSpawnEgg(() -> FRIENDLY_PUMPKINION.get(),16743215, 13335343, new Item.Properties().group(ItemGroup.MISC)));
+
+	public static final RegistryObject<Item> PUMPKIN_SCEPTER = ITEMS.register("pumpkin_scepter", () -> new ScepterItem(new Item.Properties().group(ItemGroup.COMBAT).maxStackSize(1).defaultMaxDamage(32)));
 
 
 	public static void initClient() {

@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "Desktop/pscepter",
-		"particle": "Desktop/pscepter"
+		"0": "mystical_pumpkins:item/scepter",
+		"particle": "mystical_pumpkins:item/scepter"
 	},
 	"elements": [
 		{
