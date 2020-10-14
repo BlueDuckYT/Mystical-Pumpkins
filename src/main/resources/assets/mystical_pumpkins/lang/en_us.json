@@ -23,6 +23,8 @@
   "entity.mystical_pumpkins.dragourd": "Dragourd",
   "entity.mystical_pumpkins.enemy_pumpkinion": "Rabid Pumpkinion",
   "entity.mystical_pumpkins.friendly_pumpkinion": "Pumpkinion",
+  "entity.mystical_pumpkins.pumpkin_sludge": "Pumpkin Sludge",
+  "entity.mystical_pumpkins.pumpklops": "Pumpklops",
 
   "gui.jei.category.pumpkin_infusion_table": "Pumpkin Infusion",
   "gui.mystical_pumpkins.infusion_table": "Pumpkin Infusion Table"
