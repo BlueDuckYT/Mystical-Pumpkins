@@ -1,9 +1,6 @@
 package blueduck.mysticalpumpkins;
 
-import blueduck.mysticalpumpkins.client.renderer.DragourdRenderer;
-import blueduck.mysticalpumpkins.client.renderer.EnemyPumpkinionRenderer;
-import blueduck.mysticalpumpkins.client.renderer.FriendlyPumpkinionRenderer;
-import blueduck.mysticalpumpkins.client.renderer.SludgeRenderer;
+import blueduck.mysticalpumpkins.client.renderer.*;
 import blueduck.mysticalpumpkins.item.MysticalPumpkinSpawnEgg;
 import blueduck.mysticalpumpkins.network.MysticalPumpkinsMessageHandler;
 import blueduck.mysticalpumpkins.network.message.BooleanMessage;
@@ -120,11 +117,11 @@ public class MysticalPumpkinsMod {
 		@SubscribeEvent
 		public static void onClientSetup(FMLClientSetupEvent event) {
 			RegisterHandler.initClient();
-			RenderTypeLookup.setRenderLayer(RegisterHandler.INFUSION_TABLE.get(), RenderType.getTranslucent());
 			RenderingRegistry.registerEntityRenderingHandler(RegisterHandler.DRAGOURD.get(), DragourdRenderer::new);
 			RenderingRegistry.registerEntityRenderingHandler(RegisterHandler.ENEMY_PUMPKINION.get(), EnemyPumpkinionRenderer::new);
 			RenderingRegistry.registerEntityRenderingHandler(RegisterHandler.FRIENDLY_PUMPKINION.get(), FriendlyPumpkinionRenderer::new);
 			RenderingRegistry.registerEntityRenderingHandler(RegisterHandler.PUMPKIN_SLUDGE.get(), SludgeRenderer::new);
+			RenderingRegistry.registerEntityRenderingHandler(RegisterHandler.PUMPKLOPS.get(), PumpklopsRenderer::new);
 		}
 		@SubscribeEvent
 		public static void onItemColorEvent(ColorHandlerEvent.Item event) {

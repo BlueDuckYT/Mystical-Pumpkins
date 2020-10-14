@@ -49,12 +49,12 @@ public class PumpklopsEntity extends MonsterEntity implements IAnimatedEntity {
         boolean b = false;
         if (attackTimer > 0) {
             attackTimer--;
-            moveController.setAnimation(new AnimationBuilder().addAnimation("attack", true));
+            //moveController.setAnimation(new AnimationBuilder().addAnimation("attack", true));
             b = true;
             return true;
         }
         else if (event.isWalking()) {
-            moveController.setAnimation(new AnimationBuilder().addAnimation("walk", true));
+            moveController.setAnimation(new AnimationBuilder().addAnimation("float", true));
             if (!b) {
 
             }
@@ -66,7 +66,7 @@ public class PumpklopsEntity extends MonsterEntity implements IAnimatedEntity {
     }
     public boolean attackEntityAsMob(Entity entityIn) {
         attackTimer = 60;
-        moveController.setAnimation(new AnimationBuilder().addAnimation("attack", true));
+       // moveController.setAnimation(new AnimationBuilder().addAnimation("attack", true));
 
         return super.attackEntityAsMob(entityIn);
     }
@@ -84,9 +84,9 @@ public class PumpklopsEntity extends MonsterEntity implements IAnimatedEntity {
 
     public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
         return MobEntity.func_233666_p_()
-                .func_233815_a_(Attributes.field_233818_a_, 10.0D) //health
+                .func_233815_a_(Attributes.field_233818_a_, 500.0D) //health
                 .func_233815_a_(Attributes.field_233821_d_, 0.3D) //movement speed
-                .func_233815_a_(Attributes.field_233823_f_, 2.0D) //attack damage
+                .func_233815_a_(Attributes.field_233823_f_, 8.0D) //attack damage
                 .func_233815_a_(Attributes.field_233824_g_, 0.2D); //attack knockback
     }
 
