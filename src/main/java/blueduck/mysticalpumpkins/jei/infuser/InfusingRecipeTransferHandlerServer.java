@@ -3,7 +3,6 @@ package blueduck.mysticalpumpkins.jei.infuser;
 import blueduck.mysticalpumpkins.container.InfusionTableContainer;
 import blueduck.mysticalpumpkins.registry.RegisterHandler;
 import blueduck.mysticalpumpkins.tileentity.InfusionTableRecipe;
-import blueduck.mysticalpumpkins.utils.SpecialConstants;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
@@ -12,15 +11,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-// Please end me.
 public class InfusingRecipeTransferHandlerServer {
 
 	private static final Logger LOGGER = LogManager.getLogger("Infusion Table Transfer Handler SERVER");
 
-	public static void setItems(PlayerEntity player, InfusionTableRecipe recipe, Map<Integer, Integer> slotsWithStacks, List<Integer> craftingSlots, List<Integer> inventorySlots, boolean maxTransfer, boolean requireCompleteSets) {
+	public static void setItems(PlayerEntity player, InfusionTableRecipe recipe, Map<Integer, Integer> slotsWithStacks, boolean maxTransfer) {
 		Container container = player.openContainer;
 		InfusionTableContainer infuser = (InfusionTableContainer) container;
 
@@ -64,9 +61,6 @@ public class InfusingRecipeTransferHandlerServer {
 				}
 			}
 		}
-
-		SpecialConstants.LOGGER.info(infuser.getInventory());
-
 		infuser.detectAndSendChanges();
 	}
 
@@ -94,13 +88,4 @@ public class InfusingRecipeTransferHandlerServer {
 			infuser.getSlot(index).putStack(stackToPutInInfuser);
 		}
 	}
-	/*
-	private static boolean areStackable(ItemStack stack1, ItemStack stack2) {
-		return stack1.getCount() + stack2.getCount() <= 64 && ItemStack.areItemsEqual(stack1, stack2);
-	}
-
-	private static void stackTogether(ItemStack stack1, ItemStack stack2) {
-		stack2.grow(stack1.getCount());
-		stack1.setCount(0);
-	}*/
 }

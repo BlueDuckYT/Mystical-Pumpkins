@@ -6,7 +6,6 @@ import blueduck.mysticalpumpkins.network.message.InfusingMovingMessage;
 import blueduck.mysticalpumpkins.registry.InfusionTableRecipeRegistry;
 import blueduck.mysticalpumpkins.registry.RegisterHandler;
 import blueduck.mysticalpumpkins.tileentity.InfusionTableRecipe;
-import blueduck.mysticalpumpkins.utils.SpecialConstants;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.ingredient.IGuiIngredient;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
@@ -148,9 +147,6 @@ public class InfusionTableTransferHandler implements IRecipeTransferHandler<Infu
 		List<Integer> craftingSlotIndexes = new ArrayList<>(craftingSlots.keySet());
 		Collections.sort(craftingSlotIndexes);
 
-		List<Integer> inventorySlotIndexes = new ArrayList<>(inventorySlots.keySet());
-		Collections.sort(inventorySlotIndexes);
-
 		// check that the slots exist and can be altered
 		for (Map.Entry<Integer, Integer> entry : matchingItemsResult.matchingItems.entrySet()) {
 			int craftNumber = entry.getKey();
@@ -162,13 +158,13 @@ public class InfusionTableTransferHandler implements IRecipeTransferHandler<Infu
 		}
 
 		if (doTransfer) {
-			InfusingMovingMessage message = new InfusingMovingMessage(matchingItemsResult.matchingItems, infusionTableRecipe, craftingSlotIndexes, inventorySlotIndexes, maxTransfer, transferHelper.requireCompleteSets());
+			InfusingMovingMessage message = new InfusingMovingMessage(matchingItemsResult.matchingItems, infusionTableRecipe, maxTransfer);
 			MysticalPumpkinsMessageHandler.HANDLER.sendToServer(message);
 		}
 
 		return null;
 	}
-
+	
 	private static Collection<Integer> checkStack(InfusionTableRecipe infusionTableRecipe, Map<Integer, ItemStack> stacks) {
 		Collection<Integer> slot = new ArrayList<>();
 		Map<Item, Integer> amountAndItem = new HashMap<>();
