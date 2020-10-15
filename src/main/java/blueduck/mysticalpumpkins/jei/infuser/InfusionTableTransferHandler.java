@@ -164,7 +164,7 @@ public class InfusionTableTransferHandler implements IRecipeTransferHandler<Infu
 
 		return null;
 	}
-	
+
 	private static Collection<Integer> checkStack(InfusionTableRecipe infusionTableRecipe, Map<Integer, ItemStack> stacks) {
 		Collection<Integer> slot = new ArrayList<>();
 		Map<Item, Integer> amountAndItem = new HashMap<>();
