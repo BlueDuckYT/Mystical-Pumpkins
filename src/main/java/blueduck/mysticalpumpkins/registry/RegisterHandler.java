@@ -95,7 +95,7 @@ public class RegisterHandler {
 
 	public static final RegistryObject<Item> FRIENDLY_PUMPKINION_SPAWN_EGG = ITEMS.register("friendly_pumpkinion_spawn_egg", () -> new MysticalPumpkinSpawnEgg(() -> FRIENDLY_PUMPKINION.get(),16743215, 13335343, new Item.Properties().group(ItemGroup.MISC)));
 
-	public static final RegistryObject<EntityType<SludgeEntity>> PUMPKIN_SLUDGE = ENTITIES.register("pumpkin_sludge", () -> EntityType.Builder.<SludgeEntity>create(SludgeEntity::new, EntityClassification.MISC).size(0.5F, 0.5F).build(new ResourceLocation("mystical_pumpkins", "textures/entity/pumpkinion.png").toString()));
+	public static final RegistryObject<EntityType<SludgeEntity>> PUMPKIN_SLUDGE = ENTITIES.register("pumpkin_sludge", () -> EntityType.Builder.<SludgeEntity>create(SludgeEntity::new, EntityClassification.MISC).size(2.04F, 2.04F).build(new ResourceLocation("mystical_pumpkins", "textures/entity/pumpkinion.png").toString()));
 
 	public static final RegistryObject<Item> PUMPKIN_SLUDGE_SPAWN_EGG = ITEMS.register("pumpkin_sludge_spawn_egg", () -> new MysticalPumpkinSpawnEgg(() -> PUMPKIN_SLUDGE.get(),16743215, 13335343, new Item.Properties().group(ItemGroup.MISC)));
 
