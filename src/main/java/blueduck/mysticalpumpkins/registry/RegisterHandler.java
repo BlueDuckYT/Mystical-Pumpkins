@@ -5,6 +5,7 @@ import blueduck.mysticalpumpkins.client.gui.InfusionTableScreen;
 import blueduck.mysticalpumpkins.client.renderer.*;
 import blueduck.mysticalpumpkins.container.InfusionTableContainer;
 import blueduck.mysticalpumpkins.entity.*;
+import blueduck.mysticalpumpkins.item.GreenMagicBallItem;
 import blueduck.mysticalpumpkins.item.MysticalPumpkinSpawnEgg;
 import blueduck.mysticalpumpkins.item.ScepterItem;
 import blueduck.mysticalpumpkins.tileentity.InfusionTableTileEntity;
@@ -101,7 +102,11 @@ public class RegisterHandler {
 
 	public static final RegistryObject<Item> PUMPKIN_SCEPTER = ITEMS.register("pumpkin_scepter", () -> new ScepterItem(new Item.Properties().group(ItemGroup.COMBAT).maxStackSize(1).defaultMaxDamage(32)));
 
-	public static final RegistryObject<EntityType<PumpklopsEntity>> PUMPKLOPS = ENTITIES.register("pumpklops", () -> EntityType.Builder.<PumpklopsEntity>create(PumpklopsEntity::new, EntityClassification.MISC).size(0.9F, 1.85F).build(new ResourceLocation("mystical_pumpkins", "textures/entity/pumpkinion.png").toString()));
+	public static final RegistryObject<EntityType<PumpklopsEntity>> PUMPKLOPS = ENTITIES.register("pumpklops", () -> EntityType.Builder.create(PumpklopsEntity::new, EntityClassification.MISC).size(0.9F, 1.85F).build(new ResourceLocation("mystical_pumpkins", "textures/entity/pumpkinion.png").toString()));
+
+	public static final RegistryObject<Item> GREEN_MAGIC_BALL_ITEM = ITEMS.register("green_fireball", () -> new GreenMagicBallItem(new Item.Properties().group(ItemGroup.MISC)));
+
+	public static final RegistryObject<EntityType<GreenMagicBallEntity>> GREEN_MAGIC_BALL = ENTITIES.register("green_fireball", () -> EntityType.Builder.<GreenMagicBallEntity>create(GreenMagicBallEntity::new, EntityClassification.MISC).size(0.3125F, 0.3125F).build(new ResourceLocation("mystical_pumpkins", "textures/entity/green_fireball.png").toString()));
 
 
 	public static void initClient() {
