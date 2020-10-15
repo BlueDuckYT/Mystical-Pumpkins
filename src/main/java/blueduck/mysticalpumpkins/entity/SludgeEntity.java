@@ -2,7 +2,11 @@ package blueduck.mysticalpumpkins.entity;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.loot.LootTables;
 import net.minecraft.particles.IParticleData;
@@ -25,6 +29,14 @@ public class SludgeEntity extends SlimeEntity {
 	protected void registerGoals() {
 		super.registerGoals();
 		this.targetSelector.addGoal(1, new AttackEveryFreakingAttackAbleEntity(this));
+	}
+
+	public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
+		return MobEntity.func_233666_p_()
+				       .func_233815_a_(Attributes.field_233818_a_, 16.0D) //health
+				       .func_233815_a_(Attributes.field_233821_d_, 0.3D) //movement speed
+				       .func_233815_a_(Attributes.field_233823_f_, 4.0D) //attack damage
+				       .func_233815_a_(Attributes.field_233824_g_, 0.2D); //attack knockback
 	}
 
 	@Override
@@ -103,6 +115,11 @@ public class SludgeEntity extends SlimeEntity {
 	private static class AttackEveryFreakingAttackAbleEntity extends NearestAttackableTargetGoal<LivingEntity> {
 		public AttackEveryFreakingAttackAbleEntity(SludgeEntity sludge) {
 			super(sludge, LivingEntity.class, 0, true, true, LivingEntity::attackable);
+		}
+
+		@Override
+		public boolean shouldExecute() {
+			return super.shouldExecute() && this.target instanceof MonsterEntity;
 		}
 	}
 }
