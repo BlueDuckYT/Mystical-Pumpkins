@@ -62,7 +62,7 @@ public class PumpklopsEntity extends MonsterEntity implements IAnimatedEntity {
             b = true;
             return true;
         }
-        else if (event.isWalking()) {
+        else if (event.isWalking() || true) {
             moveController.setAnimation(new AnimationBuilder().addAnimation("move", true));
             if (!b) {
 

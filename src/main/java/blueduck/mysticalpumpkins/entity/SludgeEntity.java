@@ -242,7 +242,7 @@ public class SludgeEntity extends SlimeEntity {
 			} else if (!livingentity.isAlive()) {
 				return false;
 			} else {
-				return livingentity instanceof PlayerEntity && ((PlayerEntity) livingentity).abilities.disableDamage ? false : this.slime.getMoveHelper() instanceof SlimeEntity.MoveHelperController;
+				return this.slime.getMoveHelper() instanceof SlimeEntity.MoveHelperController;
 			}
 		}
 
