@@ -31,6 +31,10 @@ public class InfusionTableRecipeRegistry {
 		addInfuserRecipe(new ItemStack(Items.CARVED_PUMPKIN), 30, new ItemStack(Items.GOLDEN_APPLE, 1), new ItemStack(RegisterHandler.HEALING_PUMPKIN_ITEM.get()));
 		addInfuserRecipe(new ItemStack(Items.CARVED_PUMPKIN), 20, new ItemStack(Items.DIAMOND_SWORD, 1), new ItemStack(RegisterHandler.WRATH_PUMPKIN_ITEM.get()));
 
+		addInfuserRecipe(new ItemStack(Items.ENDER_EYE), 64, new ItemStack(Items.CARVED_PUMPKIN, 1), new ItemStack(RegisterHandler.EYE_OF_DREAD.get()));
+
+		addInfuserRecipe(new ItemStack(Items.PUMPKIN), 64, new ItemStack(RegisterHandler.EYE_OF_DREAD.get(), 1), new ItemStack(RegisterHandler.DREAD_PUMPKIN_ITEM.get()));
+
 
 
 		for (InfusionTableRecipe recipe : recipes) {

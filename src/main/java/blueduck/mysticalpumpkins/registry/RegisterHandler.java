@@ -51,6 +51,8 @@ public class RegisterHandler {
 
 	public static final RegistryObject<Item> HEART_OF_PUMPKLOPS = ITEMS.register("heart_of_pumpklops", () -> new Item(new Item.Properties().group(ItemGroup.MISC).rarity(Rarity.RARE)));
 
+	public static final RegistryObject<Item> EYE_OF_DREAD = ITEMS.register("eye_of_dread", () -> new Item(new Item.Properties().group(ItemGroup.MISC)));
+
 
 	public static final RegistryObject<Block> GRACE_PUMPKIN = BLOCKS.register("grace_pumpkin", MysticalPumpkinBlock::new);
 	public static final RegistryObject<Item> GRACE_PUMPKIN_ITEM = ITEMS.register("grace_pumpkin", () -> new EffectPumpkinItem(GRACE_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.DOLPHINS_GRACE));
