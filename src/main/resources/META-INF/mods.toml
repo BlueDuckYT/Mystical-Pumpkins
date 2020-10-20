@@ -56,6 +56,6 @@ Mystical Pumpkins adds a new set of items and progression using the new Pumpkin 
 [[dependencies.mystical_pumpkins]]
     modId="geckolib"
     mandatory=true
-    versionRange="[2.0)"
+    versionRange="[2.0,)"
     ordering="NONE"
     side="BOTH"

@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "mystical_pumpkins:grace_pumpkin"
+          "name": "mystical_pumpkins:night_vision_pumpkin"
         }
       ],
       "conditions": [
