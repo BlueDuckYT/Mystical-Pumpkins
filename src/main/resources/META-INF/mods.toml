@@ -17,7 +17,7 @@ license="All rights reserved"
 # The modid of the mod
 modId="mystical_pumpkins" #mandatory
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
-version="0.0.1" #mandatory
+version="0.1.0" #mandatory
  # A display name for the mod
 displayName="Mystical Pumpkins" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification <here>
@@ -27,12 +27,12 @@ displayName="Mystical Pumpkins" #mandatory
 # A file name (in the root of the mod JAR) containing a logo for display
 # logoFile="mystical_pumpkins.png" #optional
 # A text field displayed in the mod UI
-credits="E" #optional
+credits="Development by Blue Duck and LorenzoPapi, idea by TheU1t1mateGuy" #optional
 # A text field displayed in the mod UI
-authors="E" #optional
+authors="Blue Duck, LorenzoPapi, TheU1t1mateGuy" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-EEEEEE
+Mystical Pumpkins adds a new set of items and progression using the new Pumpkin Infusion Table
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.mystical_pumpkins]] #optional
@@ -51,5 +51,11 @@ EEEEEE
     modId="minecraft"
     mandatory=true
     versionRange="[1.16.3]"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.mystical_pumpkins]]
+    modId="geckolib"
+    mandatory=true
+    versionRange="[2.0)"
     ordering="NONE"
     side="BOTH"
