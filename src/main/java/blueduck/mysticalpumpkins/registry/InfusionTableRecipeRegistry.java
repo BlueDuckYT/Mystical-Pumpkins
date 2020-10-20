@@ -18,8 +18,9 @@ public class InfusionTableRecipeRegistry {
 	public static final ArrayList<InfusionTableRecipe> recipes = new ArrayList<>();
 
 	private static void fillWithBuiltInRecipes() {
-		addInfuserRecipe(new ItemStack(Items.CARVED_PUMPKIN), 10, new ItemStack(Items.SEA_PICKLE, 8), new ItemStack(RegisterHandler.GRACE_PUMPKIN_ITEM.get()));
-		addInfuserRecipe(new ItemStack(RegisterHandler.GRACE_PUMPKIN_ITEM.get()), 20, new ItemStack(Items.HEART_OF_THE_SEA, 1), new ItemStack(RegisterHandler.WATER_PUMPKIN_ITEM.get()));
+		addInfuserRecipe(new ItemStack(Items.CARVED_PUMPKIN), 10, new ItemStack(Items.SEA_PICKLE, 8), new ItemStack(RegisterHandler.AQUASIGHT_PUMPKIN_ITEM.get()));
+		addInfuserRecipe(new ItemStack(RegisterHandler.AQUASIGHT_PUMPKIN_ITEM.get()), 20, new ItemStack(Items.HEART_OF_THE_SEA, 1), new ItemStack(RegisterHandler.WATER_PUMPKIN_ITEM.get()));
+		addInfuserRecipe(new ItemStack(RegisterHandler.AQUASIGHT_PUMPKIN_ITEM.get()), 32, new ItemStack(Items.ENDER_EYE, 1), new ItemStack(RegisterHandler.NIGHT_VISION_PUMPKIN_ITEM.get()));
 		addInfuserRecipe(new ItemStack(RegisterHandler.WATER_PUMPKIN_ITEM.get()), 40, new ItemStack(RegisterHandler.HEART_OF_PUMPKLOPS.get(), 1), new ItemStack(RegisterHandler.CONDUIT_PUMPKIN_ITEM.get()));
 		addInfuserRecipe(new ItemStack(Items.CARVED_PUMPKIN), 30, new ItemStack(Items.GOLD_INGOT, 7), new ItemStack(RegisterHandler.LUCK_PUMPKIN_ITEM.get()));
 		addInfuserRecipe(new ItemStack(Items.CARVED_PUMPKIN), 20, new ItemStack(Items.FEATHER, 10), new ItemStack(RegisterHandler.FLOATING_PUMPKIN_ITEM.get()));

@@ -54,12 +54,15 @@ public class RegisterHandler {
 	public static final RegistryObject<Item> EYE_OF_DREAD = ITEMS.register("eye_of_dread", () -> new Item(new Item.Properties().group(ItemGroup.MISC)));
 
 
-	public static final RegistryObject<Block> GRACE_PUMPKIN = BLOCKS.register("grace_pumpkin", MysticalPumpkinBlock::new);
-	public static final RegistryObject<Item> GRACE_PUMPKIN_ITEM = ITEMS.register("grace_pumpkin", () -> new EffectPumpkinItem(GRACE_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.DOLPHINS_GRACE));
+	public static final RegistryObject<Block> AQUASIGHT_PUMPKIN = BLOCKS.register("aquasight_pumpkin", MysticalPumpkinBlock::new);
+	public static final RegistryObject<Item> AQUASIGHT_PUMPKIN_ITEM = ITEMS.register("aquasight_pumpkin", () -> new UnderwaterEffectPumpkinItem(AQUASIGHT_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.NIGHT_VISION));
 	public static final RegistryObject<Block> WATER_PUMPKIN = BLOCKS.register("undrowning_pumpkin", MysticalPumpkinBlock::new);
-	public static final RegistryObject<Item> WATER_PUMPKIN_ITEM = ITEMS.register("undrowning_pumpkin", () -> new EffectPumpkinItem(WATER_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.WATER_BREATHING));
+	public static final RegistryObject<Item> WATER_PUMPKIN_ITEM = ITEMS.register("undrowning_pumpkin", () -> new NightVisionUnderwaterEffectPumpkinItem(WATER_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.WATER_BREATHING));
 	public static final RegistryObject<Block> CONDUIT_PUMPKIN = BLOCKS.register("conduit_pumpkin", MysticalPumpkinBlock::new);
-	public static final RegistryObject<Item> CONDUIT_PUMPKIN_ITEM = ITEMS.register("conduit_pumpkin", () -> new EffectPumpkinItem(CONDUIT_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.CONDUIT_POWER));
+	public static final RegistryObject<Item> CONDUIT_PUMPKIN_ITEM = ITEMS.register("conduit_pumpkin", () -> new NightVisionUnderwaterEffectPumpkinItem(CONDUIT_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.CONDUIT_POWER));
+
+	public static final RegistryObject<Block> NIGHT_VISION_PUMPKIN = BLOCKS.register("night_vision_pumpkin", MysticalPumpkinBlock::new);
+	public static final RegistryObject<Item> NIGHT_VISION_PUMPKIN_ITEM = ITEMS.register("night_vision_pumpkin", () -> new EffectPumpkinItem(NIGHT_VISION_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.NIGHT_VISION));
 
 	public static final RegistryObject<Block> LAVA_PUMPKIN = BLOCKS.register("cinder_pumpkin", MysticalPumpkinBlock::new);
 	public static final RegistryObject<Item> LAVA_PUMPKIN_ITEM = ITEMS.register("cinder_pumpkin", () -> new EffectPumpkinItem(LAVA_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.FIRE_RESISTANCE));
