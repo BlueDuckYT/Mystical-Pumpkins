@@ -12,6 +12,13 @@ import net.minecraft.util.IndirectEntityDamageSource;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+@OnlyIn(
+		value = Dist.CLIENT,
+		_interface = IRendersAsItem.class
+)
 
 public class GreenMagicBallEntity extends DamagingProjectileEntity implements IRendersAsItem {
 
