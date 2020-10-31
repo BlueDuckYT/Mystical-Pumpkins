@@ -26,7 +26,7 @@ public class BooleanMessage implements IMessage<BooleanMessage>{
 
 	@Override
 	public BooleanMessage decode(PacketBuffer buffer) {
-		return new BooleanMessage(buffer.readString(), buffer.readBoolean());
+		return new BooleanMessage(buffer.readString(32767), buffer.readBoolean());
 	}
 
 	@Override

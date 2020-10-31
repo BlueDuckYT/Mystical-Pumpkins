@@ -23,7 +23,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class GreenMagicBallEntity extends DamagingProjectileEntity implements IRendersAsItem {
 
 	public static DamageSource greenSource(GreenMagicBallEntity source, Entity indirectEntityIn) {
-		return (new IndirectEntityDamageSource("pumpklop.magic", source, indirectEntityIn)).setProjectile();
+		return (new IndirectEntityDamageSource("pumpklops.magic", source, indirectEntityIn)).setProjectile();
 	}
 
 	public GreenMagicBallEntity(double x, double y, double z, double accelX, double accelY, double accelZ, World world) {
