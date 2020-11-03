@@ -34,21 +34,22 @@ public class GreenMagicBallEntity extends DamagingProjectileEntity implements IR
 		return (new IndirectEntityDamageSource("pumpklops.magic", source, indirectEntityIn)).setProjectile();
 	}
 
-	public GreenMagicBallEntity(double x, double y, double z, double accelX, double accelY, double accelZ, World world) {
-		super(RegisterHandler.GREEN_MAGIC_BALL.get(), x, y, z, accelX, accelY, accelZ, world);
-	}
+//	public GreenMagicBallEntity(double x, double y, double z, double accelX, double accelY, double accelZ, World world) {
+//		super(RegisterHandler.GREEN_MAGIC_BALL.get(), x, y, z, accelX, accelY, accelZ, world);
+//	}
 
 	public GreenMagicBallEntity(LivingEntity shooter, double accelX, double accelY, double accelZ, World world) {
 		super(RegisterHandler.GREEN_MAGIC_BALL.get(), shooter, accelX, accelY, accelZ, world);
 	}
 
-	public GreenMagicBallEntity(EntityType<? extends DamagingProjectileEntity> greenMagicBallEntityType, World world) {
-		super(greenMagicBallEntityType, world);
+	public GreenMagicBallEntity(EntityType<? extends DamagingProjectileEntity> type, World world) {
+		super(type, world);
 	}
 
 	@Override
+	//JUST FOR DEBUG
 	public boolean isBurning() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -98,7 +99,6 @@ public class GreenMagicBallEntity extends DamagingProjectileEntity implements IR
 		if (stack.getItem() != RegisterHandler.GREEN_MAGIC_BALL_ITEM.get() || stack.hasTag()) {
 			this.getDataManager().set(ITEMSTACK_DATA, Util.make(stack.copy(), (newstack) -> newstack.setCount(1)));
 		}
-
 	}
 
 	protected ItemStack getStack() {
@@ -108,13 +108,12 @@ public class GreenMagicBallEntity extends DamagingProjectileEntity implements IR
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public ItemStack getItem() {
-		ItemStack itemstack = this.getStack();
-		return itemstack.isEmpty() ? new ItemStack(RegisterHandler.GREEN_MAGIC_BALL_ITEM.get()) : itemstack;
+		return new ItemStack(RegisterHandler.GREEN_MAGIC_BALL_ITEM.get());
 	}
 
 	@Override
 	protected void registerData() {
-		this.getDataManager().register(ITEMSTACK_DATA, ItemStack.EMPTY);
+		this.getDataManager().register(ITEMSTACK_DATA, new ItemStack(RegisterHandler.GREEN_MAGIC_BALL_ITEM.get()));
 	}
 
 	@Override
