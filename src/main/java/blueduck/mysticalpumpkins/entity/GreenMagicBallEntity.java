@@ -6,9 +6,15 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IRendersAsItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.DamagingProjectileEntity;
+import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IndirectEntityDamageSource;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -16,11 +22,13 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(
-		value = Dist.CLIENT,
-		_interface = IRendersAsItem.class
+	value = Dist.CLIENT,
+	_interface = IRendersAsItem.class
 )
 
 public class GreenMagicBallEntity extends DamagingProjectileEntity implements IRendersAsItem {
+
+	private static final DataParameter<ItemStack> ITEMSTACK_DATA = EntityDataManager.createKey(ProjectileItemEntity.class, DataSerializers.ITEMSTACK);
 
 	public static DamageSource greenSource(GreenMagicBallEntity source, Entity indirectEntityIn) {
 		return (new IndirectEntityDamageSource("pumpklops.magic", source, indirectEntityIn)).setProjectile();
@@ -67,7 +75,8 @@ public class GreenMagicBallEntity extends DamagingProjectileEntity implements IR
 	@Override
 	public void onImpact(RayTraceResult result) {
 		super.onImpact(result);
-		this.remove();
+		if (!this.world.isRemote)
+			this.remove();
 	}
 
 	@Override
@@ -85,8 +94,43 @@ public class GreenMagicBallEntity extends DamagingProjectileEntity implements IR
 		return false;
 	}
 
+	public void setStack(ItemStack stack) {
+		if (stack.getItem() != RegisterHandler.GREEN_MAGIC_BALL_ITEM.get() || stack.hasTag()) {
+			this.getDataManager().set(ITEMSTACK_DATA, Util.make(stack.copy(), (newstack) -> newstack.setCount(1)));
+		}
+
+	}
+
+	protected ItemStack getStack() {
+		return this.getDataManager().get(ITEMSTACK_DATA);
+	}
+
 	@Override
+	@OnlyIn(Dist.CLIENT)
 	public ItemStack getItem() {
-		return RegisterHandler.GREEN_MAGIC_BALL_ITEM.get().getDefaultInstance();
+		ItemStack itemstack = this.getStack();
+		return itemstack.isEmpty() ? new ItemStack(RegisterHandler.GREEN_MAGIC_BALL_ITEM.get()) : itemstack;
+	}
+
+	@Override
+	protected void registerData() {
+		this.getDataManager().register(ITEMSTACK_DATA, ItemStack.EMPTY);
+	}
+
+	@Override
+	public void writeAdditional(CompoundNBT compound) {
+		super.writeAdditional(compound);
+		ItemStack itemstack = this.getStack();
+		if (!itemstack.isEmpty()) {
+			compound.put("Item", itemstack.write(new CompoundNBT()));
+		}
+
+	}
+
+	@Override
+	public void readAdditional(CompoundNBT compound) {
+		super.readAdditional(compound);
+		ItemStack itemstack = ItemStack.read(compound.getCompound("Item"));
+		this.setStack(itemstack);
 	}
 }

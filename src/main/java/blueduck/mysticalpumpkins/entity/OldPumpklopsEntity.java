@@ -1,14 +1,23 @@
 package blueduck.mysticalpumpkins.entity;
 
-import net.minecraft.entity.*;
+import net.minecraft.advancements.criterion.PlayerPredicate;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
@@ -24,24 +33,26 @@ import software.bernie.geckolib.manager.EntityAnimationManager;
 
 import javax.annotation.Nullable;
 
-public class PumpklopsEntity extends MonsterEntity implements IAnimatedEntity, IRangedAttackMob {
+public class OldPumpklopsEntity extends MonsterEntity implements IAnimatedEntity {
+
+    private static final DataParameter<Integer> TARGET = EntityDataManager.createKey(WitherEntity.class, DataSerializers.VARINT);
 
     private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(this.getDisplayName(), BossInfo.Color.YELLOW, BossInfo.Overlay.PROGRESS)).setDarkenSky(true);
 
     public EntityAnimationManager animationManager = new EntityAnimationManager();
 
-    private final AnimationController<PumpklopsEntity> moveController = new EntityAnimationController<>(this, "moveController", 10F, this::moveController);
+    private AnimationController moveController = new EntityAnimationController(this, "moveController", 10F, this::moveController);
 
     public int attackTimer = 0;
 
-    public PumpklopsEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+    public OldPumpklopsEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
         super(type, worldIn);
         registerAnimationControllers();
-        this.setHealth(this.getMaxHealth());
     }
-
-    public void registerAnimationControllers() {
-        if(world.isRemote) {
+    public void registerAnimationControllers()
+    {
+        if(world.isRemote)
+        {
             this.animationManager.addAnimationController(moveController);
         }
     }
@@ -51,39 +62,61 @@ public class PumpklopsEntity extends MonsterEntity implements IAnimatedEntity, I
         return animationManager;
     }
 
-    private <T extends Entity> boolean moveController(AnimationTestEvent<T> event) {
+    private <ENTITY extends Entity> boolean moveController(AnimationTestEvent<ENTITY> event)
+    {
         boolean b = false;
         if (attackTimer > 0) {
             attackTimer--;
             //moveController.setAnimation(new AnimationBuilder().addAnimation("attack", true));
             b = true;
             return true;
-        } else if (event.isWalking()) {
+        }
+        else if (event.isWalking()) {
             moveController.setAnimation(new AnimationBuilder().addAnimation("move", true));
-//            if (!b) {
-//
-//            }
+            /*if (!b) {
+
+            }*/
             return true;
         }
         return false;
-    }
 
-    @Override
-    public void readAdditional(CompoundNBT compound) {
-        super.readAdditional(compound);
-        if (this.hasCustomName()) {
-            this.bossInfo.setName(this.getDisplayName());
-        }
 
     }
+
+
 
     @Override
     protected void updateAITasks() {
         super.updateAITasks();
+        if (this.ticksExisted % 20 == 0) {
+            launchMagicBallToEntity(this.getAttackTarget());
+        }
         this.bossInfo.setPercent(this.getHealth() / this.getMaxHealth());
     }
 
-    @Override
+    private void launchMagicBallToEntity(LivingEntity entity) {
+        if (entity != null)
+            launchMagicBallToCoords(entity.getPosX(), entity.getPosY(), entity.getPosZ());
+    }
+
+    private void launchMagicBallToCoords(double x, double y, double z) {
+        if (!this.isSilent()) {
+            this.world.playEvent(null, 1024, this.func_233580_cy_(), 0);
+        }
+
+        //TODO getScepter coords
+        double d0 = this.getPosX();
+        double d1 = this.getPosYEye();
+        double d2 = this.getPosZ();
+        double d3 = x - d0;
+        double d4 = y - d1;
+        double d5 = z - d2;
+        GreenMagicBallEntity magic = new GreenMagicBallEntity(this, d3, d4, d5, this.world);
+        magic.setShooter(this);
+        magic.setRawPosition(d0, d1, d2);
+        this.world.addEntity(magic);
+    }
+
     public void setCustomName(@Nullable ITextComponent name) {
         super.setCustomName(name);
         this.bossInfo.setName(this.getDisplayName());
@@ -110,8 +143,8 @@ public class PumpklopsEntity extends MonsterEntity implements IAnimatedEntity, I
     }
 
     @Override
-    protected void registerGoals() {
-        this.goalSelector.addGoal(1, new RangedAttackGoal(this, 1.0, 40, 8.0F));
+    protected void registerGoals()
+    {
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
         this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 8.0F));
@@ -128,42 +161,16 @@ public class PumpklopsEntity extends MonsterEntity implements IAnimatedEntity, I
                 .func_233815_a_(Attributes.field_233824_g_, 0.2D); //attack knockback
     }
 
+    //So the boss is wood lmao
+
     @Override
     public SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return SoundEvents.ENTITY_ZOMBIE_HURT;
+        return SoundEvents.BLOCK_WOOD_BREAK;
     }
 
     @Override
     public SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_ZOMBIE_DEATH;
+        return SoundEvents.BLOCK_WOOD_BREAK;
     }
 
-    private void launchMagicBallToEntity(LivingEntity entity) {
-        if (entity != null)
-            launchMagicBallToCoords(entity.getPosX(), entity.getPosY(), entity.getPosZ());
-    }
-
-    private void launchMagicBallToCoords(double x, double y, double z) {
-        if (!this.isSilent()) {
-            this.world.playEvent(null, 1024, this.func_233580_cy_(), 0);
-        }
-
-        //TODO getScepter coords
-        double d0 = this.getPosX();
-        double d1 = this.getPosYEye();
-        double d2 = this.getPosZ();
-        double d3 = x - d0;
-        double d4 = y - d1;
-        double d5 = z - d2;
-        GreenMagicBallEntity magic = new GreenMagicBallEntity(this, d3, d4, d5, this.world);
-        magic.setShooter(this);
-        magic.setRawPosition(d0, d1, d2);
-        this.world.addEntity(magic);
-    }
-
-    @Override
-    public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
-        attackTimer = 60;
-        launchMagicBallToEntity(target);
-    }
 }
