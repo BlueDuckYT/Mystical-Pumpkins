@@ -50,7 +50,7 @@ Mystical Pumpkins adds a new set of items and progression using the new Pumpkin 
 [[dependencies.mystical_pumpkins]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.3]"
+    versionRange="[1.16.3, 1.16.4]"
     ordering="NONE"
     side="BOTH"
 [[dependencies.mystical_pumpkins]]

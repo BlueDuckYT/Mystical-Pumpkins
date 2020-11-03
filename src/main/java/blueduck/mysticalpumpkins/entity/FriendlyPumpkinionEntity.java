@@ -70,8 +70,9 @@ public class FriendlyPumpkinionEntity extends CreatureEntity implements IAnimate
     }
     public boolean attackEntityAsMob(Entity entityIn) {
         attackTimer = 60;
-        moveController.setAnimation(new AnimationBuilder().addAnimation("attack", true));
-
+        if(world.isRemote) {
+            moveController.setAnimation(new AnimationBuilder().addAnimation("attack", true));
+        }
         return super.attackEntityAsMob(entityIn);
     }
 

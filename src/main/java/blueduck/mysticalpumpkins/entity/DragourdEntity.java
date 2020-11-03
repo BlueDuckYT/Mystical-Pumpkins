@@ -72,9 +72,10 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
     }
     public boolean attackEntityAsMob(Entity entityIn) {
         attackTimer = 60;
-        headController.setAnimation(new AnimationBuilder().addAnimation("attackhead", true));
-        tailController.setAnimation(new AnimationBuilder().addAnimation("attacktail", true));
-
+        if(world.isRemote) {
+            headController.setAnimation(new AnimationBuilder().addAnimation("attackhead", true));
+            tailController.setAnimation(new AnimationBuilder().addAnimation("attacktail", true));
+        }
         return super.attackEntityAsMob(entityIn);
     }
 
