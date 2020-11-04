@@ -8,8 +8,7 @@ import blueduck.mysticalpumpkins.registry.InfusionTableRecipeRegistry;
 import blueduck.mysticalpumpkins.registry.RegisterHandler;
 import blueduck.mysticalpumpkins.utils.SpecialConstants;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.SpawnEggItem;
@@ -39,30 +38,25 @@ public class MysticalPumpkinsMod {
 	public static ArrayList<String> players = new ArrayList<>();
 
 	public MysticalPumpkinsMod() {
-		// Register the setup method for modloading
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		// Register the enqueueIMC method for modloading
 		//FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
 		// Register the processIMC method for modloading
 		//FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
-		// Register the doClientStuff method for modloading
 		RegisterHandler.init();
 
-		// Register ourselves for server and other game events we are interested in
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.addListener(this::onPlayerTick);
 
 	}
 
-	private void setup(final FMLCommonSetupEvent event) {
+	private void setup(FMLCommonSetupEvent event) {
 		InfusionTableRecipeRegistry.initRegistry();
 		MysticalPumpkinsMessageHandler.register();
-
 		event.enqueueWork(this::afterCommonSetup);
-
 	}
-	public void afterCommonSetup()
-	{
+
+	private void afterCommonSetup() {
 		RegisterHandler.attributeStuff();
 	}
 
@@ -85,6 +79,7 @@ public class MysticalPumpkinsMod {
 
 	@Mod.EventBusSubscriber(modid = SpecialConstants.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 	public static class ClientEventBusSubscriber {
+
 		@SubscribeEvent
 		public static void onKeyPress(InputEvent.KeyInputEvent event) {
 			try {
@@ -92,28 +87,30 @@ public class MysticalPumpkinsMod {
 					MysticalPumpkinsMessageHandler.HANDLER.sendToServer(new BooleanMessage(Minecraft.getInstance().player.getUniqueID().toString(), event.getAction() != GLFW.GLFW_RELEASE));
 				}
 			}
-			catch(Throwable ignored) {}
+			catch (Throwable ignored) {}
 		}
 	}
 
 	@Mod.EventBusSubscriber(modid = SpecialConstants.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 	public static class OtherEvents {
+
 		@SubscribeEvent
 		public static void onBiomeLoad(BiomeLoadingEvent event) {
 			if (event.getName().equals(Biomes.DARK_FOREST.func_240901_a_())) {
 				//event.getSpawns().getEntityTypes().add(RegisterHandler.DRAGOURD.get());
 				event.getSpawns().func_242575_a(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(RegisterHandler.DRAGOURD.get(), 20, 1, 4));
 			}
-
 		}
 	}
 
 	@Mod.EventBusSubscriber(modid = SpecialConstants.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ModEventBusSubscriber {
+
 		@SubscribeEvent(priority = EventPriority.LOWEST)
 		public static void onPostRegisterEntities(final RegistryEvent.Register<EntityType<?>> event) {
 			MysticalPumpkinSpawnEgg.SetupStuff();
 		}
+
 		@SubscribeEvent
 		public static void onClientSetup(FMLClientSetupEvent event) {
 			RegisterHandler.initClient();
@@ -122,7 +119,9 @@ public class MysticalPumpkinsMod {
 			RenderingRegistry.registerEntityRenderingHandler(RegisterHandler.FRIENDLY_PUMPKINION.get(), FriendlyPumpkinionRenderer::new);
 			RenderingRegistry.registerEntityRenderingHandler(RegisterHandler.PUMPKIN_SLUDGE.get(), SludgeRenderer::new);
 			RenderingRegistry.registerEntityRenderingHandler(RegisterHandler.PUMPKLOPS.get(), PumpklopsRenderer::new);
+			RenderingRegistry.registerEntityRenderingHandler(RegisterHandler.GREEN_MAGIC_BALL.get(), manager -> new SpriteRenderer<>(manager, Minecraft.getInstance().getItemRenderer(), 4, false));
 		}
+
 		@SubscribeEvent
 		public static void onItemColorEvent(ColorHandlerEvent.Item event) {
 			for (final SpawnEggItem egg : MysticalPumpkinSpawnEgg.SPAWN_EGGS) {
@@ -130,5 +129,4 @@ public class MysticalPumpkinsMod {
 			}
 		}
 	}
-
 }
