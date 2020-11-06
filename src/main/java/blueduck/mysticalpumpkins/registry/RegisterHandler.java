@@ -15,6 +15,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.inventory.container.ContainerType;
@@ -25,6 +26,7 @@ import net.minecraft.item.Rarity;
 import net.minecraft.potion.Effects;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -111,7 +113,7 @@ public class RegisterHandler {
 
 	public static final RegistryObject<Item> GREEN_MAGIC_BALL_ITEM = ITEMS.register("green_fireball", () -> new GreenMagicBallItem(new Item.Properties().group(ItemGroup.MISC)));
 
-	public static final RegistryObject<EntityType<GreenMagicBallEntity>> GREEN_MAGIC_BALL = ENTITIES.register("green_fireball", () -> EntityType.Builder.<GreenMagicBallEntity>create(GreenMagicBallEntity::new, EntityClassification.MISC).size(0.3125F, 0.3125F).build(new ResourceLocation("mystical_pumpkins", "textures/entity/green_fireball.png").toString()));
+	public static final RegistryObject<EntityType<GreenMagicBallEntity>> GREEN_MAGIC_BALL = ENTITIES.register("green_fireball", () -> EntityType.Builder.<GreenMagicBallEntity>create(GreenMagicBallEntity::new, EntityClassification.MISC).size(1.0F, 1.0F).build(new ResourceLocation("mystical_pumpkins", "textures/entity/green_fireball.png").toString()));
 
 
 	public static void initClient() {
@@ -139,6 +141,8 @@ public class RegisterHandler {
 //	}
 
 	public static void attributeStuff() {
+		EntitySpawnPlacementRegistry.register(DRAGOURD.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DragourdEntity::canSpawn);
+
 		GlobalEntityTypeAttributes.put(DRAGOURD.get(), DragourdEntity.setCustomAttributes().func_233813_a_()/*(or your own)*/);
 		GlobalEntityTypeAttributes.put(ENEMY_PUMPKINION.get(), EnemyPumpkinionEntity.setCustomAttributes().func_233813_a_()/*(or your own)*/);
 		GlobalEntityTypeAttributes.put(FRIENDLY_PUMPKINION.get(), FriendlyPumpkinionEntity.setCustomAttributes().func_233813_a_()/*(or your own)*/);

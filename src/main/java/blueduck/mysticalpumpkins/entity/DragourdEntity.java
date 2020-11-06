@@ -3,6 +3,7 @@ package blueduck.mysticalpumpkins.entity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
@@ -11,13 +12,19 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biomes;
+import net.minecraft.world.server.ServerWorld;
 import software.bernie.geckolib.animation.builder.AnimationBuilder;
 import software.bernie.geckolib.animation.controller.AnimationController;
 import software.bernie.geckolib.animation.controller.EntityAnimationController;
 import software.bernie.geckolib.entity.IAnimatedEntity;
 import software.bernie.geckolib.event.AnimationTestEvent;
 import software.bernie.geckolib.manager.EntityAnimationManager;
+
+import java.util.Random;
 
 public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
 
@@ -100,6 +107,10 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
 
     public SoundEvent getHurtSound(DamageSource damageSourceIn) {
         return SoundEvents.BLOCK_WOOD_BREAK;
+    }
+
+    public static boolean canSpawn(EntityType<DragourdEntity> type, IWorld world, SpawnReason spawnReason, BlockPos pos, Random random) {
+        return world.getBiome(pos).getRegistryName().equals(Biomes.DARK_FOREST.func_240901_a_()) || world.getBiome(pos).getRegistryName().equals(Biomes.DARK_FOREST_HILLS.func_240901_a_()) || (pos.getY() > world.getSeaLevel() && world.func_242413_ae() == 1.0F);
     }
 
     public SoundEvent getDeathSound() {

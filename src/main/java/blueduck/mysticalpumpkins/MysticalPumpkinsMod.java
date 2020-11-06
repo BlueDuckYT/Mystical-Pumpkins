@@ -96,10 +96,11 @@ public class MysticalPumpkinsMod {
 
 		@SubscribeEvent
 		public static void onBiomeLoad(BiomeLoadingEvent event) {
-			if (event.getName().equals(Biomes.DARK_FOREST.func_240901_a_())) {
-				//event.getSpawns().getEntityTypes().add(RegisterHandler.DRAGOURD.get());
-				event.getSpawns().func_242575_a(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(RegisterHandler.DRAGOURD.get(), 20, 1, 4));
-			}
+//			if (event.getName().equals(Biomes.DARK_FOREST.func_240901_a_())) {
+//				//event.getSpawns().getEntityTypes().add(RegisterHandler.DRAGOURD.get());
+//				event.getSpawns().func_242575_a(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(RegisterHandler.DRAGOURD.get(), 20, 1, 4));
+//			}
+			event.getSpawns().func_242575_a(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(RegisterHandler.DRAGOURD.get(), 20, 1, 4));
 		}
 	}
 
