@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "mystical_pumpkins:block/pumpkin_mine"
+    },
+    "powered=true": {
+      "model": "mystical_pumpkins:block/pumpkin_mine_pressed"
+    }
+  }
+}

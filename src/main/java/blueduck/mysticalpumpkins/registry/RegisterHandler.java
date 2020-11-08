@@ -91,6 +91,10 @@ public class RegisterHandler {
 	public static final RegistryObject<Item> DREAD_PUMPKIN_ITEM = ITEMS.register("dread_pumpkin", () -> new MysticalPumpkinItem(DREAD_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC)));
 
 
+	public static final RegistryObject<Block> PUMPKIN_MINE = BLOCKS.register("pumpkin_mine", PumpkinMineBlock::new);
+	public static final RegistryObject<Item> PUMPKIN_MINE_ITEM = ITEMS.register("pumpkin_mine", () -> new BlockItem(PUMPKIN_MINE.get(), new Item.Properties().group(ItemGroup.MISC)));
+
+
 	public static final RegistryObject<EntityType<DragourdEntity>> DRAGOURD = ENTITIES.register("dragourd", () -> EntityType.Builder.create(DragourdEntity::new, EntityClassification.MONSTER).size(0.9F, 1.1F).build(new ResourceLocation("mystical_pumpkins", "textures/entity/dragourd.png").toString()));
 
 	public static final RegistryObject<Item> DRAGOURD_SPAWN_EGG = ITEMS.register("dragourd_spawn_egg", () -> new MysticalPumpkinSpawnEgg(DRAGOURD, 16743215, 13335343, new Item.Properties().group(ItemGroup.MISC)));
