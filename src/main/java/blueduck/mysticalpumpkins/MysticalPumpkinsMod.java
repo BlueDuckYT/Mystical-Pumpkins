@@ -6,6 +6,8 @@ import blueduck.mysticalpumpkins.network.MysticalPumpkinsMessageHandler;
 import blueduck.mysticalpumpkins.network.message.BooleanMessage;
 import blueduck.mysticalpumpkins.registry.InfusionTableRecipeRegistry;
 import blueduck.mysticalpumpkins.registry.RegisterHandler;
+import blueduck.mysticalpumpkins.utils.ConfigHelper;
+import blueduck.mysticalpumpkins.utils.MysticalPumpkinsConfig;
 import blueduck.mysticalpumpkins.utils.SpecialConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
@@ -17,14 +19,17 @@ import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -37,13 +42,21 @@ public class MysticalPumpkinsMod {
 
 	public static ArrayList<String> players = new ArrayList<>();
 
+	public static MysticalPumpkinsConfig CONFIG;
+
 	public MysticalPumpkinsMod() {
+
+		ForgeConfigSpec.Builder SERVER_BUILDER = new ForgeConfigSpec.Builder();
+		CONFIG = ConfigHelper.register(ModLoadingContext.get(), FMLJavaModLoadingContext.get(), ModConfig.Type.COMMON, MysticalPumpkinsConfig::new);
+
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		// Register the enqueueIMC method for modloading
 		//FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
 		// Register the processIMC method for modloading
 		//FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
 		RegisterHandler.init();
+
+
 
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.addListener(this::onPlayerTick);

@@ -1,5 +1,6 @@
 package blueduck.mysticalpumpkins.entity;
 
+import blueduck.mysticalpumpkins.MysticalPumpkinsMod;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
@@ -110,7 +111,7 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
     }
 
     public static boolean canSpawn(EntityType<DragourdEntity> type, IWorld world, SpawnReason spawnReason, BlockPos pos, Random random) {
-        return world.getBiome(pos).getRegistryName().equals(Biomes.DARK_FOREST.func_240901_a_()) || world.getBiome(pos).getRegistryName().equals(Biomes.DARK_FOREST_HILLS.func_240901_a_()) || (pos.getY() > world.getSeaLevel() && world.func_242413_ae() == 1.0F);
+        return world.func_242413_ae() == 1.0F || MysticalPumpkinsMod.CONFIG.DRAGOURD_SPAWN_BIOMES.get().contains(world.getBiome(pos).toString());
     }
 
     public SoundEvent getDeathSound() {
