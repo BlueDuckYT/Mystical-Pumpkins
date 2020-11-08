@@ -36,7 +36,7 @@ public class InfusionTableRecipeRegistry {
 
 		addInfuserRecipe(new ItemStack(Items.PUMPKIN), 64, new ItemStack(RegisterHandler.EYE_OF_DREAD.get(), 1), new ItemStack(RegisterHandler.DREAD_PUMPKIN_ITEM.get()));
 
-		addInfuserRecipe(new ItemStack(Items.PUMPKIN), 8, new ItemStack(Items.TNT.get(), 1), new ItemStack(RegisterHandler.PUMPKIN_MINE_ITEM.get()));
+		addInfuserRecipe(new ItemStack(Items.PUMPKIN), 8, new ItemStack(Items.TNT, 1), new ItemStack(RegisterHandler.PUMPKIN_MINE_ITEM.get()));
 
 
 
