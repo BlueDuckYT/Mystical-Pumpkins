@@ -18,6 +18,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 //TODO shape
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class InfusionTableBlock extends ContainerBlock {
 
 	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;

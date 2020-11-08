@@ -8,6 +8,8 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class MysticalPumpkinBlock extends HorizontalBlock {
     public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
     public MysticalPumpkinBlock() {

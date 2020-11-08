@@ -62,8 +62,8 @@ public class InfusionTableTileEntity extends LockableTileEntity implements ISide
 	}
 
 	@Override
-	public void func_230337_a_(BlockState state, CompoundNBT compound) {
-		super.func_230337_a_(state, compound);
+	public void read(BlockState state, CompoundNBT compound) {
+		super.read(state, compound);
 		this.items = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
 		ItemStackHelper.loadAllItems(compound, this.items);
 		this.infusingTime = compound.getInt("InfusingTime");

@@ -36,13 +36,13 @@ public class MysticalPumpkinSpawnEgg extends SpawnEggItem {
     }
 
     @Override
-    public EntityType<?> getType(@Nullable CompoundNBT p_208076_1_) {
+    public EntityType<?> getType(@Nullable CompoundNBT nbt) {
         return type.get();
     }
 
 
     public static void SetupStuff() {
-        final Map<EntityType<?>, SpawnEggItem> EGGS = ObfuscationReflectionHelper.getPrivateValue(SpawnEggItem.class, null, "field_195987_b");
+        final Map<EntityType<?>, SpawnEggItem> EGGS = ObfuscationReflectionHelper.getPrivateValue(SpawnEggItem.class, null, "EGGS");
         DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior() {
             public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
                 Direction direction = source.getBlockState().get(DispenserBlock.FACING);

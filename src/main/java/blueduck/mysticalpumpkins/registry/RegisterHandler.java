@@ -143,11 +143,11 @@ public class RegisterHandler {
 	public static void attributeStuff() {
 		EntitySpawnPlacementRegistry.register(DRAGOURD.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DragourdEntity::canSpawn);
 
-		GlobalEntityTypeAttributes.put(DRAGOURD.get(), DragourdEntity.setCustomAttributes().func_233813_a_()/*(or your own)*/);
-		GlobalEntityTypeAttributes.put(ENEMY_PUMPKINION.get(), EnemyPumpkinionEntity.setCustomAttributes().func_233813_a_()/*(or your own)*/);
-		GlobalEntityTypeAttributes.put(FRIENDLY_PUMPKINION.get(), FriendlyPumpkinionEntity.setCustomAttributes().func_233813_a_()/*(or your own)*/);
-		GlobalEntityTypeAttributes.put(PUMPKIN_SLUDGE.get(), SludgeEntity.setCustomAttributes().func_233813_a_()/*(or your own)*/);
-		GlobalEntityTypeAttributes.put(PUMPKLOPS.get(), PumpklopsEntity.setCustomAttributes().func_233813_a_()/*(or your own)*/);
+		GlobalEntityTypeAttributes.put(DRAGOURD.get(), DragourdEntity.setCustomAttributes().create()/*(or your own)*/);
+		GlobalEntityTypeAttributes.put(ENEMY_PUMPKINION.get(), EnemyPumpkinionEntity.setCustomAttributes().create()/*(or your own)*/);
+		GlobalEntityTypeAttributes.put(FRIENDLY_PUMPKINION.get(), FriendlyPumpkinionEntity.setCustomAttributes().create()/*(or your own)*/);
+		GlobalEntityTypeAttributes.put(PUMPKIN_SLUDGE.get(), SludgeEntity.setCustomAttributes().create()/*(or your own)*/);
+		GlobalEntityTypeAttributes.put(PUMPKLOPS.get(), PumpklopsEntity.setCustomAttributes().create()/*(or your own)*/);
 
 	}
 

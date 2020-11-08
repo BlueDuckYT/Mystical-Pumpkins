@@ -11,11 +11,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import net.minecraft.item.Item.Properties;
+
 public class MysticalPumpkinItem extends BlockItem {
 
 
-    public MysticalPumpkinItem(Block blockIn, Properties p_i48534_3_) {
-        super(blockIn, p_i48534_3_);
+    public MysticalPumpkinItem(Block blockIn, Properties builderIn) {
+        super(blockIn, builderIn);
     }
 
     @Override

@@ -7,12 +7,14 @@ import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.World;
 
+import net.minecraft.item.Item.Properties;
+
 public class EffectPumpkinItem extends MysticalPumpkinItem {
 
     public Effect effect;
 
-    public EffectPumpkinItem(Block blockIn, Properties p_i48534_3_, Effect effectIn) {
-        super(blockIn, p_i48534_3_);
+    public EffectPumpkinItem(Block blockIn, Properties builderIn, Effect effectIn) {
+        super(blockIn, builderIn);
         effect = effectIn;
     }
 

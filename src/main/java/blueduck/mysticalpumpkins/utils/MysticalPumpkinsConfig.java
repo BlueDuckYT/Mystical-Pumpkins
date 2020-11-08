@@ -15,8 +15,8 @@ public class MysticalPumpkinsConfig {
     public MysticalPumpkinsConfig(ForgeConfigSpec.Builder builder, ConfigHelper.Subscriber subscriber) {
         builder.push("General");
         ArrayList<String> BIOMES = Lists.newArrayList();
-        BIOMES.add(Biomes.DARK_FOREST.func_240901_a_().toString());
-        BIOMES.add(Biomes.DARK_FOREST_HILLS.func_240901_a_().toString());
+        BIOMES.add(Biomes.DARK_FOREST.getLocation().toString());
+        BIOMES.add(Biomes.DARK_FOREST_HILLS.getLocation().toString());
         this.DRAGOURD_SPAWN_BIOMES = subscriber.subscribe(builder
                 .comment("Specifies rules for accepting or rejecting biomes.")
                 .defineList("Dragourd_Spawn_Biomes", BIOMES, o -> o instanceof String));

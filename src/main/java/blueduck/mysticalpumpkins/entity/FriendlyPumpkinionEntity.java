@@ -91,10 +91,10 @@ public class FriendlyPumpkinionEntity extends CreatureEntity implements IAnimate
 
     public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
         return MobEntity.func_233666_p_()
-                .func_233815_a_(Attributes.field_233818_a_, 10.0D) //health
-                .func_233815_a_(Attributes.field_233821_d_, 0.3D) //movement speed
-                .func_233815_a_(Attributes.field_233823_f_, 2.0D) //attack damage
-                .func_233815_a_(Attributes.field_233824_g_, 0.2D); //attack knockback
+                .createMutableAttribute(Attributes.MAX_HEALTH, 10.0D) //health
+                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.3D) //movement speed
+                .createMutableAttribute(Attributes.ATTACK_DAMAGE, 2.0D) //attack damage
+                .createMutableAttribute(Attributes.ATTACK_KNOCKBACK, 0.2D); //attack knockback
     }
 
     public SoundEvent getHurtSound(DamageSource damageSourceIn) {

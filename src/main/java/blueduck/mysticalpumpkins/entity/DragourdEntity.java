@@ -100,10 +100,10 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
 
     public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
         return MobEntity.func_233666_p_()
-                .func_233815_a_(Attributes.field_233818_a_, 20.0D) //health
-                .func_233815_a_(Attributes.field_233821_d_, 0.3D) //movement speed
-                .func_233815_a_(Attributes.field_233823_f_, 3.0D) //attack damage
-                .func_233815_a_(Attributes.field_233824_g_, 0.2D); //attack knockback
+                .createMutableAttribute(Attributes.MAX_HEALTH, 20.0D) //health
+                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.3D) //movement speed
+                .createMutableAttribute(Attributes.ATTACK_DAMAGE, 3.0D) //attack damage
+                .createMutableAttribute(Attributes.ATTACK_KNOCKBACK, 0.2D); //attack knockback
     }
 
     public SoundEvent getHurtSound(DamageSource damageSourceIn) {
@@ -111,7 +111,7 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
     }
 
     public static boolean canSpawn(EntityType<DragourdEntity> type, IWorld world, SpawnReason spawnReason, BlockPos pos, Random random) {
-        return world.func_242413_ae() == 1.0F || MysticalPumpkinsMod.CONFIG.DRAGOURD_SPAWN_BIOMES.get().contains(world.getBiome(pos).toString());
+        return world.getMoonFactor() == 1.0F || MysticalPumpkinsMod.CONFIG.DRAGOURD_SPAWN_BIOMES.get().contains(world.getBiome(pos).toString());
     }
 
     public SoundEvent getDeathSound() {

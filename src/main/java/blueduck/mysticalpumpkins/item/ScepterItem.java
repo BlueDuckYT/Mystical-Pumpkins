@@ -22,6 +22,8 @@ import net.minecraft.world.spawner.AbstractSpawner;
 
 import java.util.Objects;
 
+import net.minecraft.item.Item.Properties;
+
 public class ScepterItem extends Item {
     public ScepterItem(Properties properties) {
         super(properties);
@@ -50,8 +52,8 @@ public class ScepterItem extends Item {
                     world.notifyBlockUpdate(blockpos, blockstate, blockstate, 3);
                     context.getPlayer().getCooldownTracker().setCooldown(itemstack.getItem(), 400);
                     if (EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, itemstack) == 0 || (EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, itemstack) > 0 && context.getPlayer().getEntityWorld().getRandom().nextDouble() < (EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, itemstack)/3))) {
-                        itemstack.damageItem(1, context.getPlayer(), (p_220045_0_) -> {
-                            p_220045_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+                        itemstack.damageItem(1, context.getPlayer(), (entity) -> {
+                            entity.sendBreakAnimation(EquipmentSlotType.MAINHAND);
                         });
                     }
 
@@ -70,8 +72,8 @@ public class ScepterItem extends Item {
             if (entitytype.spawn((ServerWorld)world, itemstack, context.getPlayer(), blockpos1, SpawnReason.BUCKET, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP) != null) {
                 context.getPlayer().getCooldownTracker().setCooldown(itemstack.getItem(), 400);
                 if (EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, itemstack) == 0 || (EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, itemstack) > 0 && context.getPlayer().getEntityWorld().getRandom().nextDouble() < (EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, itemstack)/3))) {
-                    itemstack.damageItem(1, context.getPlayer(), (p_220045_0_) -> {
-                        p_220045_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+                    itemstack.damageItem(1, context.getPlayer(), (entity) -> {
+                        entity.sendBreakAnimation(EquipmentSlotType.MAINHAND);
                     });
                 }
             }

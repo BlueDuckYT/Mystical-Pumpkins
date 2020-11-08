@@ -7,12 +7,14 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
 
+import net.minecraft.item.Item.Properties;
+
 public class GravityPumpkinItem extends MysticalPumpkinItem {
 
 
 
-    public GravityPumpkinItem(Block blockIn, Properties p_i48534_3_) {
-        super(blockIn, p_i48534_3_);
+    public GravityPumpkinItem(Block blockIn, Properties builderIn) {
+        super(blockIn, builderIn);
     }
 
     public void tick(ItemStack stack, World world, PlayerEntity player) {

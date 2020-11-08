@@ -10,9 +10,11 @@ import net.minecraft.potion.Effects;
 import net.minecraft.tags.ITag;
 import net.minecraft.world.World;
 
+import net.minecraft.item.Item.Properties;
+
 public class UnderwaterEffectPumpkinItem extends EffectPumpkinItem {
-    public UnderwaterEffectPumpkinItem(Block blockIn, Properties p_i48534_3_, Effect effectIn) {
-        super(blockIn, p_i48534_3_, effectIn);
+    public UnderwaterEffectPumpkinItem(Block blockIn, Properties builderIn, Effect effectIn) {
+        super(blockIn, builderIn, effectIn);
     }
 
     public void tick(ItemStack stack, World world, PlayerEntity player) {

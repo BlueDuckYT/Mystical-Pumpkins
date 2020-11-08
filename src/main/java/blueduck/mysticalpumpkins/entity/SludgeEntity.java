@@ -46,11 +46,11 @@ public class SludgeEntity extends SlimeEntity {
 
 	public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
 		return MobEntity.func_233666_p_()
-				.func_233815_a_(Attributes.field_233818_a_, 16.0D) //health
-				.func_233815_a_(Attributes.field_233821_d_, 0.3D) //movement speed
-				.func_233815_a_(Attributes.field_233823_f_, 4.0D) //attack damage
-				.func_233815_a_(Attributes.field_233819_b_, 32.0D) //follow range
-				.func_233815_a_(Attributes.field_233824_g_, 0.2D); //attack knockback
+				.createMutableAttribute(Attributes.MAX_HEALTH, 16.0D) //health
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.3D) //movement speed
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 4.0D) //attack damage
+				.createMutableAttribute(Attributes.FOLLOW_RANGE, 32.0D) //follow range
+				.createMutableAttribute(Attributes.ATTACK_KNOCKBACK, 0.2D); //attack knockback
 	}
 
 	@Override
@@ -153,7 +153,7 @@ public class SludgeEntity extends SlimeEntity {
 		 * method as well.
 		 */
 		public boolean shouldExecute() {
-			return this.slime.getAttackTarget() == null && (this.slime.func_233570_aj_() || this.slime.isInWater() || this.slime.isInLava() || this.slime.isPotionActive(Effects.LEVITATION)) && this.slime.getMoveHelper() instanceof SlimeEntity.MoveHelperController;
+			return this.slime.getAttackTarget() == null && (this.slime.isOnGround() || this.slime.isInWater() || this.slime.isInLava() || this.slime.isPotionActive(Effects.LEVITATION)) && this.slime.getMoveHelper() instanceof SlimeEntity.MoveHelperController;
 		}
 
 		/**

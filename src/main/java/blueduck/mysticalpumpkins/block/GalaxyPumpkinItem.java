@@ -5,12 +5,14 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import net.minecraft.item.Item.Properties;
+
 public class GalaxyPumpkinItem extends MysticalPumpkinItem {
 
 
 
-    public GalaxyPumpkinItem(Block blockIn, Properties p_i48534_3_) {
-        super(blockIn, p_i48534_3_);
+    public GalaxyPumpkinItem(Block blockIn, Properties builderIn) {
+        super(blockIn, builderIn);
     }
 
     public void tick(ItemStack stack, World world, PlayerEntity player) {
