@@ -21,4 +21,6 @@ public class EffectPumpkinItem extends MysticalPumpkinItem {
     public void tick(ItemStack stack, World world, PlayerEntity player) {
         player.addPotionEffect(new EffectInstance(effect, 20));
     }
+
+
 }

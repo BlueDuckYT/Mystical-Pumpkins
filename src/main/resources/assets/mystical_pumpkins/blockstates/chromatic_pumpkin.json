@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,lit=false": {
+      "y": 90,
+      "model": "mystical_pumpkins:block/chromatic_pumpkin_off"
+    },
+    "facing=east,lit=true": {
+      "y": 90,
+      "model": "mystical_pumpkins:block/chromatic_pumpkin"
+    },
+    "facing=north,lit=false": {
+      "model": "mystical_pumpkins:block/chromatic_pumpkin_off"
+    },
+    "facing=north,lit=true": {
+      "model": "mystical_pumpkins:block/chromatic_pumpkin"
+    },
+    "facing=south,lit=false": {
+      "y": 180,
+      "model": "mystical_pumpkins:block/chromatic_pumpkin_off"
+    },
+    "facing=south,lit=true": {
+      "y": 180,
+      "model": "mystical_pumpkins:block/chromatic_pumpkin"
+    },
+    "facing=west,lit=false": {
+      "y": 270,
+      "model": "mystical_pumpkins:block/chromatic_pumpkin_off"
+    },
+    "facing=west,lit=true": {
+      "y": 270,
+      "model": "mystical_pumpkins:block/chromatic_pumpkin"
+    }
+  }
+}
