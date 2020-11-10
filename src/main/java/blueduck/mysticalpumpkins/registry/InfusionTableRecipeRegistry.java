@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class InfusionTableRecipeRegistry {
 
-	public static final ArrayList<InfusionTableRecipe> recipes = new ArrayList<>();
+	public static final  ArrayList<InfusionTableRecipe> recipes = new ArrayList<>();
 
 	private static void fillWithBuiltInRecipes() {
 		addInfuserRecipe(new ItemStack(Items.CARVED_PUMPKIN), 10, new ItemStack(Items.SEA_PICKLE, 8), new ItemStack(RegisterHandler.AQUASIGHT_PUMPKIN_ITEM.get()));
@@ -50,7 +50,7 @@ public class InfusionTableRecipeRegistry {
 		return new InfusionTableRecipe(input, essenceAmount, secondaryMaterials, output);
 	}
 
-	public static void addInfuserRecipe(ItemStack input, int essenceAmount, ItemStack secondaryMaterials, ItemStack output) {
+	public static synchronized void addInfuserRecipe(ItemStack input, int essenceAmount, ItemStack secondaryMaterials, ItemStack output) {
 		InfusionTableRecipe toAdd = createInfuserRecipe(input, essenceAmount, secondaryMaterials, output);
 		recipes.add(toAdd);
 	}

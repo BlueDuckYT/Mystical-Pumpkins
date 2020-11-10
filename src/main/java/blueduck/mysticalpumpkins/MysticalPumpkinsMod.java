@@ -84,7 +84,12 @@ public class MysticalPumpkinsMod {
 		@SubscribeEvent
 		public static void onKeyPress(InputEvent.KeyInputEvent event) {
 			if (event.getKey() == GLFW.GLFW_KEY_SPACE && !Minecraft.getInstance().isGamePaused()) {
-				MysticalPumpkinsMessageHandler.HANDLER.sendToServer(new BooleanMessage(event.getAction() != GLFW.GLFW_RELEASE));
+				try {
+					MysticalPumpkinsMessageHandler.HANDLER.sendToServer(new BooleanMessage(event.getAction() != GLFW.GLFW_RELEASE));
+				}
+				catch(Exception e) {
+
+				}
 			}
 		}
 	}
