@@ -14,7 +14,6 @@ import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.SpawnEggItem;
-import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
@@ -22,7 +21,6 @@ import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -35,12 +33,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.ArrayList;
-
 @Mod("mystical_pumpkins")
 public class MysticalPumpkinsMod {
-
-	public static ArrayList<String> players = new ArrayList<>();
 
 	public static MysticalPumpkinsConfig CONFIG;
 
@@ -59,7 +53,6 @@ public class MysticalPumpkinsMod {
 
 
 		MinecraftForge.EVENT_BUS.register(this);
-		MinecraftForge.EVENT_BUS.addListener(this::onPlayerTick);
 
 	}
 
@@ -85,22 +78,14 @@ public class MysticalPumpkinsMod {
 				collect(Collectors.toList()));
 	}*/
 
-	@SubscribeEvent
-	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-		event.player.getPersistentData().putBoolean("isPressingSpace", players.contains(event.player.getUniqueID().toString()));
-	}
-
 	@Mod.EventBusSubscriber(modid = SpecialConstants.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 	public static class ClientEventBusSubscriber {
 
 		@SubscribeEvent
 		public static void onKeyPress(InputEvent.KeyInputEvent event) {
-			try {
-				if (event.getKey() == GLFW.GLFW_KEY_SPACE && !Minecraft.getInstance().isGamePaused()) {
-					MysticalPumpkinsMessageHandler.HANDLER.sendToServer(new BooleanMessage(Minecraft.getInstance().player.getUniqueID().toString(), event.getAction() != GLFW.GLFW_RELEASE));
-				}
+			if (event.getKey() == GLFW.GLFW_KEY_SPACE && !Minecraft.getInstance().isGamePaused()) {
+				MysticalPumpkinsMessageHandler.HANDLER.sendToServer(new BooleanMessage(event.getAction() != GLFW.GLFW_RELEASE));
 			}
-			catch (Throwable ignored) {}
 		}
 	}
 

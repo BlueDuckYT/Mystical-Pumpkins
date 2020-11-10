@@ -44,7 +44,7 @@ public class InfusingMovingMessage implements IMessage<InfusingMovingMessage> {
 	@Override
 	public InfusingMovingMessage decode(PacketBuffer buf) {
 		int recipeMapSize = buf.readVarInt();
-		Map<Integer, Integer> recipeMap = new HashMap<>(recipeMapSize);
+		Map<Integer, Integer> recipeMap = new HashMap<>();
 		for (int i = 0; i < recipeMapSize; i++) {
 			int slotIndex = buf.readVarInt();
 			int recipeItem = buf.readVarInt();
@@ -58,11 +58,12 @@ public class InfusingMovingMessage implements IMessage<InfusingMovingMessage> {
 
 	@Override
 	public void handle(InfusingMovingMessage message, Supplier<NetworkEvent.Context> supplier) {
-		supplier.get().enqueueWork(() -> {
-			ServerPlayerEntity player = supplier.get().getSender();
-			SpecialConstants.LOGGER.info(message.toString());
-			InfusingRecipeTransferHandlerServer.setItems(player, message.recipeToBeMoved, message.recipeMap, message.maxTransfer);
-		});
+		ServerPlayerEntity player = supplier.get().getSender();
+		if (player != null) {
+			supplier.get().enqueueWork(() -> {
+				InfusingRecipeTransferHandlerServer.setItems(player, message.recipeToBeMoved, message.recipeMap, message.maxTransfer);
+			});
+		}
 		supplier.get().setPacketHandled(true);
 	}
 }

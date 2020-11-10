@@ -1,91 +1,56 @@
 package blueduck.mysticalpumpkins.jei.infuser;
 
 import blueduck.mysticalpumpkins.container.InfusionTableContainer;
-import blueduck.mysticalpumpkins.registry.RegisterHandler;
 import blueduck.mysticalpumpkins.tileentity.InfusionTableRecipe;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class InfusingRecipeTransferHandlerServer {
-
-	private static final Logger LOGGER = LogManager.getLogger("Infusion Table Transfer Handler SERVER");
-
 	public static void setItems(PlayerEntity player, InfusionTableRecipe recipe, Map<Integer, Integer> slotsWithStacks, boolean maxTransfer) {
 		Container container = player.openContainer;
 		InfusionTableContainer infuser = (InfusionTableContainer) container;
-
-		Map<Slot, ItemStack> mapSlotToItemStack = new HashMap<>();
-
-		for (int slotId : slotsWithStacks.values()) {
-			Slot inventorySlot = infuser.getSlot(slotId);
-			if (inventorySlot.getHasStack()) {
-				if (recipe.getInput().isItemEqual(inventorySlot.getStack())) {
-					mapSlotToItemStack.put(inventorySlot, inventorySlot.getStack());
-				} else if (RegisterHandler.PUMPKIN_ESSENCE.get() == inventorySlot.getStack().getItem()) {
-					mapSlotToItemStack.put(inventorySlot, inventorySlot.getStack());
-				} else if (recipe.getSecondary().isItemEqual(inventorySlot.getStack())) {
-					mapSlotToItemStack.put(inventorySlot, inventorySlot.getStack());
-				}
+		List<ItemStack> ingredients = recipe.getIngredients();
+		for (Map.Entry<Integer, Integer> e : slotsWithStacks.entrySet()) {
+			Slot infuserSlot = infuser.getSlot(e.getKey());
+			Slot inventorySlot = infuser.getSlot(e.getValue());
+			if (!inventorySlot.canTakeStack(player)) {
+				continue;
 			}
-		}
-
-		LOGGER.info(mapSlotToItemStack);
-
-		if (maxTransfer) {
-			for (ItemStack stackInInventorySlot : mapSlotToItemStack.values()) {
-				ItemStack stackToPutInInfuser = stackInInventorySlot.copy();
-				if (recipe.getInput().isItemEqual(stackInInventorySlot)) {
-					setMaxStackToInfuser(infuser, stackToPutInInfuser, stackInInventorySlot, 0);
-				} else if (RegisterHandler.PUMPKIN_ESSENCE.get() == stackInInventorySlot.getItem()) {
-					setMaxStackToInfuser(infuser, stackToPutInInfuser, stackInInventorySlot, 1);
-				} else if (recipe.getSecondary().isItemEqual(stackInInventorySlot)) {
-					setMaxStackToInfuser(infuser, stackToPutInInfuser, stackInInventorySlot, 2);
-				}
+			ItemStack inventoryStack = inventorySlot.getStack();
+			if (inventoryStack.isEmpty()) {
+				continue;
 			}
-		} else {
-			for (ItemStack stackInInventorySlot : mapSlotToItemStack.values()) {
-				ItemStack stackToPutInInfuser = stackInInventorySlot.copy();
-				if (recipe.getInput().isItemEqual(stackInInventorySlot)) {
-					setItemToInfuser(recipe, infuser, stackInInventorySlot, stackToPutInInfuser, 0);
-				} else if (RegisterHandler.PUMPKIN_ESSENCE.get() == stackInInventorySlot.getItem()) {
-					setItemToInfuser(recipe, infuser, stackInInventorySlot, stackToPutInInfuser, 1);
-				} else if (recipe.getSecondary().isItemEqual(stackInInventorySlot)) {
-					setItemToInfuser(recipe, infuser, stackInInventorySlot, stackToPutInInfuser, 2);
+			if (!infuserSlot.isItemValid(inventoryStack)) {
+				continue;
+			}
+			ItemStack infuserStack = infuserSlot.getStack();
+			int transfer = maxTransfer ? infuserSlot.getItemStackLimit(inventoryStack) : ingredients.get(e.getKey()).getCount();
+			int count = Math.min(inventoryStack.getCount(), transfer - infuserStack.getCount());
+			if (count <= 0) {
+				continue;
+			}
+			if (infuserStack.isEmpty()) {
+				infuserSlot.putStack(inventoryStack.split(count));
+			} else if (ItemHandlerHelper.canItemStacksStackRelaxed(infuserStack, infuserStack)) {
+				inventoryStack.shrink(count);
+				infuserStack.grow(count);
+			} else {
+				// let full transfer be incomplete due to insufficient space to clear ingredient slots
+				ItemStack remainder = ItemHandlerHelper.insertItemStacked(new PlayerMainInvWrapper(player.inventory), infuserStack, false);
+				if (remainder.isEmpty()) {
+					infuserSlot.putStack(inventoryStack.split(count));
+				} else {
+					infuserSlot.putStack(remainder);
 				}
 			}
 		}
 		infuser.detectAndSendChanges();
-	}
-
-	private static void setItemToInfuser(InfusionTableRecipe recipe, InfusionTableContainer infuser, ItemStack stackInInventorySlot, ItemStack stackToPutInInfuser, int index) {
-		ItemStack stackThatWasAlreadyThere = infuser.getSlot(index).getStack();
-		if (stackThatWasAlreadyThere.isEmpty()) {
-			stackToPutInInfuser.setCount(recipe.getIngredients().get(index).getCount());
-		} else {
-			stackToPutInInfuser.grow(recipe.getIngredients().get(index).getCount());
-		}
-		stackInInventorySlot.shrink(recipe.getIngredients().get(index).getCount());
-		infuser.getSlot(index).putStack(stackToPutInInfuser);
-	}
-
-	private static void setMaxStackToInfuser(InfusionTableContainer infuser, ItemStack stackToPutInInfuser, ItemStack stackInInventorySlot, int index) {
-		int infuserSlotCount = infuser.getSlot(index).getStack().getCount();
-		if (infuserSlotCount < 64) {
-			if (infuserSlotCount + stackInInventorySlot.getCount() > stackToPutInInfuser.getMaxStackSize()) {
-				stackInInventorySlot.setCount(infuserSlotCount);
-				stackToPutInInfuser.setCount(stackToPutInInfuser.getMaxStackSize());
-			} else {
-				stackToPutInInfuser.setCount(infuserSlotCount + stackInInventorySlot.getCount());
-				stackInInventorySlot.setCount(0);
-			}
-			infuser.getSlot(index).putStack(stackToPutInInfuser);
-		}
 	}
 }
