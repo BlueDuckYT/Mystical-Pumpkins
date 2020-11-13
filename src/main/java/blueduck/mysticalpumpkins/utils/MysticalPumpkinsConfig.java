@@ -11,6 +11,7 @@ import java.util.List;
 public class MysticalPumpkinsConfig {
 
     public ConfigHelper.ConfigValueListener<List<? extends String>> DRAGOURD_SPAWN_BIOMES;
+    public ConfigHelper.ConfigValueListener<Boolean> DRAGOURD_SPAWN_EVERYWHERE_ON_FULL_MOON;
 
     public MysticalPumpkinsConfig(ForgeConfigSpec.Builder builder, ConfigHelper.Subscriber subscriber) {
         builder.push("General");
@@ -20,6 +21,10 @@ public class MysticalPumpkinsConfig {
         this.DRAGOURD_SPAWN_BIOMES = subscriber.subscribe(builder
                 .comment("Specifies rules for accepting or rejecting biomes.")
                 .defineList("Dragourd_Spawn_Biomes", BIOMES, o -> o instanceof String));
+        builder.pop();
+        this.DRAGOURD_SPAWN_EVERYWHERE_ON_FULL_MOON = subscriber.subscribe(builder
+                .comment("Should Dragourds spawn everywhere on full moons?")
+                .define("Dragourds_Spawn_Everywhere", true, o -> o instanceof Boolean));
         builder.pop();
     }
 

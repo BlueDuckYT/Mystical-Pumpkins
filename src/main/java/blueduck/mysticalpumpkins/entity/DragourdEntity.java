@@ -111,7 +111,7 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
     }
 
     public static boolean canSpawn(EntityType<DragourdEntity> type, IWorld world, SpawnReason spawnReason, BlockPos pos, Random random) {
-        return world.getMoonFactor() == 1.0F || MysticalPumpkinsMod.CONFIG.DRAGOURD_SPAWN_BIOMES.get().contains(world.getBiome(pos).toString());
+        return (MysticalPumpkinsMod.CONFIG.DRAGOURD_SPAWN_EVERYWHERE_ON_FULL_MOON.get() && world.getMoonFactor() == 1.0F) || MysticalPumpkinsMod.CONFIG.DRAGOURD_SPAWN_BIOMES.get().contains(world.getBiome(pos).toString());
     }
 
     public SoundEvent getDeathSound() {
