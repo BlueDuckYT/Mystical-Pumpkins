@@ -72,6 +72,7 @@ repositories {
     maven {
         url = "https://www.cursemaven.com"
     }
+    maven { url 'https://repo.repsy.io/mvn/gandiber/geckolib' }
 }
 
 dependencies {
@@ -82,7 +83,7 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.16.4-35.0.11'
 
     implementation fg.deobf("curse.maven:jei:3073591")
-    implementation fg.deobf("curse.maven:geckolib:3071704")
+	implementation fg.deobf('software.bernie.geckolib:forge-1.16.4-geckolib:3.0.0-beta.10')
 
     //implementation fg.deobf("curse.maven:quark:3102528")
     //implementation fg.deobf("curse.maven:autoreglib:3088870")
