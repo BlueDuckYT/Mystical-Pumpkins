@@ -21,7 +21,6 @@ public class MysticalPumpkinsConfig {
         this.DRAGOURD_SPAWN_BIOMES = subscriber.subscribe(builder
                 .comment("Specifies rules for accepting or rejecting biomes.")
                 .defineList("Dragourd_Spawn_Biomes", BIOMES, o -> o instanceof String));
-        builder.pop();
         this.DRAGOURD_SPAWN_EVERYWHERE_ON_FULL_MOON = subscriber.subscribe(builder
                 .comment("Should Dragourds spawn everywhere on full moons?")
                 .define("Dragourds_Spawn_Everywhere", true, o -> o instanceof Boolean));

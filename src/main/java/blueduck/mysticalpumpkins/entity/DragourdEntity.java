@@ -14,49 +14,48 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.server.ServerWorld;
-import software.bernie.geckolib.animation.builder.AnimationBuilder;
-import software.bernie.geckolib.animation.controller.AnimationController;
-import software.bernie.geckolib.animation.controller.EntityAnimationController;
-import software.bernie.geckolib.entity.IAnimatedEntity;
-import software.bernie.geckolib.event.AnimationTestEvent;
-import software.bernie.geckolib.manager.EntityAnimationManager;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.Random;
 
-public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
+public class DragourdEntity extends MonsterEntity implements IAnimatable {
 
-    public EntityAnimationManager animationManager = new EntityAnimationManager();
+    public AnimationFactory animationManager = new AnimationFactory(this);
 
-    private AnimationController moveController = new EntityAnimationController(this, "moveController", 10F, this::moveController);
-    private AnimationController headController = new EntityAnimationController(this, "headController", 10F, this::moveController);
-    private AnimationController tailController = new EntityAnimationController(this, "tailController", 10F, this::moveController);
+    private AnimationController moveController = new AnimationController(this, "moveController", 10F, this::moveController);
+    private AnimationController headController = new AnimationController(this, "headController", 10F, this::moveController);
+    private AnimationController tailController = new AnimationController(this, "tailController", 10F, this::moveController);
 
     public int attackTimer = 0;
 
     public DragourdEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
         super(type, worldIn);
-        registerAnimationControllers();
+        registerAnimationControllers(animationManager.getOrCreateAnimationData(1));
     }
-    public void registerAnimationControllers()
+    public void registerAnimationControllers(AnimationData data)
     {
         if(world.isRemote)
         {
-            this.animationManager.addAnimationController(moveController);
-            this.animationManager.addAnimationController(headController);
-            this.animationManager.addAnimationController(tailController);
+            data.addAnimationController(moveController);
+            data.addAnimationController(headController);
+            data.addAnimationController(tailController);
         }
     }
 
-    @Override
-    public EntityAnimationManager getAnimationManager() {
-        return animationManager;
-    }
 
-    private <ENTITY extends Entity> boolean moveController(AnimationTestEvent<ENTITY> event)
+
+    private <E extends IAnimatable> PlayState moveController(AnimationEvent<E> event)
     {
         boolean b = false;
         if (attackTimer > 0) {
@@ -64,17 +63,17 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
             tailController.setAnimation(new AnimationBuilder().addAnimation("attacktail", true));
             attackTimer--;
             b = true;
-            return true;
+            return PlayState.STOP;
         }
-        else if (event.isWalking()) {
+        else if (event.isMoving()) {
             moveController.setAnimation(new AnimationBuilder().addAnimation("walklegs", true));
             if (!b) {
                 headController.setAnimation(new AnimationBuilder().addAnimation("walkhead", true));
                 tailController.setAnimation(new AnimationBuilder().addAnimation("walktail", true));
             }
-            return true;
+            return PlayState.CONTINUE;
         }
-        return false;
+        return PlayState.STOP;
 
 
     }
@@ -111,11 +110,20 @@ public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
     }
 
     public static boolean canSpawn(EntityType<DragourdEntity> type, IWorld world, SpawnReason spawnReason, BlockPos pos, Random random) {
-        return (MysticalPumpkinsMod.CONFIG.DRAGOURD_SPAWN_EVERYWHERE_ON_FULL_MOON.get() && world.getMoonFactor() == 1.0F) || MysticalPumpkinsMod.CONFIG.DRAGOURD_SPAWN_BIOMES.get().contains(world.getBiome(pos).toString());
+        return (MysticalPumpkinsMod.CONFIG.DRAGOURD_SPAWN_EVERYWHERE_ON_FULL_MOON.get() && world.getMoonFactor() == 1.0F && world.getDimensionType().equals(DimensionType.OVERWORLD)) || MysticalPumpkinsMod.CONFIG.DRAGOURD_SPAWN_BIOMES.get().contains(world.getBiome(pos).toString());
     }
 
     public SoundEvent getDeathSound() {
         return SoundEvents.BLOCK_WOOD_BREAK;
     }
 
+    @Override
+    public void registerControllers(AnimationData animationData) {
+
+    }
+
+    @Override
+    public AnimationFactory getFactory() {
+        return animationManager;
+    }
 }
