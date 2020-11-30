@@ -15,6 +15,9 @@ import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -28,6 +31,9 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class FriendlyPumpkinionEntity extends CreatureEntity implements IAnimatable {
+
+	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(FriendlyPumpkinionEntity.class,
+			DataSerializers.BOOLEAN);
 
 	public int attackTimer = 0;
 

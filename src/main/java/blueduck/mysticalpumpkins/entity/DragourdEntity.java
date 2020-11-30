@@ -38,17 +38,11 @@ public class DragourdEntity extends MonsterEntity implements IAnimatable {
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 		boolean b = false;
 		if (attackTimer > 0) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("attackhead", true));
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacktail", true));
-			attackTimer--;
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("attackfull", true));
 			b = true;
 			return PlayState.CONTINUE;
 		} else if (event.isMoving()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("walklegs", true));
-			if (!b) {
-				event.getController().setAnimation(new AnimationBuilder().addAnimation("walkhead", true));
-				event.getController().setAnimation(new AnimationBuilder().addAnimation("walktail", true));
-			}
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("walkfull", true));
 			return PlayState.CONTINUE;
 		}
 		return PlayState.STOP;

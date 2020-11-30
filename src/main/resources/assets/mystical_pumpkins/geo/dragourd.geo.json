@@ -128,22 +128,6 @@
 					"cubes": [
 						{"origin": [-2, 10.5, 19], "size": [4, 5, 9], "uv": [55, 23]}
 					]
-				},
-				{
-					"name": "lwing",
-					"parent": "body",
-					"pivot": [8, 18, -1],
-					"cubes": [
-						{"origin": [8, 18, -7], "size": [22, 0, 17], "uv": [1, 94]}
-					]
-				},
-				{
-					"name": "rwing",
-					"parent": "body",
-					"pivot": [-8, 18, -1],
-					"cubes": [
-						{"origin": [-30, 18, -7], "size": [22, 0, 17], "uv": [1, 94], "mirror": true}
-					]
 				}
 			]
 		}
