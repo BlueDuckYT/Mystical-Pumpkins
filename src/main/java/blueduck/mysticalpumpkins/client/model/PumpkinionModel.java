@@ -5,68 +5,26 @@
 package blueduck.mysticalpumpkins.client.model;
 
 import blueduck.mysticalpumpkins.entity.EnemyPumpkinionEntity;
-import blueduck.mysticalpumpkins.utils.SpecialConstants;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ResourceLocation;
-import software.bernie.geckolib.animation.model.AnimatedEntityModel;
-import software.bernie.geckolib.animation.render.AnimatedModelRenderer;
+import software.bernie.geckolib3.model.AnimatedGeoModel;
 
-public class PumpkinionModel extends AnimatedEntityModel<EnemyPumpkinionEntity> {
+public class PumpkinionModel extends AnimatedGeoModel<EnemyPumpkinionEntity> {
 
-    private final AnimatedModelRenderer main;
-	private final AnimatedModelRenderer body;
-	private final AnimatedModelRenderer stalk;
-	private final AnimatedModelRenderer lleg;
-	private final AnimatedModelRenderer rleg;
+	public PumpkinionModel() {
+	}
 
-    public PumpkinionModel()
-    {
-        textureWidth = 64;
-    textureHeight = 64;
-    main = new AnimatedModelRenderer(this);
-		main.setRotationPoint(0.0F, 9.0F, 0.0F);
-		
-		main.setModelRendererName("main");
-		this.registerModelRenderer(main);
+	@Override
+	public ResourceLocation getModelLocation(EnemyPumpkinionEntity object) {
+		return new ResourceLocation("mystical_pumpkins", "geo/pumpkinion.geo.json");
+	}
 
-		body = new AnimatedModelRenderer(this);
-		body.setRotationPoint(0.0F, 0.0F, 0.0F);
-		main.addChild(body);
-		body.setTextureOffset(0, 0).addBox(-8.0F, -8.0F, -8.0F, 16.0F, 16.0F, 16.0F, 0.0F, false);
-		body.setModelRendererName("body");
-		this.registerModelRenderer(body);
+	@Override
+	public ResourceLocation getTextureLocation(EnemyPumpkinionEntity object) {
+		return new ResourceLocation("mystical_pumpkins", "textures/entity/pumpkinion.png");
+	}
 
-		stalk = new AnimatedModelRenderer(this);
-		stalk.setRotationPoint(0.0F, -8.0F, 0.0F);
-		body.addChild(stalk);
-		setRotationAngle(stalk, -0.3927F, 0.0F, 0.0F);
-		stalk.setTextureOffset(16, 32).addBox(-1.5F, -4.0F, -1.5F, 3.0F, 5.0F, 3.0F, 0.0F, false);
-		stalk.setModelRendererName("stalk");
-		this.registerModelRenderer(stalk);
-
-		lleg = new AnimatedModelRenderer(this);
-		lleg.setRotationPoint(4.0F, 7.0F, 0.0F);
-		main.addChild(lleg);
-		lleg.setTextureOffset(0, 0).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 8.0F, 4.0F, 0.0F, false);
-		lleg.setTextureOffset(28, 32).addBox(-2.0F, 5.0F, -4.0F, 4.0F, 3.0F, 2.0F, 0.0F, false);
-		lleg.setModelRendererName("lleg");
-		this.registerModelRenderer(lleg);
-
-		rleg = new AnimatedModelRenderer(this);
-		rleg.setRotationPoint(-4.0F, 7.0F, 0.0F);
-		main.addChild(rleg);
-		rleg.setTextureOffset(0, 0).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 8.0F, 4.0F, 0.0F, true);
-		rleg.setTextureOffset(28, 32).addBox(-2.0F, 5.0F, -4.0F, 4.0F, 3.0F, 2.0F, 0.0F, true);
-		rleg.setModelRendererName("rleg");
-		this.registerModelRenderer(rleg);
-
-    this.rootBones.add(main);
-  }
-
-
-    @Override
-    public ResourceLocation getAnimationFileLocation()
-    {
-        return new ResourceLocation(SpecialConstants.MODID, "animations/pumpkinion.json");
-    }
+	@Override
+	public ResourceLocation getAnimationFileLocation(EnemyPumpkinionEntity object) {
+		return new ResourceLocation("mystical_pumpkins", "animations/pumpkinion.json");
+	}
 }
