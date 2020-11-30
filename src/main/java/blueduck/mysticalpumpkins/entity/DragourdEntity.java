@@ -1,13 +1,19 @@
 package blueduck.mysticalpumpkins.entity;
 
+import java.util.Random;
+
 import blueduck.mysticalpumpkins.MysticalPumpkinsMod;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.HurtByTargetGoal;
+import net.minecraft.entity.ai.goal.LookAtGoal;
+import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
@@ -16,106 +22,83 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biomes;
-import net.minecraft.world.server.ServerWorld;
-import software.bernie.geckolib.animation.builder.AnimationBuilder;
-import software.bernie.geckolib.animation.controller.AnimationController;
-import software.bernie.geckolib.animation.controller.EntityAnimationController;
-import software.bernie.geckolib.entity.IAnimatedEntity;
-import software.bernie.geckolib.event.AnimationTestEvent;
-import software.bernie.geckolib.manager.EntityAnimationManager;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-import java.util.Random;
+public class DragourdEntity extends MonsterEntity implements IAnimatable {
 
-public class DragourdEntity extends MonsterEntity implements IAnimatedEntity {
+	private AnimationFactory factory = new AnimationFactory(this);
 
-    public EntityAnimationManager animationManager = new EntityAnimationManager();
+	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+		boolean b = false;
+		if (attackTimer > 0) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("attackhead", true));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacktail", true));
+			attackTimer--;
+			b = true;
+			return PlayState.CONTINUE;
+		} else if (event.isMoving()) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("walklegs", true));
+			if (!b) {
+				event.getController().setAnimation(new AnimationBuilder().addAnimation("walkhead", true));
+				event.getController().setAnimation(new AnimationBuilder().addAnimation("walktail", true));
+			}
+			return PlayState.CONTINUE;
+		}
+		return PlayState.STOP;
+	}
 
-    private AnimationController moveController = new EntityAnimationController(this, "moveController", 10F, this::moveController);
-    private AnimationController headController = new EntityAnimationController(this, "headController", 10F, this::moveController);
-    private AnimationController tailController = new EntityAnimationController(this, "tailController", 10F, this::moveController);
+	@Override
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(new AnimationController<DragourdEntity>(this, "controller", 0.1F, this::predicate));
+	}
 
-    public int attackTimer = 0;
+	@Override
+	public AnimationFactory getFactory() {
+		return this.factory;
+	}
 
-    public DragourdEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
-        super(type, worldIn);
-        registerAnimationControllers();
-    }
-    public void registerAnimationControllers()
-    {
-        if(world.isRemote)
-        {
-            this.animationManager.addAnimationController(moveController);
-            this.animationManager.addAnimationController(headController);
-            this.animationManager.addAnimationController(tailController);
-        }
-    }
+	public int attackTimer = 0;
 
-    @Override
-    public EntityAnimationManager getAnimationManager() {
-        return animationManager;
-    }
+	public DragourdEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+		super(type, worldIn);
+	}
 
-    private <ENTITY extends Entity> boolean moveController(AnimationTestEvent<ENTITY> event)
-    {
-        boolean b = false;
-        if (attackTimer > 0) {
-            headController.setAnimation(new AnimationBuilder().addAnimation("attackhead", true));
-            tailController.setAnimation(new AnimationBuilder().addAnimation("attacktail", true));
-            attackTimer--;
-            b = true;
-            return true;
-        }
-        else if (event.isWalking()) {
-            moveController.setAnimation(new AnimationBuilder().addAnimation("walklegs", true));
-            if (!b) {
-                headController.setAnimation(new AnimationBuilder().addAnimation("walkhead", true));
-                tailController.setAnimation(new AnimationBuilder().addAnimation("walktail", true));
-            }
-            return true;
-        }
-        return false;
+	@Override
+	protected void registerGoals() {
+		this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
+		this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
+		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setCallsForHelp());
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+	}
 
+	public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
+		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 20.0D) // health
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.3D) // movement speed
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 3.0D) // attack damage
+				.createMutableAttribute(Attributes.ATTACK_KNOCKBACK, 0.2D); // attack knockback
+	}
 
-    }
-    public boolean attackEntityAsMob(Entity entityIn) {
-        attackTimer = 60;
-        if(world.isRemote) {
-            headController.setAnimation(new AnimationBuilder().addAnimation("attackhead", true));
-            tailController.setAnimation(new AnimationBuilder().addAnimation("attacktail", true));
-        }
-        return super.attackEntityAsMob(entityIn);
-    }
+	public SoundEvent getHurtSound(DamageSource damageSourceIn) {
+		return SoundEvents.BLOCK_WOOD_BREAK;
+	}
 
-    @Override
-    protected void registerGoals()
-    {
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
-        this.goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
-        this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
-        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setCallsForHelp());
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
-    }
+	public static boolean canSpawn(EntityType<DragourdEntity> type, IWorld world, SpawnReason spawnReason, BlockPos pos,
+			Random random) {
+		return (MysticalPumpkinsMod.CONFIG.DRAGOURD_SPAWN_EVERYWHERE_ON_FULL_MOON.get()
+				&& world.getMoonFactor() == 1.0F)
+				|| MysticalPumpkinsMod.CONFIG.DRAGOURD_SPAWN_BIOMES.get().contains(world.getBiome(pos).toString());
+	}
 
-    public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
-        return MobEntity.func_233666_p_()
-                .createMutableAttribute(Attributes.MAX_HEALTH, 20.0D) //health
-                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.3D) //movement speed
-                .createMutableAttribute(Attributes.ATTACK_DAMAGE, 3.0D) //attack damage
-                .createMutableAttribute(Attributes.ATTACK_KNOCKBACK, 0.2D); //attack knockback
-    }
-
-    public SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return SoundEvents.BLOCK_WOOD_BREAK;
-    }
-
-    public static boolean canSpawn(EntityType<DragourdEntity> type, IWorld world, SpawnReason spawnReason, BlockPos pos, Random random) {
-        return (MysticalPumpkinsMod.CONFIG.DRAGOURD_SPAWN_EVERYWHERE_ON_FULL_MOON.get() && world.getMoonFactor() == 1.0F) || MysticalPumpkinsMod.CONFIG.DRAGOURD_SPAWN_BIOMES.get().contains(world.getBiome(pos).toString());
-    }
-
-    public SoundEvent getDeathSound() {
-        return SoundEvents.BLOCK_WOOD_BREAK;
-    }
+	public SoundEvent getDeathSound() {
+		return SoundEvents.BLOCK_WOOD_BREAK;
+	}
 
 }

@@ -8,45 +8,56 @@
 				"main": {
 					"position": {
 						"0.0": {
-							"vector": [0, 2, 0]
+							"vector": [0, 2, 0],
+							"easing": "easeOutExpo"
 						},
 						"0.16": {
-							"vector": [0, 0, 0]
+							"vector": [0, 0, 0],
+							"easing": "easeInSine"
 						},
 						"0.32": {
-							"vector": [0, 2, 0]
+							"vector": [0, 2, 0],
+							"easing": "easeOutSine"
 						},
 						"0.48": {
-							"vector": [0, 0, 0]
+							"vector": [0, 0, 0],
+							"easing": "easeInSine"
 						},
 						"0.64": {
-							"vector": [0, 2, 0]
+							"vector": [0, 2, 0],
+							"easing": "easeOutSine"
 						}
 					}
 				},
 				"rleg": {
 					"rotation": {
 						"0.0": {
-							"vector": [30, 0, 0]
+							"vector": [30, 0, 0],
+							"easing": "easeInOutExpo"
 						},
 						"0.32": {
-							"vector": [-20, 0, 0]
+							"vector": [-20, 0, 0],
+							"easing": "easeInOutExpo"
 						},
 						"0.64": {
-							"vector": [30, 0, 0]
+							"vector": [30, 0, 0],
+							"easing": "easeInOutExpo"
 						}
 					}
 				},
 				"lleg": {
 					"rotation": {
 						"0.0": {
-							"vector": [-20, 0, 0]
+							"vector": [-20, 0, 0],
+							"easing": "easeInOutExpo"
 						},
 						"0.32": {
-							"vector": [30, 0, 0]
+							"vector": [30, 0, 0],
+							"easing": "easeInOutExpo"
 						},
 						"0.64": {
-							"vector": [-20, 0, 0]
+							"vector": [-20, 0, 0],
+							"easing": "easeInOutExpo"
 						}
 					}
 				},
@@ -56,16 +67,20 @@
 							"vector": [0, 0, 0]
 						},
 						"0.16": {
-							"vector": [-20, 0, 0]
+							"vector": [-20, 0, 0],
+							"easing": "easeInExpo"
 						},
 						"0.32": {
-							"vector": [0, 0, 0]
+							"vector": [0, 0, 0],
+							"easing": "easeOutExpo"
 						},
 						"0.48": {
-							"vector": [-20, 0, 0]
+							"vector": [-20, 0, 0],
+							"easing": "easeInExpo"
 						},
 						"0.64": {
-							"vector": [0, 0, 0]
+							"vector": [0, 0, 0],
+							"easing": "easeOutExpo"
 						}
 					}
 				},
@@ -75,16 +90,20 @@
 							"vector": [-5, 0, 0]
 						},
 						"0.16": {
-							"vector": [5, 0, 0]
+							"vector": [5, 0, 0],
+							"easing": "easeInExpo"
 						},
 						"0.32": {
-							"vector": [-5, 0, 0]
+							"vector": [-5, 0, 0],
+							"easing": "easeOutExpo"
 						},
 						"0.48": {
-							"vector": [5, 0, 0]
+							"vector": [5, 0, 0],
+							"easing": "easeInExpo"
 						},
 						"0.64": {
-							"vector": [-5, 0, 0]
+							"vector": [-5, 0, 0],
+							"easing": "easeOutExpo"
 						}
 					}
 				}
@@ -99,10 +118,12 @@
 							"vector": [0, 0, 0]
 						},
 						"0.24": {
-							"vector": [0, 1.5, -2]
+							"vector": [0, 1.5, -2],
+							"easing": "easeInOutExpo"
 						},
 						"0.52": {
-							"vector": [0, 0, 0]
+							"vector": [0, 0, 0],
+							"easing": "easeInOutSine"
 						}
 					}
 				},
@@ -112,10 +133,12 @@
 							"vector": [0, 0, 0]
 						},
 						"0.24": {
-							"vector": [30, 0, 0]
+							"vector": [30, 0, 0],
+							"easing": "easeInOutExpo"
 						},
 						"0.52": {
-							"vector": [0, 0, 0]
+							"vector": [0, 0, 0],
+							"easing": "easeInOutSine"
 						}
 					}
 				},
@@ -125,10 +148,12 @@
 							"vector": [0, 0, 0]
 						},
 						"0.24": {
-							"vector": [30, 0, 0]
+							"vector": [30, 0, 0],
+							"easing": "easeInOutExpo"
 						},
 						"0.52": {
-							"vector": [0, 0, 0]
+							"vector": [0, 0, 0],
+							"easing": "easeInOutSine"
 						}
 					}
 				},
@@ -138,10 +163,12 @@
 							"vector": [0, 0, 0]
 						},
 						"0.24": {
-							"vector": [-20, 0, 0]
+							"vector": [-20, 0, 0],
+							"easing": "easeInOutExpo"
 						},
 						"0.52": {
-							"vector": [0, 0, 0]
+							"vector": [0, 0, 0],
+							"easing": "easeInOutSine"
 						}
 					}
 				},
@@ -151,14 +178,17 @@
 							"vector": [0, 0, 0]
 						},
 						"0.24": {
-							"vector": [5, 0, 0]
+							"vector": [5, 0, 0],
+							"easing": "easeInOutExpo"
 						},
 						"0.52": {
-							"vector": [0, 0, 0]
+							"vector": [0, 0, 0],
+							"easing": "easeInOutSine"
 						}
 					}
 				}
 			}
 		}
-	}
+	},
+	"geckolib_format_version": 2
 }
