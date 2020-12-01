@@ -84,8 +84,8 @@ public class RegisterHandler {
 	public static final RegistryObject<Block> HEALING_PUMPKIN = BLOCKS.register("healing_pumpkin", MysticalPumpkinBlock::new);
 	public static final RegistryObject<Item> HEALING_PUMPKIN_ITEM = ITEMS.register("healing_pumpkin", () -> new EffectPumpkinItem(HEALING_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.REGENERATION));
 
-	public static final RegistryObject<Block> MIRE_PUMPKIN = BLOCKS.register("mire_pumpkin", MysticalPumpkinBlock::new);
-	public static final RegistryObject<Item> MIRE_PUMPKIN_ITEM = ITEMS.register("mire_pumpkin", () -> new EffectPumpkinItem(MIRE_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC), Effects.JUMP_BOOST));
+	public static final RegistryObject<Block> MIRE_PUMPKIN = BLOCKS.register("mire_pumpkin", MirePumpkinBlock::new);
+	public static final RegistryObject<Item> MIRE_PUMPKIN_ITEM = ITEMS.register("mire_pumpkin", () -> new MysticalPumpkinItem(MIRE_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC)));
 
 	public static final RegistryObject<Block> CHROMATIC_PUMPKIN = BLOCKS.register("chromatic_pumpkin", ChromaticPumpkinBlock::new);
 	public static final RegistryObject<Item> CHROMATIC_PUMPKIN_ITEM = ITEMS.register("chromatic_pumpkin", () -> new BlockItem(CHROMATIC_PUMPKIN.get(), new Item.Properties().group(ItemGroup.MISC)));

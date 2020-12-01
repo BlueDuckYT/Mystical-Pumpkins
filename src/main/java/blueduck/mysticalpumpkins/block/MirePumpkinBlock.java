@@ -1,5 +1,7 @@
 package blueduck.mysticalpumpkins.block;
 
+import blueduck.mysticalpumpkins.entity.SludgeEntity;
+import blueduck.mysticalpumpkins.registry.RegisterHandler;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -14,10 +16,6 @@ import javax.annotation.Nullable;
 
 public class MirePumpkinBlock extends MysticalPumpkinBlock {
 
-    @Nullable
-    private BlockPattern snowmanBasePattern;
-    @Nullable
-    private BlockPattern snowmanPattern;
 
 
     public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
@@ -28,7 +26,7 @@ public class MirePumpkinBlock extends MysticalPumpkinBlock {
     private void trySpawnGolem(World world, BlockPos pos) {
 
         if (world.getBlockState(pos.down()).isStickyBlock()) {
-            SnowGolemEntity snowgolementity = EntityType.SNOW_GOLEM.create(world);
+            SludgeEntity snowgolementity = RegisterHandler.PUMPKIN_SLUDGE.get().create(world);
             BlockPos blockpos1 = pos.down();
             snowgolementity.setLocationAndAngles((double) blockpos1.getX() + 0.5D, (double) blockpos1.getY() + 0.05D, (double) blockpos1.getZ() + 0.5D, 0.0F, 0.0F);
             world.addEntity(snowgolementity);

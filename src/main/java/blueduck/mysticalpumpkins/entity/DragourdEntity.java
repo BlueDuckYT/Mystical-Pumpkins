@@ -36,10 +36,8 @@ public class DragourdEntity extends MonsterEntity implements IAnimatable {
 	private AnimationFactory factory = new AnimationFactory(this);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		boolean b = false;
-		if (attackTimer > 0) {
+		if (this.getLastAttackedEntityTime() + 30 > this.ticksExisted && this.getLastAttackedEntityTime() != 0) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("attackfull", true));
-			b = true;
 			return PlayState.CONTINUE;
 		} else if (event.isMoving()) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walkfull", true));
@@ -57,8 +55,6 @@ public class DragourdEntity extends MonsterEntity implements IAnimatable {
 	public AnimationFactory getFactory() {
 		return this.factory;
 	}
-
-	public int attackTimer = 0;
 
 	public DragourdEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -80,6 +76,7 @@ public class DragourdEntity extends MonsterEntity implements IAnimatable {
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 3.0D) // attack damage
 				.createMutableAttribute(Attributes.ATTACK_KNOCKBACK, 0.2D); // attack knockback
 	}
+
 
 	public SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return SoundEvents.BLOCK_WOOD_BREAK;
