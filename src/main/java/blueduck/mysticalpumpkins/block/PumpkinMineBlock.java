@@ -26,6 +26,7 @@ public class PumpkinMineBlock extends PressurePlateBlock {
 
         if (!flag1 && flag) {
             this.playClickOffSound(worldIn, pos);
+            worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
             worldIn.createExplosion(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 5, Explosion.Mode.BREAK);
         } else if (flag1 && !flag) {
             this.playClickOnSound(worldIn, pos);

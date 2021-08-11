@@ -18,6 +18,12 @@ public class PumpklopsRenderer extends GeoEntityRenderer<PumpklopsEntity> {
 	}
 
 	@Override
+	public ResourceLocation getEntityTexture(PumpklopsEntity entity) {
+
+		return new ResourceLocation("mystical_pumpkins", "textures/entity/pumpklops_rotten.png");
+	}
+
+	@Override
 	public RenderType getRenderType(PumpklopsEntity animatable, float partialTicks, MatrixStack stack,
 			IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder, int packedLightIn,
 			ResourceLocation textureLocation) {

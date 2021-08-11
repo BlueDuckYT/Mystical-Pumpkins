@@ -18,6 +18,11 @@ public class EnemyPumpkinionRenderer extends GeoEntityRenderer<EnemyPumpkinionEn
 	}
 
 	@Override
+	public ResourceLocation getEntityTexture(EnemyPumpkinionEntity entity) {
+		return new ResourceLocation("mystical_pumpkins", "textures/entity/pumpkinion.png");
+	}
+
+	@Override
 	public RenderType getRenderType(EnemyPumpkinionEntity animatable, float partialTicks, MatrixStack stack,
 			IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder, int packedLightIn,
 			ResourceLocation textureLocation) {

@@ -80,13 +80,12 @@ dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.16.4-35.0.11'
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.2'
 
-    implementation fg.deobf("curse.maven:jei:3073591")
+    implementation fg.deobf("curse.maven:JEI-238222:3414898")
 
-	implementation fg.deobf('software.bernie.geckolib:forge-1.16.4-geckolib:3.0.0-beta.10')
 
-    //implementation fg.deobf("curse.maven:quark:3102528")
+    implementation fg.deobf("curse.maven:Geckolib-388172:3120121")
     //implementation fg.deobf("curse.maven:autoreglib:3088870")
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"

@@ -18,6 +18,11 @@ public class DragourdRenderer extends GeoEntityRenderer<DragourdEntity> {
 	}
 
 	@Override
+	public ResourceLocation getEntityTexture(DragourdEntity entity) {
+		return new ResourceLocation("mystical_pumpkins", "textures/entity/dragourd.png");
+	}
+
+	@Override
 	public RenderType getRenderType(DragourdEntity animatable, float partialTicks, MatrixStack stack,
 			IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder, int packedLightIn,
 			ResourceLocation textureLocation) {
